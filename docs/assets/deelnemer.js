@@ -4,12 +4,12 @@ import {
     optionLetter,
     queryCode,
     setConnection,
-} from "./app.js";
+} from "./app.js?v=3";
 import {
     ensureAuth,
     submitAnswer as saveAnswer,
     watchQuiz,
-} from "./firebase-service.js";
+} from "./firebase-service.js?v=3";
 
 const storageCodeKey = "dlq-participant-code";
 const connectionStatus = document.querySelector("#connectionStatus");
