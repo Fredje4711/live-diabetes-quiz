@@ -105,16 +105,13 @@ a {
     font-weight: 850;
 }
 
-.brand__mark {
-    display: grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
+.brand__logo {
+    display: block;
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
     border-radius: 50%;
-    color: #fff;
-    background: var(--brand);
-    font-size: 0.9rem;
-    letter-spacing: 0.03em;
+    object-fit: contain;
 }
 
 .page-shell {
@@ -490,14 +487,18 @@ h3 {
 }
 
 .option__letter {
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 2.2rem;
     height: 2.2rem;
     border-radius: 0.55rem;
+    padding: 0 0 0.06em;
     color: #fff;
     background: var(--brand-dark);
     font-weight: 900;
+    line-height: 1;
+    text-align: center;
 }
 
 .option.is-correct,
