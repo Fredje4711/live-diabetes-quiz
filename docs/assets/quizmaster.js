@@ -57,7 +57,9 @@ const buttons = {
     finish: document.querySelector("#finishButton"),
 };
 
-let code = localStorage.getItem(storageCodeKey) || "";
+const storedCode = localStorage.getItem(storageCodeKey) || "";
+let code = /^\d{3}$/.test(storedCode) ? storedCode : "";
+if (storedCode && !code) localStorage.removeItem(storageCodeKey);
 let latestState = null;
 let stopWatch = null;
 let commandBusy = false;
