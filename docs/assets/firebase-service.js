@@ -100,10 +100,10 @@ export function ensureAuth() {
     return authPromise;
 }
 
-function sixDigitCode() {
+function threeDigitCode() {
     const values = new Uint32Array(1);
     crypto.getRandomValues(values);
-    return String(100000 + (values[0] % 900000));
+    return String(100 + (values[0] % 900));
 }
 
 function shuffledIndexes() {
@@ -122,8 +122,8 @@ export async function createSession({ questionCount, shuffle }) {
     const count = Math.min(QUESTIONS.length, Math.max(1, Number(questionCount) || 10));
     const order = (shuffle ? shuffledIndexes() : QUESTIONS.map((_, index) => index)).slice(0, count);
 
-    for (let attempt = 0; attempt < 12; attempt += 1) {
-        const code = sixDigitCode();
+    for (let attempt = 0; attempt < 30; attempt += 1) {
+        const code = threeDigitCode();
         const sessionRef = doc(db, "sessions", code);
         try {
             await runTransaction(db, async (transaction) => {
@@ -471,7 +471,7 @@ export async function watchQuiz(code, role, onState, onError) {
             fail,
         );
 
-        if (role === "master") {
+        if (role === "master" || role === "projector") {
             participantUnsubscribe = onSnapshot(
                 collection(db, "sessions", code, "participants"),
                 (snapshot) => {

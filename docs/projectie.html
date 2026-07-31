@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Projectiescherm van de Live Diabetes Quiz.">
-    <title>Projectie – Live Diabetes Quiz</title>
+    <title>Zaalscherm – Live Diabetes Quiz</title>
     <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body class="projector">
@@ -26,7 +26,7 @@
     <main class="projector-shell">
         <section id="projectorJoin" class="panel projector-message">
             <div>
-                <p class="eyebrow">Projectiescherm</p>
+                <p class="eyebrow">Groot zaalscherm</p>
                 <h1>Voer de quizcode in</h1>
                 <form id="projectorJoinForm" class="page-shell--narrow" style="margin: 1.5rem auto 0">
                     <div class="field">
@@ -36,9 +36,9 @@
                             class="code-input"
                             type="text"
                             inputmode="numeric"
-                            maxlength="6"
-                            pattern="[0-9]{6}"
-                            placeholder="000000"
+                            maxlength="3"
+                            pattern="[0-9]{3}"
+                            placeholder="000"
                             required
                         >
                     </div>
@@ -53,27 +53,29 @@
         <section id="projectorWaiting" class="panel projector-message hide">
             <div>
                 <p class="eyebrow">De quiz begint binnenkort</p>
-                <h1>Ga naar het deelnemerscherm en gebruik quizcode</h1>
-                <p id="projectorSessionCode" class="projector-code">------</p>
-                <canvas id="projectorQr" class="projector-qr" width="220" height="220" aria-label="QR-code voor deelnemers"></canvas>
-                <p id="joinAddress" class="lead" style="margin-inline: auto"></p>
+                <h1>Neem uw deelnemersbriefje en maak verbinding</h1>
+                <p id="projectorSessionCode" class="projector-code">---</p>
+                <p class="lead" style="margin-inline: auto">
+                    De quizmaster start zodra iedereen verbonden is.
+                </p>
             </div>
         </section>
 
         <section id="projectorQuestion" class="hide">
-            <div class="session-header">
-                <p id="projectorQuestionNumber" class="eyebrow">Vraag 1 van 10</p>
-                <p class="lead" style="margin: 0">
-                    <strong id="projectorAnswered">0</strong> antwoorden ontvangen
-                </p>
-            </div>
+            <p id="projectorQuestionNumber" class="eyebrow">Vraag 1 van 10</p>
             <div class="panel">
                 <h1 id="projectorQuestionText" class="projector-question"></h1>
                 <div id="projectorOptions" class="options"></div>
             </div>
-            <section id="projectorResults" class="panel hide">
-                <h2>Resultaten van deze vraag</h2>
-                <div id="projectorResultBars" class="result-bars"></div>
+            <section class="projector-stats" aria-label="Voortgang van de zaal">
+                <div class="projector-stat">
+                    <strong id="projectorParticipants">0</strong>
+                    <span>deelnemers verbonden</span>
+                </div>
+                <div class="projector-stat">
+                    <strong id="projectorAnswered">0</strong>
+                    <span>antwoorden ontvangen</span>
+                </div>
             </section>
         </section>
 
@@ -88,7 +90,6 @@
         </section>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
-    <script type="module" src="assets/projectie.js?v=2"></script>
+    <script type="module" src="assets/projectie.js?v=3"></script>
 </body>
 </html>

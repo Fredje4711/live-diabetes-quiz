@@ -1,10 +1,10 @@
 export function queryCode() {
     const value = new URLSearchParams(window.location.search).get("code") || "";
-    return value.replace(/\D/g, "").slice(0, 6);
+    return value.replace(/\D/g, "").slice(0, 3);
 }
 
 export function normalizeCode(value) {
-    return String(value || "").replace(/\D/g, "").slice(0, 6);
+    return String(value || "").replace(/\D/g, "").slice(0, 3);
 }
 
 export function optionLetter(index) {
@@ -55,20 +55,28 @@ export function projectorUrl(code) {
     return url.href;
 }
 
-export function renderQr(canvas, value) {
-    if (!canvas || !window.QRCode) return;
-    window.QRCode.toCanvas(
-        canvas,
-        value,
-        {
-            width: 220,
-            margin: 2,
-            color: {
-                dark: "#075b78",
-                light: "#ffffff",
-            },
-            errorCorrectionLevel: "M",
-        },
-        () => {},
-    );
+export function handoutUrl(code) {
+    return new URL(`briefje.html?code=${encodeURIComponent(code)}`, window.location.href).href;
+}
+
+export function renderQr(container, value, size = 220) {
+    if (!container) return false;
+    container.replaceChildren();
+
+    if (!window.QRCode) {
+        container.textContent = "QR-code kon niet worden gemaakt.";
+        container.classList.add("qr-output--error");
+        return false;
+    }
+
+    container.classList.remove("qr-output--error");
+    new window.QRCode(container, {
+        text: value,
+        width: size,
+        height: size,
+        colorDark: "#075b78",
+        colorLight: "#ffffff",
+        correctLevel: window.QRCode.CorrectLevel.M,
+    });
+    return true;
 }

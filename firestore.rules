@@ -33,6 +33,7 @@ service cloud.firestore {
           'updatedAt'
         ])
         && request.resource.data.code == code
+        && code.matches('^[0-9]{3}$')
         && request.resource.data.masterUid == request.auth.uid
         && request.resource.data.phase == 'waiting'
         && request.resource.data.activePosition == 0
@@ -59,8 +60,9 @@ service cloud.firestore {
       allow delete: if false;
 
       match /participants/{participantId} {
-        allow read: if signedIn()
-          && (request.auth.uid == participantId || isMaster(code));
+        // Projectieschermen lezen deze anonieme registraties uitsluitend om
+        // het aantal verbonden deelnemers in de zaal te kunnen tonen.
+        allow read: if signedIn();
 
         allow create: if signedIn()
           && request.auth.uid == participantId

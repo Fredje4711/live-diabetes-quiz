@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Afdrukbare deelnemersbriefjes voor de Live Diabetes Quiz.">
+    <title>Deelnemersbriefjes – Live Diabetes Quiz</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="handout-page">
+    <header class="site-header no-print">
+        <div class="site-header__inner">
+            <a class="brand" href="quizmaster.html">
+                <span class="brand__mark" aria-hidden="true">DL</span>
+                <span>Deelnemersbriefjes</span>
+            </a>
+            <span class="badge">Twee briefjes per A4</span>
+        </div>
+    </header>
+
+    <main class="handout-shell">
+        <section class="panel handout-controls no-print">
+            <p class="eyebrow">Vooraf voorbereiden</p>
+            <h1>Deelnemersbriefjes afdrukken</h1>
+            <p class="lead">
+                Vul eventueel de wifi van de zaal in. De QR-code, internetlink en
+                driecijferige quizcode staan daarna op ieder briefje.
+            </p>
+            <div class="form-row" style="margin-top: 1.5rem">
+                <div class="field">
+                    <label for="wifiName">Naam wifi van de zaal</label>
+                    <input id="wifiName" type="text" placeholder="Bijvoorbeeld: Zaal_Gasten">
+                </div>
+                <div class="field">
+                    <label for="wifiPassword">Wachtwoord wifi</label>
+                    <input id="wifiPassword" type="text" placeholder="Laat leeg als dit niet nodig is">
+                </div>
+            </div>
+            <div class="button-row">
+                <button id="printButton" class="button-primary" type="button">Nu afdrukken</button>
+                <a class="button-link" href="quizmaster.html">Terug naar quizmaster</a>
+            </div>
+            <p id="handoutError" class="notice notice--error hide" role="alert"></p>
+        </section>
+
+        <section id="handoutSheets" class="handout-sheets" aria-label="Afdrukvoorbeeld">
+            <article class="participant-handout">
+                <div class="participant-handout__content"></div>
+            </article>
+            <article class="participant-handout">
+                <div class="participant-handout__content"></div>
+            </article>
+        </section>
+    </main>
+
+    <template id="handoutTemplate">
+        <div class="handout-heading">
+            <span class="brand__mark" aria-hidden="true">DL</span>
+            <div>
+                <p class="eyebrow">Anoniem deelnemen</p>
+                <h2>Live Diabetes Quiz</h2>
+            </div>
+        </div>
+        <div class="handout-grid">
+            <div class="handout-steps">
+                <ol>
+                    <li>
+                        <strong>Zet internet aan op uw gsm.</strong>
+                        Gebruik uw mobiele data of de wifi van de zaal.
+                    </li>
+                    <li class="wifi-instruction">
+                        <strong>Wifi zaal:</strong>
+                        <span class="wifi-details">Vraag indien nodig hulp aan een begeleider.</span>
+                    </li>
+                    <li>
+                        <strong>Scan de QR-code</strong> met de camera van uw gsm
+                        en tik op de link die verschijnt.
+                    </li>
+                    <li>
+                        Lukt scannen niet? Open de internetbrowser en typ:
+                        <strong class="handout-address"></strong>
+                    </li>
+                    <li>
+                        Vul indien gevraagd deze quizcode in:
+                        <strong class="handout-code"></strong>
+                    </li>
+                </ol>
+                <p class="handout-help">Lukt het niet? Steek uw hand op. Wij helpen u graag.</p>
+            </div>
+            <div class="handout-qr-wrap">
+                <div class="handout-qr qr-output" aria-label="QR-code naar het deelnemerscherm"></div>
+                <p>Scan mij</p>
+            </div>
+        </div>
+        <p class="handout-privacy">
+            Uw naam en e-mailadres worden niet gevraagd. Laat het deelnemerscherm tijdens de quiz openstaan.
+        </p>
+    </template>
+
+    <script src="assets/vendor/qrcode.min.js"></script>
+    <script type="module" src="assets/briefje.js?v=1"></script>
+</body>
+</html>

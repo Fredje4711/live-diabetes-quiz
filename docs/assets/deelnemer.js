@@ -161,8 +161,8 @@ function renderState(state) {
 
 async function joinQuiz(nextCode) {
     code = normalizeCode(nextCode);
-    if (code.length !== 6) {
-        showError("Voer zes cijfers in.");
+    if (code.length !== 3) {
+        showError("Voer de drie cijfers van uw quizbriefje in.");
         return;
     }
 
@@ -234,7 +234,7 @@ quizCodeInput.addEventListener("input", () => {
 
 try {
     await ensureAuth();
-    if (code.length === 6) {
+    if (code.length === 3) {
         quizCodeInput.value = code;
         await joinQuiz(code);
     } else {

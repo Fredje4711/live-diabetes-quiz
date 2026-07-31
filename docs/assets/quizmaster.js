@@ -1,6 +1,7 @@
 import {
     copyText,
     formatPhase,
+    handoutUrl,
     optionLetter,
     participantUrl,
     projectorUrl,
@@ -26,6 +27,7 @@ const connectionStatus = document.querySelector("#connectionStatus");
 const sessionCode = document.querySelector("#sessionCode");
 const phaseBadge = document.querySelector("#phaseBadge");
 const openProjectorLink = document.querySelector("#openProjectorLink");
+const printHandoutsLink = document.querySelector("#printHandoutsLink");
 const copyParticipantLink = document.querySelector("#copyParticipantLink");
 const participantQr = document.querySelector("#participantQr");
 const waitingMaster = document.querySelector("#waitingMaster");
@@ -194,6 +196,7 @@ function renderState(state) {
     totalParticipants.textContent = state.participants.total;
     answeredCount.textContent = state.statistics?.total ?? 0;
     openProjectorLink.href = projectorUrl(code);
+    printHandoutsLink.href = handoutUrl(code);
 
     waitingMaster.classList.toggle("hide", state.session.phase !== "waiting");
     questionMaster.classList.toggle(
@@ -230,6 +233,7 @@ async function beginControl() {
     sessionCode.textContent = code;
     const joinLink = participantUrl(code);
     openProjectorLink.href = projectorUrl(code);
+    printHandoutsLink.href = handoutUrl(code);
     renderQr(participantQr, joinLink);
     setConnection(connectionStatus, "busy", "Verbinden…");
 

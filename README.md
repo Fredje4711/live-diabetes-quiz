@@ -5,8 +5,9 @@ Anonieme live quiz voor Diabetes Liga Midden-Limburg.
 ## Onderdelen
 
 - **Quizmaster:** maakt een sessie en bedient de vragen.
-- **Deelnemer:** opent de quiz via QR-code of zescijferige code.
-- **Projectie:** toont vragen en resultaten in de zaal.
+- **Deelnemer:** opent de quiz via het vooraf afgedrukte briefje en een driecijferige code.
+- **Groot zaalscherm:** toont dezelfde vraag en antwoorden als de gsm, plus de live aantallen.
+- **Deelnemersbriefje:** drukt twee briefjes per A4 af met QR-code, terugvallink, quizcode en zaalwifi.
 - **GitHub Pages:** publiceert de statische website uit de map `docs`.
 - **Firebase:** verzorgt anonieme toegang en realtime synchronisatie.
 
@@ -20,7 +21,11 @@ Na publicatie:
 - Startpagina: `https://fredje4711.github.io/live-diabetes-quiz/`
 - Quizmaster: `https://fredje4711.github.io/live-diabetes-quiz/quizmaster.html`
 - Deelnemer: `https://fredje4711.github.io/live-diabetes-quiz/deelnemer.html`
-- Projectie: `https://fredje4711.github.io/live-diabetes-quiz/projectie.html`
+- Groot zaalscherm: `https://fredje4711.github.io/live-diabetes-quiz/projectie.html`
+
+Maak eerst een quizsessie. Gebruik daarna in het quizmasterscherm de knop
+**Deelnemersbriefjes afdrukken**. De unieke QR-code op het briefje opent
+rechtstreeks het deelnemerscherm van die sessie.
 
 ## Beheer
 

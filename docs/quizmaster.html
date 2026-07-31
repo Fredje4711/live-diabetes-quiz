@@ -54,7 +54,7 @@
                 <div class="session-header">
                     <div>
                         <p class="eyebrow">Quizcode voor deelnemers</p>
-                        <p id="sessionCode" class="session-code">------</p>
+                        <p id="sessionCode" class="session-code">---</p>
                     </div>
                     <span id="phaseBadge" class="badge">Wachtkamer</span>
                 </div>
@@ -62,12 +62,18 @@
                 <div class="button-row">
                     <button id="copyParticipantLink" class="button-secondary" type="button">Kopieer deelnemerslink</button>
                     <a id="openProjectorLink" class="button-link" href="projectie.html" target="_blank" rel="noopener">
-                        Open projectie
+                        Open groot zaalscherm
+                    </a>
+                    <a id="printHandoutsLink" class="button-link button-link--print" href="briefje.html" target="_blank" rel="noopener">
+                        Deelnemersbriefjes afdrukken
                     </a>
                 </div>
                 <div class="qr-card">
-                    <canvas id="participantQr" width="220" height="220" aria-label="QR-code voor deelnemers"></canvas>
-                    <p>Laat deelnemers deze QR-code scannen of de quizcode invoeren.</p>
+                    <div id="participantQr" class="qr-output" aria-label="Voorbeeld van de QR-code op het deelnemersbriefje"></div>
+                    <p>
+                        Dit is een controlevoorbeeld. Deelnemers scannen deze QR-code
+                        <strong>niet van dit scherm</strong>, maar van hun vooraf afgedrukte briefje.
+                    </p>
                 </div>
             </div>
 
@@ -149,7 +155,7 @@
         </section>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
-    <script type="module" src="assets/quizmaster.js?v=2"></script>
+    <script src="assets/vendor/qrcode.min.js"></script>
+    <script type="module" src="assets/quizmaster.js?v=3"></script>
 </body>
 </html>

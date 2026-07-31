@@ -2,9 +2,7 @@ import {
     formatPhase,
     normalizeCode,
     optionLetter,
-    participantUrl,
     queryCode,
-    renderQr,
     setConnection,
 } from "./app.js";
 import { ensureAuth, watchQuiz } from "./firebase-service.js";
@@ -20,14 +18,11 @@ const projectorWaiting = document.querySelector("#projectorWaiting");
 const projectorQuestion = document.querySelector("#projectorQuestion");
 const projectorFinished = document.querySelector("#projectorFinished");
 const projectorSessionCode = document.querySelector("#projectorSessionCode");
-const joinAddress = document.querySelector("#joinAddress");
-const projectorQr = document.querySelector("#projectorQr");
 const projectorQuestionNumber = document.querySelector("#projectorQuestionNumber");
 const projectorQuestionText = document.querySelector("#projectorQuestionText");
 const projectorOptions = document.querySelector("#projectorOptions");
 const projectorAnswered = document.querySelector("#projectorAnswered");
-const projectorResults = document.querySelector("#projectorResults");
-const projectorResultBars = document.querySelector("#projectorResultBars");
+const projectorParticipants = document.querySelector("#projectorParticipants");
 
 let code = queryCode() || localStorage.getItem(storageCodeKey) || "";
 let stopWatch = null;
@@ -57,34 +52,6 @@ function renderOptions(state) {
     });
 }
 
-function renderBars(state) {
-    projectorResultBars.replaceChildren();
-    const maximum = Math.max(1, ...state.statistics.counts);
-
-    state.statistics.counts.forEach((count, index) => {
-        const row = document.createElement("div");
-        row.className = "result-bar";
-        if (index === state.question.correctOption) row.classList.add("is-correct");
-
-        const header = document.createElement("div");
-        header.className = "result-bar__header";
-        const label = document.createElement("span");
-        label.textContent = `${optionLetter(index)}. ${state.question.options[index]}`;
-        const value = document.createElement("strong");
-        value.textContent = `${count} antwoord${count === 1 ? "" : "en"}`;
-        header.append(label, value);
-
-        const track = document.createElement("div");
-        track.className = "result-bar__track";
-        const fill = document.createElement("div");
-        fill.className = "result-bar__fill";
-        fill.style.width = `${Math.round((count / maximum) * 100)}%`;
-        track.append(fill);
-        row.append(header, track);
-        projectorResultBars.append(row);
-    });
-}
-
 function renderState(state) {
     latestState = state;
     projectorJoin.classList.add("hide");
@@ -97,21 +64,13 @@ function renderState(state) {
     projectorPhase.textContent = formatPhase(state.session.phase);
     projectorSessionCode.textContent = state.session.code;
 
-    const joinUrl = participantUrl(state.session.code);
-    const readableUrl = new URL(joinUrl);
-    joinAddress.textContent = `${readableUrl.host}${readableUrl.pathname}`;
-    renderQr(projectorQr, joinUrl);
-
     if (state.question && state.session.phase !== "finished") {
         projectorQuestionNumber.textContent =
             `Vraag ${state.session.questionNumber} van ${state.session.totalQuestions}`;
         projectorQuestionText.textContent = state.question.question;
         projectorAnswered.textContent = state.statistics.total;
+        projectorParticipants.textContent = state.participants.active;
         renderOptions(state);
-
-        const showResults = state.session.phase === "revealed";
-        projectorResults.classList.toggle("hide", !showResults);
-        if (showResults) renderBars(state);
     }
 
     setConnection(connectionStatus, "online", "Live verbonden");
@@ -120,8 +79,8 @@ function renderState(state) {
 
 async function openProjection(nextCode) {
     code = normalizeCode(nextCode);
-    if (code.length !== 6) {
-        showError("Voer zes cijfers in.");
+    if (code.length !== 3) {
+        showError("Voer de drie cijfers van de quizcode in.");
         return;
     }
 
@@ -166,7 +125,7 @@ projectorCodeInput.addEventListener("input", () => {
 
 try {
     await ensureAuth();
-    if (code.length === 6) {
+    if (code.length === 3) {
         projectorCodeInput.value = code;
         await openProjection(code);
     } else {
