@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Projectiescherm van de Live Diabetes Quiz.">
     <title>Zaalscherm – Live Diabetes Quiz</title>
-    <link rel="stylesheet" href="assets/styles.css?v=7">
+    <link rel="stylesheet" href="assets/styles.css?v=8">
 </head>
 <body class="projector">
     <header class="site-header">
@@ -80,9 +80,11 @@
         </section>
 
         <section id="projectorFinished" class="panel projector-analysis hide">
-            <p class="eyebrow">Eindanalyse</p>
-            <h1>Top 3 meest fout beantwoorde vragen</h1>
-            <p class="lead">Samen nog even herhalen: dit zijn de vragen die het vaakst fout werden beantwoord.</p>
+            <div class="projector-analysis__intro">
+                <p class="eyebrow">Eindanalyse</p>
+                <h1>Top 3 meest fout beantwoorde vragen</h1>
+                <p class="lead">Samen nog even herhalen: dit zijn de vragen die het vaakst fout werden beantwoord.</p>
+            </div>
             <ol id="projectorAnalysisList" class="projector-analysis__list"></ol>
             <p id="projectorAnalysisEmpty" class="projector-analysis__empty hide">
                 Er zijn geen fout beantwoorde vragen. Prima gedaan!
