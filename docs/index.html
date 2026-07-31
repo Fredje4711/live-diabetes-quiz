@@ -6,6 +6,7 @@
     <meta name="description" content="Anonieme online Live Diabetes Quiz voor quizmaster, deelnemers en projectie.">
     <title>Live Diabetes Quiz</title>
     <link rel="stylesheet" href="assets/styles.css?v=6">
+    <link rel="stylesheet" href="assets/start.css?v=1">
 </head>
 <body>
     <header class="site-header">
@@ -18,53 +19,131 @@
         </div>
     </header>
 
-    <main class="page-shell">
-        <section class="hero">
-            <p class="eyebrow">Samen leren, eenvoudig deelnemen</p>
-            <h1>Live Diabetes Quiz</h1>
-            <p class="lead">
-                Een nieuwe anonieme quiz met een eenvoudig quizmasterscherm,
-                grote antwoordknoppen en een rustige presentatie voor de zaal.
-            </p>
+    <main class="page-shell start-page">
+        <section class="start-hero">
+            <div>
+                <p class="eyebrow">Samen leren, eenvoudig deelnemen</p>
+                <h1>Live Diabetes Quiz</h1>
+                <p class="lead">
+                    Start als quizmaster een nieuwe anonieme zaalquiz of bekijk eerst rustig
+                    de volledige handleiding en de veilige voorbeeldschermen.
+                </p>
+                <div class="start-actions">
+                    <a class="button-link start-button start-button--primary" href="quizmaster.html">
+                        Quiz starten
+                    </a>
+                    <a class="button-link start-button start-button--secondary" href="handleiding.html">
+                        Volledige handleiding
+                    </a>
+                </div>
+                <p class="start-recovery">
+                    Had u al een actieve sessie op deze laptop? Dan wordt die automatisch hervat.
+                </p>
+            </div>
+            <aside class="start-hero__aside">
+                <strong>Deelnemers starten hier niet</strong>
+                <p>
+                    Zij gebruiken uitsluitend de QR-code of internetlink op hun vooraf afgedrukte briefje.
+                    Het grote zaalscherm opent de quizmaster vanuit de actieve sessie.
+                </p>
+            </aside>
         </section>
 
-        <section class="card-grid" aria-label="Kies een scherm">
-            <article class="card">
-                <span class="card__number" aria-hidden="true">1</span>
-                <h2>Quizmaster</h2>
-                <p>Maak een sessie, volg hoeveel deelnemers antwoorden en bedien de quiz stap voor stap.</p>
-                <a class="button-link" href="quizmaster.html">Open quizmaster</a>
-            </article>
-
-            <article class="card">
-                <span class="card__number" aria-hidden="true">2</span>
-                <h2>Deelnemer</h2>
-                <p>Scan de QR-code op uw briefje of voer de driecijferige code in en antwoord anoniem.</p>
-                <a class="button-link" href="deelnemer.html">Open deelnemerscherm</a>
-            </article>
-
-            <article class="card">
-                <span class="card__number" aria-hidden="true">3</span>
-                <h2>Groot zaalscherm</h2>
-                <p>Toon dezelfde vraag en antwoorden als op de gsm, met de live aantallen onderaan.</p>
-                <a class="button-link" href="projectie.html">Open groot zaalscherm</a>
-            </article>
-        </section>
-
-        <section class="panel panel--soft" style="margin-top: 1.5rem">
-            <h2>Zo gebruikt u de quiz</h2>
+        <section class="start-flow" aria-labelledby="start-flow-title">
+            <div class="start-section-heading">
+                <p class="eyebrow">De echte quiz starten</p>
+                <h2 id="start-flow-title">Drie eenvoudige stappen</h2>
+            </div>
             <ol>
-                <li>Maak ruim vooraf een sessie in het quizmasterscherm.</li>
-                <li>Druk vanuit de sessie de deelnemersbriefjes met QR-code af.</li>
-                <li>Open in de zaal het grote scherm; deelnemers gebruiken uitsluitend hun eigen gsm.</li>
+                <li><span>1</span><div><strong>Quiz maken</strong><p>Kies als quizmaster het aantal vragen en maak een sessie.</p></div></li>
+                <li><span>2</span><div><strong>Zaal voorbereiden</strong><p>Druk de briefjes af en open vanuit de sessie het grote zaalscherm.</p></div></li>
+                <li><span>3</span><div><strong>Samen starten</strong><p>Wacht tot iedereen verbonden is en klik daarna op “Start quiz”.</p></div></li>
             </ol>
-            <p class="notice">
-                Er worden geen namen, e-mailadressen of andere persoonsgegevens gevraagd.
-            </p>
-            <a class="button-link" href="handleiding.html">Open volledige handleiding</a>
+        </section>
+
+        <section class="start-previews" aria-labelledby="preview-title">
+            <div class="start-section-heading start-section-heading--center">
+                <p class="eyebrow">Kijken zonder een quiz te openen</p>
+                <h2 id="preview-title">Wat kunt u verwachten?</h2>
+                <p>
+                    Dit zijn uitsluitend voorbeelden van een fictieve quiz. Ze maken geen verbinding
+                    met een oude of actieve sessie en kunnen dus veilig bekeken worden.
+                </p>
+            </div>
+
+            <div class="preview-grid">
+                <article class="preview-card">
+                    <div class="preview-card__image">
+                        <img src="assets/handleiding/quizmaster-vraag-open.jpg" alt="Fictief voorbeeld van het quizmasterscherm tijdens een vraag">
+                        <span>Veilig voorbeeld</span>
+                    </div>
+                    <div class="preview-card__content">
+                        <p class="preview-card__role">Voor de organisator</p>
+                        <h3>Quizmasterscherm</h3>
+                        <p>Hier bedient de quizmaster de vragen en ziet hij hoeveel deelnemers verbonden zijn en geantwoord hebben.</p>
+                        <details>
+                            <summary>Bekijk groot voorbeeld</summary>
+                            <div class="preview-expanded">
+                                <img src="assets/handleiding/quizmaster-vraag-open.jpg" alt="Groot fictief voorbeeld van het quizmasterscherm">
+                                <p>Het juiste antwoord is alleen voor de quizmaster zichtbaar totdat hij het bewust aan de zaal toont.</p>
+                            </div>
+                        </details>
+                        <a href="handleiding.html#quizmaster">Lees uitleg voor de quizmaster</a>
+                    </div>
+                </article>
+
+                <article class="preview-card">
+                    <div class="preview-card__image preview-card__image--participant">
+                        <img src="assets/handleiding/deelnemer-vraag.jpg" alt="Fictief voorbeeld van een quizvraag op het deelnemerscherm">
+                        <span>Veilig voorbeeld</span>
+                    </div>
+                    <div class="preview-card__content">
+                        <p class="preview-card__role">Op de eigen gsm</p>
+                        <h3>Deelnemerscherm</h3>
+                        <p>De deelnemer ziet één duidelijke vraag met vier grote antwoordknoppen en geeft anoniem één antwoord.</p>
+                        <details>
+                            <summary>Bekijk groot voorbeeld</summary>
+                            <div class="preview-expanded">
+                                <img src="assets/handleiding/deelnemer-vraag.jpg" alt="Groot fictief voorbeeld van het deelnemerscherm">
+                                <p>Nieuwe vragen verschijnen automatisch. De deelnemer hoeft de pagina niet te vernieuwen.</p>
+                            </div>
+                        </details>
+                        <a href="handleiding.html#deelnemer">Lees uitleg voor deelnemers</a>
+                    </div>
+                </article>
+
+                <article class="preview-card">
+                    <div class="preview-card__image">
+                        <img src="assets/handleiding/zaalscherm-vraag.jpg" alt="Fictief voorbeeld van een quizvraag op het grote zaalscherm">
+                        <span>Veilig voorbeeld</span>
+                    </div>
+                    <div class="preview-card__content">
+                        <p class="preview-card__role">Voor het hele publiek</p>
+                        <h3>Groot zaalscherm</h3>
+                        <p>Iedereen volgt dezelfde vraag en antwoordmogelijkheden, met onderaan de live aantallen van de zaal.</p>
+                        <details>
+                            <summary>Bekijk groot voorbeeld</summary>
+                            <div class="preview-expanded">
+                                <img src="assets/handleiding/zaalscherm-vraag.jpg" alt="Groot fictief voorbeeld van het zaalscherm">
+                                <p>Dit scherm wordt altijd geopend vanuit de actuele quizsessie van de quizmaster.</p>
+                            </div>
+                        </details>
+                        <a href="handleiding.html#zaalscherm">Lees uitleg over het zaalscherm</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="start-help">
+            <div>
+                <p class="eyebrow">Twijfelt u nog?</p>
+                <h2>Oefen eerst met vijf vragen</h2>
+                <p>Maak een korte demonstratiesessie met enkele bestuursleden. Zo kunt u alle knoppen en schermen zonder tijdsdruk uitproberen.</p>
+            </div>
+            <a class="button-link" href="quizmaster.html">Korte demonstratie voorbereiden</a>
         </section>
     </main>
 
-    <footer class="footer">Nieuwe lokale ontwikkelversie van de Live Diabetes Quiz</footer>
+    <footer class="footer">Live Diabetes Quiz · Diabetes Liga Midden-Limburg</footer>
 </body>
 </html>
