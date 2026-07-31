@@ -4,12 +4,13 @@ import {
     optionLetter,
     queryCode,
     setConnection,
-} from "./app.js?v=4";
+} from "./app.js?v=8";
 import {
     ensureAuth,
+    resolveLatestSessionCode,
     submitAnswer as saveAnswer,
     watchQuiz,
-} from "./firebase-service.js?v=4";
+} from "./firebase-service.js?v=8";
 
 const storageCodeKey = "dlq-participant-code";
 const connectionStatus = document.querySelector("#connectionStatus");
@@ -37,6 +38,7 @@ let latestState = null;
 let stopWatch = null;
 let submitting = false;
 let renderedQuestionKey = "";
+let switchingSession = false;
 
 function showError(message = "") {
     joinError.textContent = message;
@@ -131,6 +133,11 @@ function renderFinalReport(report) {
 }
 
 function renderState(state) {
+    if (state.session.nextSessionCode && state.session.nextSessionCode !== code) {
+        switchToSession(state.session.nextSessionCode);
+        return;
+    }
+
     latestState = state;
     joinPanel.classList.add("hide");
     quizPanel.classList.remove("hide");
@@ -159,15 +166,28 @@ function renderState(state) {
     showError();
 }
 
+async function switchToSession(nextCode) {
+    if (switchingSession) return;
+    switchingSession = true;
+    setConnection(connectionStatus, "busy", "Nieuwe quiz openen…");
+    try {
+        await joinQuiz(nextCode);
+    } finally {
+        switchingSession = false;
+    }
+}
+
 async function joinQuiz(nextCode) {
-    code = normalizeCode(nextCode);
-    if (code.length !== 3) {
+    const requestedCode = normalizeCode(nextCode);
+    if (requestedCode.length !== 3) {
         showError("Voer de drie cijfers van uw quizbriefje in.");
         return;
     }
 
     stopWatch?.();
     stopWatch = null;
+    latestState = null;
+    code = await resolveLatestSessionCode(requestedCode);
     localStorage.setItem(storageCodeKey, code);
     const currentUrl = new URL(window.location.href);
     currentUrl.pathname = currentUrl.pathname.replace(/[^/]+$/, "deelnemer.html");

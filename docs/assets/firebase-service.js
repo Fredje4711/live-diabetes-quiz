@@ -18,7 +18,7 @@ import {
     setDoc,
     where,
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
-import { QUESTIONS } from "./questions.js?v=4";
+import { QUESTIONS } from "./questions.js?v=8";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAEDsSpOk5CSFHox7Q59IBUbx6XcRmmXDo",
@@ -117,7 +117,7 @@ function shuffledIndexes() {
     return indexes;
 }
 
-export async function createSession({ questionCount, shuffle }) {
+export async function createSession({ questionCount, shuffle, previousCode = "" }) {
     const user = await ensureAuth();
     const count = Math.min(QUESTIONS.length, Math.max(1, Number(questionCount) || 10));
     const order = (shuffle ? shuffledIndexes() : QUESTIONS.map((_, index) => index)).slice(0, count);
@@ -125,9 +125,16 @@ export async function createSession({ questionCount, shuffle }) {
     for (let attempt = 0; attempt < 30; attempt += 1) {
         const code = threeDigitCode();
         const sessionRef = doc(db, "sessions", code);
+        const validPreviousCode = /^\d{3}$/.test(previousCode) ? previousCode : "";
+        const previousRef = validPreviousCode
+            ? doc(db, "sessions", validPreviousCode)
+            : null;
         try {
             await runTransaction(db, async (transaction) => {
-                const existing = await transaction.get(sessionRef);
+                const [existing, previous] = await Promise.all([
+                    transaction.get(sessionRef),
+                    previousRef ? transaction.get(previousRef) : Promise.resolve(null),
+                ]);
                 if (existing.exists()) throw new Error("CODE_EXISTS");
                 transaction.set(sessionRef, {
                     code,
@@ -139,6 +146,12 @@ export async function createSession({ questionCount, shuffle }) {
                     createdAt: serverTimestamp(),
                     updatedAt: serverTimestamp(),
                 });
+                if (previous?.exists() && previous.data().masterUid === user.uid) {
+                    transaction.update(previousRef, {
+                        nextSessionCode: code,
+                        updatedAt: serverTimestamp(),
+                    });
+                }
             });
             return { code };
         } catch (error) {
@@ -148,6 +161,24 @@ export async function createSession({ questionCount, shuffle }) {
     }
 
     throw new Error("Er kon geen vrije quizcode worden gemaakt. Probeer opnieuw.");
+}
+
+export async function resolveLatestSessionCode(startCode) {
+    await ensureAuth();
+    let currentCode = String(startCode || "");
+    const visited = new Set();
+
+    for (let hop = 0; hop < 12; hop += 1) {
+        if (!/^\d{3}$/.test(currentCode) || visited.has(currentCode)) break;
+        visited.add(currentCode);
+        const snapshot = await getDoc(doc(db, "sessions", currentCode));
+        if (!snapshot.exists()) break;
+        const nextCode = snapshot.data().nextSessionCode || "";
+        if (!/^\d{3}$/.test(nextCode) || nextCode === currentCode) break;
+        currentCode = nextCode;
+    }
+
+    return currentCode;
 }
 
 export async function controlSession(code, command) {
@@ -419,6 +450,7 @@ export async function watchQuiz(code, role, onState, onError) {
             isMaster,
             session: {
                 code,
+                nextSessionCode: session.nextSessionCode || "",
                 phase: session.phase,
                 activePosition: session.activePosition,
                 questionNumber: session.activePosition + 1,

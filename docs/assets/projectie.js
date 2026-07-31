@@ -4,8 +4,12 @@ import {
     optionLetter,
     queryCode,
     setConnection,
-} from "./app.js?v=4";
-import { ensureAuth, watchQuiz } from "./firebase-service.js?v=4";
+} from "./app.js?v=8";
+import {
+    ensureAuth,
+    resolveLatestSessionCode,
+    watchQuiz,
+} from "./firebase-service.js?v=8";
 
 const storageCodeKey = "dlq-projector-code";
 const connectionStatus = document.querySelector("#connectionStatus");
@@ -27,6 +31,7 @@ const projectorParticipants = document.querySelector("#projectorParticipants");
 let code = queryCode() || localStorage.getItem(storageCodeKey) || "";
 let stopWatch = null;
 let latestState = null;
+let switchingSession = false;
 
 function showError(message = "") {
     projectorError.textContent = message;
@@ -53,6 +58,11 @@ function renderOptions(state) {
 }
 
 function renderState(state) {
+    if (state.session.nextSessionCode && state.session.nextSessionCode !== code) {
+        switchProjection(state.session.nextSessionCode);
+        return;
+    }
+
     latestState = state;
     projectorJoin.classList.add("hide");
     projectorWaiting.classList.toggle("hide", state.session.phase !== "waiting");
@@ -77,15 +87,28 @@ function renderState(state) {
     showError();
 }
 
+async function switchProjection(nextCode) {
+    if (switchingSession) return;
+    switchingSession = true;
+    setConnection(connectionStatus, "busy", "Nieuwe quiz openen…");
+    try {
+        await openProjection(nextCode);
+    } finally {
+        switchingSession = false;
+    }
+}
+
 async function openProjection(nextCode) {
-    code = normalizeCode(nextCode);
-    if (code.length !== 3) {
+    const requestedCode = normalizeCode(nextCode);
+    if (requestedCode.length !== 3) {
         showError("Voer de drie cijfers van de quizcode in.");
         return;
     }
 
     stopWatch?.();
     stopWatch = null;
+    latestState = null;
+    code = await resolveLatestSessionCode(requestedCode);
     localStorage.setItem(storageCodeKey, code);
     const currentUrl = new URL(window.location.href);
     currentUrl.pathname = currentUrl.pathname.replace(/[^/]+$/, "projectie.html");

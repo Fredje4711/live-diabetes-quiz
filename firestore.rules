@@ -45,7 +45,7 @@ service cloud.firestore {
 
       allow update: if isMaster(code)
         && request.resource.data.diff(resource.data).affectedKeys()
-          .hasOnly(['phase', 'activePosition', 'updatedAt'])
+          .hasOnly(['phase', 'activePosition', 'nextSessionCode', 'updatedAt'])
         && request.resource.data.phase in [
           'waiting',
           'open',
@@ -55,6 +55,10 @@ service cloud.firestore {
         ]
         && request.resource.data.activePosition >= 0
         && request.resource.data.activePosition < resource.data.totalQuestions
+        && (!request.resource.data.keys().hasAny(['nextSessionCode'])
+          || (request.resource.data.nextSessionCode.matches('^[0-9]{3}$')
+            && request.resource.data.nextSessionCode != code
+            && existsAfter(/databases/$(database)/documents/sessions/$(request.resource.data.nextSessionCode))))
         && request.resource.data.updatedAt == request.time;
 
       allow delete: if false;

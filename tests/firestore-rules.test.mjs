@@ -108,6 +108,32 @@ test("het zaalscherm kan anonieme deelnemers tellen", async () => {
     );
 });
 
+test("alleen de quizmaster kan een bestaande sessie aan een nieuwe koppelen", async () => {
+    await seedSession("236", "finished");
+    await seedSession("237", "waiting");
+    const master = environment.authenticatedContext("master-1").firestore();
+    const stranger = environment.authenticatedContext("master-2").firestore();
+
+    await assertSucceeds(
+        updateDoc(doc(master, "sessions", "236"), {
+            nextSessionCode: "237",
+            updatedAt: serverTimestamp(),
+        }),
+    );
+    await assertFails(
+        updateDoc(doc(stranger, "sessions", "236"), {
+            nextSessionCode: "237",
+            updatedAt: serverTimestamp(),
+        }),
+    );
+    await assertFails(
+        updateDoc(doc(master, "sessions", "236"), {
+            nextSessionCode: "999",
+            updatedAt: serverTimestamp(),
+        }),
+    );
+});
+
 test("een antwoord kan tijdens de open vraag precies eenmaal worden vastgelegd", async () => {
     await seedSession("345");
     const participant = environment.authenticatedContext("participant-3").firestore();

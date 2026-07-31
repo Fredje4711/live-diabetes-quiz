@@ -7,15 +7,16 @@ import {
     projectorUrl,
     renderQr,
     setConnection,
-} from "./app.js?v=4";
+} from "./app.js?v=8";
 import {
     controlSession,
     createSession,
     ensureAuth,
     watchQuiz,
-} from "./firebase-service.js?v=4";
+} from "./firebase-service.js?v=8";
 
 const storageCodeKey = "dlq-master-code";
+const previousStorageCodeKey = "dlq-master-previous-code";
 
 const setupPanel = document.querySelector("#setupPanel");
 const controlPanel = document.querySelector("#controlPanel");
@@ -60,6 +61,11 @@ const buttons = {
 const storedCode = localStorage.getItem(storageCodeKey) || "";
 let code = /^\d{3}$/.test(storedCode) ? storedCode : "";
 if (storedCode && !code) localStorage.removeItem(storageCodeKey);
+const storedPreviousCode = localStorage.getItem(previousStorageCodeKey) || "";
+let previousCode = /^\d{3}$/.test(storedPreviousCode) ? storedPreviousCode : "";
+if (storedPreviousCode && !previousCode) {
+    localStorage.removeItem(previousStorageCodeKey);
+}
 let latestState = null;
 let stopWatch = null;
 let commandBusy = false;
@@ -266,8 +272,11 @@ createSessionForm.addEventListener("submit", async (event) => {
         const result = await createSession({
             questionCount: Number(questionCount.value),
             shuffle: shuffleQuestions.checked,
+            previousCode,
         });
         code = result.code;
+        previousCode = "";
+        localStorage.removeItem(previousStorageCodeKey);
         localStorage.setItem(storageCodeKey, code);
         await beginControl();
     } catch (error) {
@@ -322,13 +331,15 @@ copyParticipantLink.addEventListener("click", () =>
 newSessionButton.addEventListener("click", () => {
     if (
         !window.confirm(
-            "Een nieuwe sessie voorbereiden? De huidige sessie blijft online bewaard.",
+            "Een nieuwe quiz voorbereiden? De verbonden gsm’s en het zaalscherm gaan na het maken automatisch mee naar de nieuwe quiz.",
         )
     ) {
         return;
     }
     stopWatch?.();
     stopWatch = null;
+    previousCode = code;
+    localStorage.setItem(previousStorageCodeKey, previousCode);
     localStorage.removeItem(storageCodeKey);
     code = "";
     latestState = null;
