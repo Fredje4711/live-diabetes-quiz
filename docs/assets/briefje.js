@@ -27,13 +27,35 @@ function wifiText() {
         : `${name} — geen wachtwoord nodig`;
 }
 
+function escapeWifiValue(value) {
+    return value.replace(/([\\;,:"])/g, "\\$1");
+}
+
+function wifiQrValue() {
+    const name = wifiName.value.trim();
+    const password = wifiPassword.value.trim();
+    if (!name) return "";
+    const security = password ? "WPA" : "nopass";
+    return `WIFI:T:${security};S:${escapeWifiValue(name)};P:${escapeWifiValue(password)};;`;
+}
+
 function renderHandouts() {
     targets.forEach((target) => {
         target.replaceChildren(template.content.cloneNode(true));
         target.querySelector(".handout-code").textContent = code;
         target.querySelector(".handout-address").textContent = readableParticipantAddress();
         target.querySelector(".wifi-details").textContent = wifiText();
-        renderQr(target.querySelector(".handout-qr"), participantUrl(code), 190);
+        const wifiCard = target.querySelector(".handout-wifi-card");
+        const wifiQr = target.querySelector(".handout-wifi-qr");
+        const wifiValue = wifiQrValue();
+        wifiCard.classList.toggle("handout-wifi-card--inactive", !wifiValue);
+        if (wifiValue) {
+            renderQr(wifiQr, wifiValue, 125);
+        } else {
+            wifiQr.replaceChildren();
+            wifiQr.textContent = "Mobiele data gebruiken";
+        }
+        renderQr(target.querySelector(".handout-quiz-qr"), participantUrl(code), 145);
     });
 }
 

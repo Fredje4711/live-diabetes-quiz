@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Afdrukbare deelnemersbriefjes voor de Live Diabetes Quiz.">
     <title>Deelnemersbriefjes – Live Diabetes Quiz</title>
-    <link rel="stylesheet" href="assets/styles.css?v=6">
+    <link rel="stylesheet" href="assets/styles.css?v=9">
 </head>
 <body class="handout-page">
     <header class="site-header no-print">
@@ -61,43 +61,39 @@
                 <h2>Live Diabetes Quiz</h2>
             </div>
         </div>
-        <div class="handout-grid">
-            <div class="handout-steps">
-                <ol>
-                    <li>
-                        <strong>Zet internet aan op uw gsm.</strong>
-                        Gebruik uw mobiele data of de wifi van de zaal.
-                    </li>
-                    <li class="wifi-instruction">
-                        <strong>Wifi zaal:</strong>
-                        <span class="wifi-details">Vraag indien nodig hulp aan een begeleider.</span>
-                    </li>
-                    <li>
-                        <strong>Scan de QR-code</strong> met de camera van uw gsm
-                        en tik op de link die verschijnt.
-                    </li>
-                    <li>
-                        Lukt scannen niet? Open de internetbrowser en typ:
-                        <strong class="handout-address"></strong>
-                    </li>
-                    <li>
-                        Vul indien gevraagd deze quizcode in:
-                        <strong class="handout-code"></strong>
-                    </li>
-                </ol>
-                <p class="handout-help">Lukt het niet? Steek uw hand op. Wij helpen u graag.</p>
+        <p class="handout-start">
+            <strong>Start hier:</strong> zorg dat uw gsm verbinding heeft met internet.
+            Uw eigen mobiele data aanzetten is meestal het gemakkelijkst.
+        </p>
+        <div class="handout-access-grid">
+            <div class="handout-access-card handout-wifi-card">
+                <p class="handout-access-card__number">1</p>
+                <div>
+                    <h3>Wifi van de zaal (alleen indien gewenst)</h3>
+                    <p>Scan met uw gewone camera-app of QR-app en tik op <strong>Verbinden</strong>.</p>
+                    <p class="wifi-details">Vraag indien nodig hulp aan een begeleider.</p>
+                </div>
+                <div class="handout-wifi-qr qr-output" aria-label="QR-code voor de wifi van de zaal"></div>
             </div>
-            <div class="handout-qr-wrap">
-                <div class="handout-qr qr-output" aria-label="QR-code naar het deelnemerscherm"></div>
-                <p>Scan mij</p>
+            <div class="handout-access-card">
+                <p class="handout-access-card__number">2</p>
+                <div>
+                    <h3>Open de quiz</h3>
+                    <p>Scan deze QR-code met uw camera-app of QR-app en tik op de link.</p>
+                    <p>Lukt scannen niet? Typ in de adresbalk van Google, Chrome of Safari:</p>
+                    <strong class="handout-address"></strong>
+                    <p>Vul indien gevraagd quizcode <strong class="handout-code"></strong> in.</p>
+                </div>
+                <div class="handout-quiz-qr qr-output" aria-label="QR-code naar het deelnemerscherm"></div>
             </div>
         </div>
+        <p class="handout-help">Lukt het niet? Steek uw hand op. Wij helpen u graag.</p>
         <p class="handout-privacy">
             Uw naam en e-mailadres worden niet gevraagd. Laat het deelnemerscherm tijdens de quiz openstaan.
         </p>
     </template>
 
     <script src="assets/vendor/qrcode.min.js"></script>
-    <script type="module" src="assets/briefje.js?v=4"></script>
+    <script type="module" src="assets/briefje.js?v=5"></script>
 </body>
 </html>

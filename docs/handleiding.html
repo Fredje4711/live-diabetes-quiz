@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Volledige praktische handleiding voor de Live Diabetes Quiz in een zaal met groot scherm.">
+    <title>Handleiding – Live Diabetes Quiz</title>
+    <link rel="stylesheet" href="assets/handleiding.css?v=1">
+</head>
+<body>
+    <header class="guide-header">
+        <div class="guide-header__inner">
+            <a class="guide-brand" href="index.html">
+                <img src="assets/logo-diabetes-liga-midden-limburg.png" alt="">
+                <span>Live Diabetes Quiz</span>
+            </a>
+            <nav aria-label="Snelle acties">
+                <a href="quizmaster.html">Open quizmaster</a>
+                <button type="button" onclick="window.print()">Handleiding afdrukken</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div>
+                <p class="guide-kicker">Praktische zaalhandleiding</p>
+                <h1>Van deelnemersbriefje tot eindanalyse</h1>
+                <p class="guide-intro">
+                    Een volledige stap-voor-staphandleiding voor een Live Diabetes Quiz in een grote zaal,
+                    met deelnemers op hun eigen gsm, een quizmaster op de laptop en één duidelijk groot zaalscherm.
+                </p>
+                <div class="guide-audience" aria-label="Voor wie is deze handleiding">
+                    <span>Voor quizmaster</span>
+                    <span>Voor begeleiders</span>
+                    <span>Voor deelnemershulp</span>
+                </div>
+            </div>
+            <aside class="guide-summary">
+                <strong>De eenvoudigste start</strong>
+                <ol>
+                    <li>Geef iedereen bij het binnenkomen een briefje.</li>
+                    <li>Laat deelnemers eerst hun internetverbinding controleren.</li>
+                    <li>Laat daarna de quiz-QR-code op het briefje scannen.</li>
+                    <li>Open de quiz en volg samen dezelfde vraag op gsm en groot scherm.</li>
+                </ol>
+            </aside>
+        </section>
+
+        <nav class="guide-toc" aria-label="Inhoud van de handleiding">
+            <a href="#overzicht"><span>1</span> Overzicht</a>
+            <a href="#voorbereiding"><span>2</span> Voorbereiden</a>
+            <a href="#briefje"><span>3</span> Briefje en internet</a>
+            <a href="#deelnemer"><span>4</span> Deelnemer</a>
+            <a href="#zaalscherm"><span>5</span> Groot scherm</a>
+            <a href="#quizmaster"><span>6</span> Quizmaster</a>
+            <a href="#einde"><span>7</span> Einde</a>
+            <a href="#problemen"><span>8</span> Hulp bij problemen</a>
+        </nav>
+
+        <section id="overzicht" class="guide-section">
+            <div class="section-heading">
+                <span class="section-number">1</span>
+                <div>
+                    <p class="guide-kicker">Eerst het totaalbeeld</p>
+                    <h2>Wie gebruikt welk scherm?</h2>
+                </div>
+            </div>
+            <div class="role-grid">
+                <article class="role-card role-card--participant">
+                    <span class="role-card__icon" aria-hidden="true">📱</span>
+                    <h3>De deelnemer</h3>
+                    <p>Gebruikt uitsluitend het <strong>deelnemerscherm</strong> op de eigen gsm. Er wordt geen naam of e-mailadres gevraagd.</p>
+                </article>
+                <article class="role-card role-card--projector">
+                    <span class="role-card__icon" aria-hidden="true">▣</span>
+                    <h3>Het grote zaalscherm</h3>
+                    <p>Toont dezelfde vraag en antwoordmogelijkheden, plus hoeveel deelnemers verbonden zijn en hoeveel antwoorden binnen zijn.</p>
+                </article>
+                <article class="role-card role-card--master">
+                    <span class="role-card__icon" aria-hidden="true">💻</span>
+                    <h3>De quizmaster</h3>
+                    <p>Gebruikt het <strong>quizmasterscherm</strong> op de laptop om de sessie te maken, vragen te bedienen en resultaten te volgen.</p>
+                </article>
+            </div>
+            <div class="guide-note guide-note--important">
+                <strong>Belangrijk:</strong> de laptop en de gsm’s hoeven niet met hetzelfde wifinetwerk verbonden te zijn.
+                Ze moeten wel allemaal een werkende internetverbinding hebben.
+            </div>
+        </section>
+
+        <section id="voorbereiding" class="guide-section">
+            <div class="section-heading">
+                <span class="section-number">2</span>
+                <div>
+                    <p class="guide-kicker">Voor de deuren opengaan</p>
+                    <h2>Voorbereiding door de quizmaster</h2>
+                </div>
+            </div>
+
+            <div class="checklist-card">
+                <h3>Materiaal en verbinding controleren</h3>
+                <ul class="check-list">
+                    <li>Laptop met oplader en een stabiele internetverbinding.</li>
+                    <li>Beamer, groot televisiescherm of vaste zaalprojectie met de juiste kabel of draadloze koppeling.</li>
+                    <li>Een actuele browser, bij voorkeur Chrome, Edge, Firefox of Safari.</li>
+                    <li>Voldoende vooraf afgedrukte deelnemersbriefjes, plus enkele reserve-exemplaren.</li>
+                    <li>Indien gebruikt: naam en wachtwoord van de gastenwifi van de zaal.</li>
+                    <li>Minstens één korte proef met een eigen gsm vóór het publiek binnenkomt.</li>
+                </ul>
+            </div>
+
+            <div class="step-layout">
+                <div>
+                    <h3>Een sessie maken</h3>
+                    <ol class="numbered-steps">
+                        <li><span>1</span><div>Open het <a href="quizmaster.html">quizmasterscherm</a> op de laptop.</div></li>
+                        <li><span>2</span><div>Kies het aantal vragen. <strong>10 vragen</strong> is aanbevolen; <strong>20 vragen</strong> is het aanbevolen maximum. Voor een korte demonstratie kunt u <strong>5 vragen</strong> kiezen.</div></li>
+                        <li><span>3</span><div>Vink “Vragen in willekeurige volgorde” alleen aan wanneer u een andere volgorde wenst.</div></li>
+                        <li><span>4</span><div>Klik op <strong>Nieuwe quizsessie maken</strong>. Er verschijnt een unieke code van drie cijfers.</div></li>
+                    </ol>
+                </div>
+                <figure class="guide-figure">
+                    <img src="assets/handleiding/quizmaster-voorbereiden.jpg" alt="Quizmasterscherm waarop het aantal vragen wordt gekozen" loading="lazy">
+                    <figcaption>De quizmaster kiest eerst het aantal vragen. Tien vragen blijft de aanbevolen instelling.</figcaption>
+                </figure>
+            </div>
+
+            <div class="guide-note">
+                <strong>Projectietip:</strong> gebruik op Windows bij voorkeur <strong>Beeldschermen uitbreiden</strong>.
+                Laat het quizmasterscherm op de laptop staan en sleep het geopende zaalscherm naar de projector.
+                Zo ziet het publiek nooit per ongeluk de bediening of het juiste antwoord vóór u dat wilt tonen.
+            </div>
+        </section>
+
+        <section id="briefje" class="guide-section">
+            <div class="section-heading">
+                <span class="section-number">3</span>
+                <div>
+                    <p class="guide-kicker">Bij het binnenkomen</p>
+                    <h2>Het deelnemersbriefje en internet</h2>
+                </div>
+            </div>
+
+            <p class="section-lead">
+                Geef iedere deelnemer het briefje vóór hij of zij plaatsneemt. Het briefje is bewust zelfstandig leesbaar:
+                eerst internet activeren, daarna de quiz openen. Een begeleider kan oudere deelnemers rustig helpen.
+            </p>
+
+            <figure class="guide-figure guide-figure--wide">
+                <img src="assets/handleiding/deelnemersbriefje.jpg" alt="Voorbeeld van een deelnemersbriefje met wifi-QR-code en quiz-QR-code" loading="lazy">
+                <figcaption>Voorbeeld met fictieve wifi. De echte naam, het echte wachtwoord en de quizcode worden vóór het afdrukken ingevuld.</figcaption>
+            </figure>
+
+            <div class="choice-grid">
+                <article>
+                    <span class="choice-label">Makkelijkste keuze</span>
+                    <h3>Eigen mobiele data</h3>
+                    <p>Vraag de deelnemer om mobiele data of internet op de gsm aan te zetten. Wanneer een website opent, is de verbinding klaar.</p>
+                    <p>Dit voorkomt tijdverlies met wifiwachtwoorden en is meestal de eenvoudigste start.</p>
+                </article>
+                <article>
+                    <span class="choice-label choice-label--secondary">Alternatief</span>
+                    <h3>Wifi van de zaal</h3>
+                    <p>Wie liever zaalwifi gebruikt, scant eerst de <strong>wifi-QR-code</strong> op het briefje.</p>
+                    <p>Scannen kan met de gewone camera-app of met een vertrouwde QR-app. Er hoeft geen foto gemaakt te worden: tik op de melding die verschijnt.</p>
+                </article>
+            </div>
+
+            <h3>Als de wifi-QR-code niet lukt</h3>
+            <ol class="numbered-steps">
+                <li><span>1</span><div>Open op de gsm <strong>Instellingen</strong> en daarna <strong>Wifi</strong>.</div></li>
+                <li><span>2</span><div>Kies de wifi-naam die op het briefje staat.</div></li>
+                <li><span>3</span><div>Typ het wachtwoord precies zoals vermeld. Hoofdletters en kleine letters kunnen belangrijk zijn.</div></li>
+                <li><span>4</span><div>Controleer kort of een gewone website opent. Ga daarna verder met de quiz.</div></li>
+            </ol>
+
+            <h3>De quiz openen</h3>
+            <div class="two-column-explanation">
+                <div>
+                    <h4>Eerste keuze: scan de quiz-QR-code</h4>
+                    <p>Richt de gewone camera-app of QR-app op de tweede QR-code. Tik op de internetlink die bovenaan of onderaan het camerabeeld verschijnt. De juiste quizcode is dan normaal al ingevuld.</p>
+                </div>
+                <div>
+                    <h4>Als scannen niet lukt: typ de link</h4>
+                    <p>Open Chrome, Safari, Samsung Internet of de browser van de Google-app. Typ het volledige adres van het briefje in de <strong>adresbalk</strong>, open de pagina en vul daarna de drie cijfers van de quizcode in.</p>
+                </div>
+            </div>
+            <div class="guide-note guide-note--warning">
+                <strong>Niet zoeken naar de quiz via Google.</strong> Typ de link rechtstreeks in de adresbalk. Controleer vooral punten, schuine strepen en eventuele streepjes.
+            </div>
+        </section>
+
+        <section id="deelnemer" class="guide-section">
+            <div class="section-heading">
+                <span class="section-number">4</span>
+                <div>
+                    <p class="guide-kicker">Op de eigen gsm</p>
+                    <h2>Wat ziet en doet de deelnemer?</h2>
+                </div>
+            </div>
+
+            <div class="image-pair">
+                <figure class="guide-figure guide-figure--phone">
+                    <img src="assets/handleiding/deelnemer-wachtkamer.jpg" alt="Deelnemerscherm in de wachtkamer" loading="lazy">
+                    <figcaption><strong>1. Verbonden.</strong> De deelnemer laat deze pagina open en wacht rustig op de eerste vraag.</figcaption>
+                </figure>
+                <figure class="guide-figure guide-figure--phone">
+                    <img src="assets/handleiding/deelnemer-vraag.jpg" alt="Deelnemerscherm met een actieve vraag en vier antwoorden" loading="lazy">
+                    <figcaption><strong>2. Vraag open.</strong> De deelnemer tikt één keer op A, B, C of D. Het antwoord wordt daarna vergrendeld.</figcaption>
+                </figure>
+            </div>
+
+            <ol class="numbered-steps">
+                <li><span>1</span><div>Na verbinding verschijnt <strong>U bent verbonden</strong>. Laat de browserpagina tijdens de volledige quiz open.</div></li>
+                <li><span>2</span><div>Wanneer de quizmaster start, verschijnt automatisch de eerste vraag met vier grote antwoordknoppen.</div></li>
+                <li><span>3</span><div>Tik één keer op het gekozen antwoord. De melding <strong>Uw antwoord is ontvangen en veilig bewaard</strong> bevestigt de ontvangst.</div></li>
+                <li><span>4</span><div>Het antwoord kan niet meer gewijzigd worden. Dit voorkomt onbedoeld dubbel antwoorden.</div></li>
+                <li><span>5</span><div>Nadat de quizmaster het juiste antwoord toont, ziet de deelnemer groen bij juist of rood bij het eigen foute antwoord, samen met de juiste oplossing.</div></li>
+                <li><span>6</span><div>De volgende vraag verschijnt automatisch. De deelnemer hoeft geen pagina te vernieuwen en geen nieuwe code in te voeren.</div></li>
+            </ol>
+        </section>
+
+        <section id="zaalscherm" class="guide-section">
+            <div class="section-heading">
+                <span class="section-number">5</span>
+                <div>
+                    <p class="guide-kicker">Voor iedereen zichtbaar</p>
+                    <h2>Het grote zaalscherm</h2>
+                </div>
+            </div>
+            <p class="section-lead">
+                Klik op de laptop op <strong>Open groot zaalscherm</strong> en toon dat browservenster via de projector.
+                Het publiek ziet inhoudelijk dezelfde vraag en antwoorden als op de gsm, maar kan op het grote scherm niets aanklikken.
+            </p>
+            <figure class="guide-figure guide-figure--wide">
+                <img src="assets/handleiding/zaalscherm-vraag.jpg" alt="Groot zaalscherm met een actieve quizvraag, vier antwoordmogelijkheden en live aantallen" loading="lazy">
+                <figcaption>Onderaan ziet iedereen hoeveel deelnemers verbonden zijn en hoeveel antwoorden voor deze vraag zijn ontvangen.</figcaption>
+            </figure>
+            <div class="guide-note guide-note--important">
+                <strong>Wanneer doorgaan?</strong> Wacht tot “antwoorden ontvangen” ongeveer gelijk is aan “deelnemers verbonden”.
+                Vraag bij twijfel rustig of iemand nog bezig is. Een klein verschil kan voorkomen wanneer iemand de pagina heeft gesloten of tijdelijk geen verbinding heeft.
+            </div>
+        </section>
+
+        <section id="quizmaster" class="guide-section">
+            <div class="section-heading">
+                <span class="section-number">6</span>
+                <div>
+                    <p class="guide-kicker">Rustige bediening, stap voor stap</p>
+                    <h2>Wat ziet en doet de quizmaster?</h2>
+                </div>
+            </div>
+
+            <div class="step-layout">
+                <div>
+                    <h3>De wachtkamer</h3>
+                    <p>De quizcode, deelnemerslink, afdrukknop en knop voor het zaalscherm staan bovenaan. Rechts ziet u hoeveel toestellen verbonden zijn.</p>
+                    <p>Start pas wanneer de meeste deelnemers het bericht <strong>U bent verbonden</strong> op hun gsm zien.</p>
+                </div>
+                <figure class="guide-figure">
+                    <img src="assets/handleiding/quizmaster-wachtkamer.jpg" alt="Quizmasterscherm met geopende wachtkamer en live deelnemersaantallen" loading="lazy">
+                    <figcaption>De wachtkamer vóór de eerste vraag.</figcaption>
+                </figure>
+            </div>
+
+            <div class="step-layout step-layout--reverse">
+                <figure class="guide-figure">
+                    <img src="assets/handleiding/quizmaster-vraag-open.jpg" alt="Quizmasterscherm tijdens een geopende vraag" loading="lazy">
+                    <figcaption>Tijdens een open vraag ziet de quizmaster de vraag, antwoorden en live aantallen.</figcaption>
+                </figure>
+                <div>
+                    <h3>Tijdens iedere vraag</h3>
+                    <ol class="numbered-steps numbered-steps--compact">
+                        <li><span>1</span><div>Lees de vraag en antwoorden rustig voor.</div></li>
+                        <li><span>2</span><div>Geef deelnemers voldoende tijd om op hun gsm te antwoorden.</div></li>
+                        <li><span>3</span><div>Controleer rechts het aantal ontvangen antwoorden.</div></li>
+                        <li><span>4</span><div>Sluit eventueel de antwoordtijd en toon daarna het juiste antwoord.</div></li>
+                        <li><span>5</span><div>Geef indien nuttig een korte toelichting en ga naar de volgende vraag.</div></li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3>Betekenis van alle bedieningsknoppen</h3>
+            <div class="button-table-wrap">
+                <table class="button-table">
+                    <thead><tr><th>Knop</th><th>Wanneer zichtbaar?</th><th>Wat gebeurt er?</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="button-sample button-sample--blue">Start quiz</span></td><td>In de wachtkamer</td><td>Opent vraag 1 op de gsm’s en op het grote scherm.</td></tr>
+                        <tr><td><span class="button-sample button-sample--orange">Sluit antwoorden</span></td><td>Terwijl de vraag openstaat</td><td>Stopt nieuwe antwoorden. Gebruik dit wanneer de antwoordtijd duidelijk voorbij is.</td></tr>
+                        <tr><td><span class="button-sample button-sample--green">Toon juiste antwoord</span></td><td>Bij een open of gesloten vraag</td><td>Markeert het juiste antwoord en geeft iedere deelnemer persoonlijke feedback.</td></tr>
+                        <tr><td><span class="button-sample button-sample--blue">Volgende vraag</span></td><td>Nadat het antwoord getoond is</td><td>Opent de volgende vraag automatisch voor iedereen.</td></tr>
+                        <tr><td><span class="button-sample button-sample--outline">Vorige vraag</span></td><td>Vanaf vraag 2</td><td>Gaat één vraag terug. Eerder opgeslagen antwoorden veranderen niet.</td></tr>
+                        <tr><td><span class="button-sample button-sample--red">Quiz beëindigen</span></td><td>Tijdens de quiz</td><td>Stopt de quiz vroegtijdig. Gebruik dit alleen wanneer u bewust wilt stoppen.</td></tr>
+                        <tr><td><span class="button-sample button-sample--blue">Eindanalyse</span></td><td>Na het tonen van het juiste antwoord op de laatste vraag</td><td>Sluit de quiz normaal af en toont de top drie op het grote scherm.</td></tr>
+                        <tr><td><span class="button-sample button-sample--quiet">Nieuwe sessie voorbereiden</span></td><td>In de bedieningskolom</td><td>Brengt u terug naar de keuze van het aantal vragen. Verbonden deelnemers gaan automatisch mee naar de nieuwe sessie zodra die gemaakt is.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <figure class="guide-figure guide-figure--wide">
+                <img src="assets/handleiding/quizmaster-oplossing.jpg" alt="Quizmasterscherm nadat het juiste antwoord is getoond" loading="lazy">
+                <figcaption>Na “Toon juiste antwoord” zijn de verdeling en het juiste antwoord zichtbaar. Bespreek dit kort en ga daarna verder.</figcaption>
+            </figure>
+        </section>
+
+        <section id="einde" class="guide-section">
+            <div class="section-heading">
+                <span class="section-number">7</span>
+                <div>
+                    <p class="guide-kicker">Na de laatste oplossing</p>
+                    <h2>Het einde voor deelnemer, zaal en quizmaster</h2>
+                </div>
+            </div>
+
+            <ol class="numbered-steps">
+                <li><span>1</span><div>Toon bij de laatste vraag eerst het juiste antwoord.</div></li>
+                <li><span>2</span><div>De linkse knop heet nu <strong>Eindanalyse</strong>. Klik daarop om de quiz normaal af te ronden.</div></li>
+                <li><span>3</span><div>De deelnemer krijgt op de eigen gsm de persoonlijke score en een overzicht van de eigen foute antwoorden.</div></li>
+                <li><span>4</span><div>Het grote scherm toont de drie meest fout beantwoorde vragen, telkens met foutpercentage, vraag en juiste antwoord.</div></li>
+                <li><span>5</span><div>De quizmaster ziet daarnaast de volledige groepsanalyse op de laptop.</div></li>
+            </ol>
+
+            <div class="ending-grid">
+                <figure class="guide-figure guide-figure--phone">
+                    <img src="assets/handleiding/deelnemer-resultaat.jpg" alt="Persoonlijk eindresultaat op de gsm van een deelnemer" loading="lazy">
+                    <figcaption><strong>Deelnemer:</strong> persoonlijke score en eigen foute antwoorden. Andere deelnemers zien dit niet.</figcaption>
+                </figure>
+                <figure class="guide-figure">
+                    <img src="assets/handleiding/zaalscherm-eindanalyse.jpg" alt="Top drie van fout beantwoorde vragen op het grote zaalscherm" loading="lazy">
+                    <figcaption><strong>Groot scherm:</strong> gezamenlijke top drie om de belangrijkste leerpunten nog eens te bespreken.</figcaption>
+                </figure>
+                <figure class="guide-figure">
+                    <img src="assets/handleiding/quizmaster-eindanalyse.jpg" alt="Volledige eindanalyse op het quizmasterscherm" loading="lazy">
+                    <figcaption><strong>Quizmaster:</strong> aantallen, juistpercentage en overzicht van moeilijke vragen.</figcaption>
+                </figure>
+            </div>
+
+            <div class="guide-note">
+                <strong>Nog een quiz starten?</strong> Klik op <strong>Nieuwe sessie voorbereiden</strong>, kies opnieuw het aantal vragen en maak de sessie.
+                Deelnemers die hun pagina open hebben gelaten, worden automatisch naar de nieuwe sessie gebracht. Zij hoeven het briefje niet opnieuw te scannen.
+            </div>
+        </section>
+
+        <section id="problemen" class="guide-section">
+            <div class="section-heading">
+                <span class="section-number">8</span>
+                <div>
+                    <p class="guide-kicker">Rustig oplossen</p>
+                    <h2>Veelvoorkomende problemen</h2>
+                </div>
+            </div>
+
+            <div class="problem-grid">
+                <article><h3>De QR-code wordt niet herkend</h3><p>Maak de cameralens schoon, zorg voor voldoende licht, houd de gsm iets verder weg en probeer de gewone camera-app. Typ anders de link van het briefje handmatig.</p></article>
+                <article><h3>De deelnemer ziet geen internet</h3><p>Zet mobiele data kort uit en weer aan, of verbind opnieuw met de zaalwifi. Test met een gewone website vóór u opnieuw de quiz opent.</p></article>
+                <article><h3>De pagina vraagt een quizcode</h3><p>Vul de drie grote cijfers van het briefje in en tik op <strong>Deelnemen</strong>. De naam van de deelnemer is niet nodig.</p></article>
+                <article><h3>Een nieuwe vraag verschijnt niet</h3><p>Wacht enkele seconden. Controleer bovenaan of “Verbonden” staat. Vernieuw alleen wanneer de verbinding echt vastgelopen lijkt; het reeds bewaarde antwoord blijft behouden.</p></article>
+                <article><h3>De antwoordknoppen werken niet meer</h3><p>De deelnemer heeft al geantwoord of de quizmaster heeft de antwoorden gesloten. Per vraag wordt maar één antwoord aanvaard.</p></article>
+                <article><h3>Het grote scherm toont niet de juiste fase</h3><p>Sluit het oude zaalscherm, klik opnieuw op <strong>Open groot zaalscherm</strong> vanuit de actieve quizsessie en zet dat nieuwe venster op de projector.</p></article>
+                <article><h3>Het aantal verbonden deelnemers daalt</h3><p>Een toestel kan tijdelijk slapen of de pagina kan gesloten zijn. Vraag deelnemers om het quizzescherm open te laten en hun gsm niet langdurig te vergrendelen.</p></article>
+                <article><h3>De quizmaster wil onmiddellijk stoppen</h3><p>Gebruik <strong>Quiz beëindigen</strong>. De huidige resultaten worden afgesloten en de beschikbare eindanalyse verschijnt.</p></article>
+            </div>
+        </section>
+
+        <section class="guide-section guide-section--final">
+            <p class="guide-kicker">Laatste controle vóór het publiek binnenkomt</p>
+            <h2>Korte generale repetitie</h2>
+            <div class="final-check-grid">
+                <label><input type="checkbox"> Laptop heeft internet en voeding</label>
+                <label><input type="checkbox"> Groot zaalscherm toont de wachtkamer</label>
+                <label><input type="checkbox"> Eigen gsm kan via het briefje deelnemen</label>
+                <label><input type="checkbox"> Wifi-QR en wachtwoord zijn getest</label>
+                <label><input type="checkbox"> Voldoende briefjes zijn afgedrukt</label>
+                <label><input type="checkbox"> Een begeleider weet hoe hij deelnemers helpt</label>
+            </div>
+            <p class="closing-message">Alles klaar? Dan kan de quiz rustig, anoniem en gezamenlijk beginnen.</p>
+        </section>
+    </main>
+
+    <footer class="guide-footer">
+        <img src="assets/logo-diabetes-liga-midden-limburg.png" alt="">
+        <p>Handleiding Live Diabetes Quiz · Diabetes Liga Midden-Limburg</p>
+        <a href="#top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Terug naar boven</a>
+    </footer>
+</body>
+</html>
