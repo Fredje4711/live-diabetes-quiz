@@ -13,7 +13,7 @@ import {
     createSession,
     ensureAuth,
     watchQuiz,
-} from "./firebase-service.js?v=8";
+} from "./firebase-service.js?v=9";
 
 const storageCodeKey = "dlq-master-code";
 const previousStorageCodeKey = "dlq-master-previous-code";
@@ -192,7 +192,7 @@ function renderControls(state) {
 
     if (phase === "revealed") {
         buttons.next.textContent =
-            position >= state.session.totalQuestions - 1 ? "Rond quiz af" : "Volgende vraag";
+            position >= state.session.totalQuestions - 1 ? "Eindanalyse" : "Volgende vraag";
     }
 }
 

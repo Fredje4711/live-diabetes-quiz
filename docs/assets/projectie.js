@@ -9,7 +9,7 @@ import {
     ensureAuth,
     resolveLatestSessionCode,
     watchQuiz,
-} from "./firebase-service.js?v=8";
+} from "./firebase-service.js?v=9";
 
 const storageCodeKey = "dlq-projector-code";
 const connectionStatus = document.querySelector("#connectionStatus");
@@ -21,6 +21,8 @@ const projectorError = document.querySelector("#projectorError");
 const projectorWaiting = document.querySelector("#projectorWaiting");
 const projectorQuestion = document.querySelector("#projectorQuestion");
 const projectorFinished = document.querySelector("#projectorFinished");
+const projectorAnalysisList = document.querySelector("#projectorAnalysisList");
+const projectorAnalysisEmpty = document.querySelector("#projectorAnalysisEmpty");
 const projectorSessionCode = document.querySelector("#projectorSessionCode");
 const projectorQuestionNumber = document.querySelector("#projectorQuestionNumber");
 const projectorQuestionText = document.querySelector("#projectorQuestionText");
@@ -58,6 +60,36 @@ function renderOptions(state) {
     });
 }
 
+function renderFinalAnalysis(analysis) {
+    projectorAnalysisList.replaceChildren();
+    const topThree = analysis?.difficultQuestions?.slice(0, 3) || [];
+    projectorAnalysisEmpty.classList.toggle("hide", topThree.length > 0);
+
+    topThree.forEach((entry, index) => {
+        const item = document.createElement("li");
+
+        const rank = document.createElement("span");
+        rank.className = "projector-analysis__rank";
+        rank.textContent = String(index + 1);
+
+        const content = document.createElement("div");
+        const meta = document.createElement("p");
+        meta.className = "projector-analysis__meta";
+        meta.textContent = `Vraag ${entry.number} · ${entry.incorrect} fout (${entry.percentage}%)`;
+
+        const question = document.createElement("h2");
+        question.textContent = entry.question;
+
+        const answer = document.createElement("p");
+        answer.className = "projector-analysis__answer";
+        answer.textContent = `Juiste antwoord: ${entry.correctAnswer}`;
+
+        content.append(meta, question, answer);
+        item.append(rank, content);
+        projectorAnalysisList.append(item);
+    });
+}
+
 function renderState(state) {
     if (state.session.nextSessionCode && state.session.nextSessionCode !== code) {
         switchProjection(state.session.nextSessionCode);
@@ -82,6 +114,10 @@ function renderState(state) {
         projectorAnswered.textContent = state.statistics.total;
         projectorParticipants.textContent = state.participants.active;
         renderOptions(state);
+    }
+
+    if (state.session.phase === "finished") {
+        renderFinalAnalysis(state.analysis);
     }
 
     setConnection(connectionStatus, "online", "Live verbonden");

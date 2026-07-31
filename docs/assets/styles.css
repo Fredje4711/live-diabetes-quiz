@@ -601,6 +601,82 @@ h3 {
     background: #f4f8fa;
 }
 
+.projector-analysis {
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.projector-analysis > h1 {
+    margin-bottom: 0.4rem;
+    font-size: clamp(2rem, 4vw, 3.8rem);
+    text-align: center;
+}
+
+.projector-analysis > .eyebrow,
+.projector-analysis > .lead {
+    text-align: center;
+}
+
+.projector-analysis__list {
+    display: grid;
+    gap: 1rem;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.projector-analysis__list li {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    align-items: start;
+    gap: 1rem;
+    border: 2px solid #8fbacc;
+    border-radius: 0.9rem;
+    padding: 1rem 1.2rem;
+    background: #f8fcfe;
+}
+
+.projector-analysis__rank {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--brand-dark);
+    font-size: 1.6rem;
+    font-weight: 900;
+}
+
+.projector-analysis__meta {
+    margin: 0 0 0.25rem;
+    color: var(--brand-dark);
+    font-weight: 850;
+}
+
+.projector-analysis__list h2 {
+    margin: 0;
+    font-size: clamp(1.15rem, 2vw, 1.65rem);
+    line-height: 1.25;
+}
+
+.projector-analysis__answer {
+    margin: 0.55rem 0 0;
+    color: #0c4e28;
+    font-size: clamp(1rem, 1.6vw, 1.3rem);
+    font-weight: 850;
+}
+
+.projector-analysis__empty {
+    margin: 2rem auto 0;
+    border-radius: 0.8rem;
+    padding: 1.2rem;
+    background: var(--success-soft);
+    font-size: 1.35rem;
+    font-weight: 850;
+    text-align: center;
+}
+
 .projector .site-header__inner,
 .projector-shell {
     width: min(1500px, calc(100% - 4rem));

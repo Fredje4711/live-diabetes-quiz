@@ -389,6 +389,10 @@ function analysisFor(session, answers) {
         .map(([position, item]) => ({
             number: position + 1,
             question: QUESTIONS[session.questionOrder[position]]?.question || "",
+            correctAnswer:
+                QUESTIONS[session.questionOrder[position]]?.options?.[
+                    QUESTIONS[session.questionOrder[position]]?.correctOption
+                ] || "",
             incorrect: item.incorrect,
             percentage: Math.round((item.incorrect / item.total) * 100),
         }))
@@ -475,7 +479,7 @@ export async function watchQuiz(code, role, onState, onError) {
                     ? finalReport(session, answers, user.uid)
                     : null,
             analysis:
-                isMaster && session.phase === "finished"
+                (isMaster || role === "projector") && session.phase === "finished"
                     ? analysisFor(session, answers)
                     : null,
         });

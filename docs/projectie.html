@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Projectiescherm van de Live Diabetes Quiz.">
     <title>Zaalscherm – Live Diabetes Quiz</title>
-    <link rel="stylesheet" href="assets/styles.css?v=6">
+    <link rel="stylesheet" href="assets/styles.css?v=7">
 </head>
 <body class="projector">
     <header class="site-header">
@@ -79,17 +79,17 @@
             </section>
         </section>
 
-        <section id="projectorFinished" class="panel projector-message hide">
-            <div>
-                <p class="eyebrow">Einde</p>
-                <h1>Bedankt voor uw deelname</h1>
-                <p class="lead" style="margin-inline: auto">
-                    De persoonlijke score staat op het eigen toestel van iedere deelnemer.
-                </p>
-            </div>
+        <section id="projectorFinished" class="panel projector-analysis hide">
+            <p class="eyebrow">Eindanalyse</p>
+            <h1>Top 3 meest fout beantwoorde vragen</h1>
+            <p class="lead">Samen nog even herhalen: dit zijn de vragen die het vaakst fout werden beantwoord.</p>
+            <ol id="projectorAnalysisList" class="projector-analysis__list"></ol>
+            <p id="projectorAnalysisEmpty" class="projector-analysis__empty hide">
+                Er zijn geen fout beantwoorde vragen. Prima gedaan!
+            </p>
         </section>
     </main>
 
-    <script type="module" src="assets/projectie.js?v=9"></script>
+    <script type="module" src="assets/projectie.js?v=10"></script>
 </body>
 </html>
