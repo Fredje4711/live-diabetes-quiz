@@ -3,7 +3,7 @@ import {
     participantUrl,
     queryCode,
     renderQr,
-} from "./app.js?v=3";
+} from "./app.js?v=4";
 
 const code = normalizeCode(queryCode());
 const handoutError = document.querySelector("#handoutError");

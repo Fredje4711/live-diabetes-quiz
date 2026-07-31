@@ -4,8 +4,8 @@ import {
     optionLetter,
     queryCode,
     setConnection,
-} from "./app.js?v=3";
-import { ensureAuth, watchQuiz } from "./firebase-service.js?v=3";
+} from "./app.js?v=4";
+import { ensureAuth, watchQuiz } from "./firebase-service.js?v=4";
 
 const storageCodeKey = "dlq-projector-code";
 const connectionStatus = document.querySelector("#connectionStatus");

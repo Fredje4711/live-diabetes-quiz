@@ -7,13 +7,13 @@ import {
     projectorUrl,
     renderQr,
     setConnection,
-} from "./app.js?v=3";
+} from "./app.js?v=4";
 import {
     controlSession,
     createSession,
     ensureAuth,
     watchQuiz,
-} from "./firebase-service.js?v=3";
+} from "./firebase-service.js?v=4";
 
 const storageCodeKey = "dlq-master-code";
 

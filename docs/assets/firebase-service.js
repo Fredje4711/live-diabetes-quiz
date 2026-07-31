@@ -18,7 +18,7 @@ import {
     setDoc,
     where,
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
-import { QUESTIONS } from "./questions.js?v=3";
+import { QUESTIONS } from "./questions.js?v=4";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAEDsSpOk5CSFHox7Q59IBUbx6XcRmmXDo",
