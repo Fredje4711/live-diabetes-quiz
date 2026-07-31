@@ -43,8 +43,3 @@ npx firebase-tools deploy --only auth,firestore:rules
 ```
 
 De website zelf wordt via GitHub Pages gepubliceerd vanuit de map `docs`.
-
-## Lokale voorganger
-
-De eerdere PHP/SQLite-proefversie blijft lokaal bewaard in
-`live-diabetes-quiz`, maar wordt bewust niet naar GitHub geüpload.
