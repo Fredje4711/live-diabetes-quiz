@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Bediening van de Live Diabetes Quiz.">
+    <title>Quizmaster – Live Diabetes Quiz</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a class="brand" href="index.html">
+                <span class="brand__mark" aria-hidden="true">DL</span>
+                <span class="brand__text">Live Diabetes Quiz</span>
+            </a>
+            <p id="connectionStatus" class="status-line" data-state="busy" role="status" aria-live="polite">
+                Voorbereiden…
+            </p>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <section id="setupPanel" class="panel">
+            <p class="eyebrow">Nieuwe activiteit</p>
+            <h1>Quiz voorbereiden</h1>
+            <p class="lead">Kies het aantal vragen. Daarna krijgt u automatisch een quizcode voor de deelnemers.</p>
+
+            <form id="createSessionForm" style="margin-top: 1.5rem">
+                <div class="form-row">
+                    <div class="field">
+                        <label for="questionCount">Aantal vragen</label>
+                        <select id="questionCount" name="questionCount">
+                            <option value="5">5 vragen – korte kennismaking</option>
+                            <option value="10" selected>10 vragen – aanbevolen test</option>
+                            <option value="20">20 vragen – uitgebreide quiz</option>
+                            <option value="50">Alle 50 vragen</option>
+                        </select>
+                    </div>
+                    <label class="check-field">
+                        <input id="shuffleQuestions" type="checkbox">
+                        Vragen in willekeurige volgorde
+                    </label>
+                </div>
+                <div class="button-row">
+                    <button class="button-primary" type="submit">Nieuwe quizsessie maken</button>
+                </div>
+            </form>
+            <p id="setupError" class="notice notice--error hide" role="alert"></p>
+        </section>
+
+        <section id="controlPanel" class="hide">
+            <div class="panel">
+                <div class="session-header">
+                    <div>
+                        <p class="eyebrow">Quizcode voor deelnemers</p>
+                        <p id="sessionCode" class="session-code">------</p>
+                    </div>
+                    <span id="phaseBadge" class="badge">Wachtkamer</span>
+                </div>
+
+                <div class="button-row">
+                    <button id="copyParticipantLink" class="button-secondary" type="button">Kopieer deelnemerslink</button>
+                    <a id="openProjectorLink" class="button-link" href="projectie.html" target="_blank" rel="noopener">
+                        Open projectie
+                    </a>
+                </div>
+                <div class="qr-card">
+                    <canvas id="participantQr" width="220" height="220" aria-label="QR-code voor deelnemers"></canvas>
+                    <p>Laat deelnemers deze QR-code scannen of de quizcode invoeren.</p>
+                </div>
+            </div>
+
+            <div class="dashboard-grid" style="margin-top: 1rem">
+                <div>
+                    <section class="panel">
+                        <div id="waitingMaster">
+                            <h2>Wachtkamer is geopend</h2>
+                            <p>Laat deelnemers de code invoeren. Start wanneer iedereen klaar is.</p>
+                        </div>
+
+                        <div id="questionMaster" class="hide">
+                            <div class="session-header">
+                                <p id="questionNumberMaster" class="eyebrow">Vraag 1 van 10</p>
+                                <span id="questionPhase" class="badge">Vraag open</span>
+                            </div>
+                            <div class="question-card">
+                                <p id="questionTextMaster" class="question-card__text"></p>
+                            </div>
+                            <div id="optionsMaster" class="options"></div>
+                        </div>
+
+                        <div id="finishedMaster" class="hide">
+                            <p class="eyebrow">Afgerond</p>
+                            <h2>De quiz is afgelopen</h2>
+                            <p>De resultaten hieronder zijn gebaseerd op unieke antwoorden per deelnemer en vraag.</p>
+                        </div>
+
+                        <div id="controlButtons" class="button-row">
+                            <button id="startButton" class="button-primary" type="button">Start quiz</button>
+                            <button id="lockButton" class="button-warning hide" type="button">Sluit antwoorden</button>
+                            <button id="revealButton" class="button-success hide" type="button">Toon juiste antwoord</button>
+                            <button id="nextButton" class="button-primary hide" type="button">Volgende vraag</button>
+                            <button id="previousButton" class="button-secondary hide" type="button">Vorige vraag</button>
+                            <button id="finishButton" class="button-danger hide" type="button">Quiz beëindigen</button>
+                        </div>
+                        <p id="controlError" class="notice notice--error hide" role="alert"></p>
+                    </section>
+
+                    <section id="analysisPanel" class="panel hide">
+                        <h2>Eindanalyse</h2>
+                        <div id="analysisMetrics" class="metric-grid"></div>
+                        <h3 style="margin-top: 1.4rem">Meest fout beantwoorde vragen</h3>
+                        <ol id="analysisList" class="analysis-list"></ol>
+                    </section>
+                </div>
+
+                <aside>
+                    <section class="panel">
+                        <h2>Live overzicht</h2>
+                        <div class="metric-grid">
+                            <div class="metric">
+                                <span id="activeParticipants" class="metric__value">0</span>
+                                <span class="metric__label">nu verbonden</span>
+                            </div>
+                            <div class="metric">
+                                <span id="answeredCount" class="metric__value">0</span>
+                                <span class="metric__label">geantwoord</span>
+                            </div>
+                            <div class="metric">
+                                <span id="totalParticipants" class="metric__value">0</span>
+                                <span class="metric__label">totaal aangemeld</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="liveResultsPanel" class="panel hide">
+                        <h2>Antwoorden</h2>
+                        <div id="masterResultBars" class="result-bars"></div>
+                    </section>
+
+                    <section class="panel panel--soft">
+                        <h2>Veilige bediening</h2>
+                        <p>Antwoorden worden per deelnemer maar één keer aanvaard. Teruggaan verandert eerdere antwoorden niet.</p>
+                        <button id="newSessionButton" class="button-quiet" type="button">Nieuwe sessie voorbereiden</button>
+                    </section>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+    <script type="module" src="assets/quizmaster.js?v=2"></script>
+</body>
+</html>

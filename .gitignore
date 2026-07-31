@@ -1,0 +1,8 @@
+.firebase/
+firebase-debug.log
+firestore-debug.log
+node_modules/
+coverage/
+live-diabetes-quiz/
+.emulator-*.log
+.server-*.log

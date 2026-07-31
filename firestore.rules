@@ -1,0 +1,107 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function sessionPath(code) {
+      return /databases/$(database)/documents/sessions/$(code);
+    }
+
+    function session(code) {
+      return get(sessionPath(code)).data;
+    }
+
+    function isMaster(code) {
+      return signedIn() && session(code).masterUid == request.auth.uid;
+    }
+
+    match /sessions/{code} {
+      allow read: if signedIn();
+
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly([
+          'code',
+          'masterUid',
+          'phase',
+          'activePosition',
+          'questionOrder',
+          'totalQuestions',
+          'createdAt',
+          'updatedAt'
+        ])
+        && request.resource.data.code == code
+        && request.resource.data.masterUid == request.auth.uid
+        && request.resource.data.phase == 'waiting'
+        && request.resource.data.activePosition == 0
+        && request.resource.data.totalQuestions >= 1
+        && request.resource.data.totalQuestions <= 50
+        && request.resource.data.questionOrder.size() == request.resource.data.totalQuestions
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+
+      allow update: if isMaster(code)
+        && request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['phase', 'activePosition', 'updatedAt'])
+        && request.resource.data.phase in [
+          'waiting',
+          'open',
+          'locked',
+          'revealed',
+          'finished'
+        ]
+        && request.resource.data.activePosition >= 0
+        && request.resource.data.activePosition < resource.data.totalQuestions
+        && request.resource.data.updatedAt == request.time;
+
+      allow delete: if false;
+
+      match /participants/{participantId} {
+        allow read: if signedIn()
+          && (request.auth.uid == participantId || isMaster(code));
+
+        allow create: if signedIn()
+          && request.auth.uid == participantId
+          && request.resource.data.keys().hasOnly(['uid', 'joinedAt', 'lastSeen'])
+          && request.resource.data.uid == request.auth.uid
+          && request.resource.data.joinedAt == request.time
+          && request.resource.data.lastSeen == request.time;
+
+        allow update: if signedIn()
+          && request.auth.uid == participantId
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lastSeen'])
+          && request.resource.data.uid == resource.data.uid
+          && request.resource.data.joinedAt == resource.data.joinedAt
+          && request.resource.data.lastSeen == request.time;
+
+        allow delete: if false;
+      }
+
+      match /answers/{answerId} {
+        // Antwoorden bevatten geen naam of contactgegeven. Lezen is nodig voor
+        // het live projectiescherm; wijzigen of verwijderen is nooit toegestaan.
+        allow read: if signedIn();
+
+        allow create: if signedIn()
+          && request.resource.data.keys().hasOnly([
+            'participantUid',
+            'questionPosition',
+            'optionIndex',
+            'answeredAt'
+          ])
+          && request.resource.data.participantUid == request.auth.uid
+          && answerId == request.auth.uid + '_' + string(request.resource.data.questionPosition)
+          && request.resource.data.questionPosition == session(code).activePosition
+          && session(code).phase == 'open'
+          && request.resource.data.optionIndex is int
+          && request.resource.data.optionIndex >= 0
+          && request.resource.data.optionIndex <= 3
+          && request.resource.data.answeredAt == request.time;
+
+        allow update, delete: if false;
+      }
+    }
+  }
+}

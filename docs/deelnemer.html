@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Anoniem deelnemen aan de Live Diabetes Quiz.">
+    <title>Deelnemer – Live Diabetes Quiz</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a class="brand" href="index.html">
+                <span class="brand__mark" aria-hidden="true">DL</span>
+                <span class="brand__text">Live Diabetes Quiz</span>
+            </a>
+            <p id="connectionStatus" class="status-line" data-state="busy" role="status" aria-live="polite">
+                Verbinden…
+            </p>
+        </div>
+    </header>
+
+    <main class="page-shell page-shell--narrow">
+        <section id="joinPanel" class="panel">
+            <p class="eyebrow">Anoniem deelnemen</p>
+            <h1>Voer de quizcode in</h1>
+            <p class="lead">De code bestaat uit zes cijfers en staat op het projectiescherm of het quizbriefje.</p>
+            <form id="joinForm" style="margin-top: 1.5rem">
+                <div class="field">
+                    <label for="quizCode">Quizcode</label>
+                    <input
+                        id="quizCode"
+                        class="code-input"
+                        type="text"
+                        inputmode="numeric"
+                        autocomplete="one-time-code"
+                        maxlength="6"
+                        pattern="[0-9]{6}"
+                        placeholder="000000"
+                        required
+                    >
+                </div>
+                <div class="button-row">
+                    <button class="button-primary" type="submit">Deelnemen</button>
+                </div>
+            </form>
+            <p class="notice">Uw naam of e-mailadres wordt niet gevraagd.</p>
+            <p id="joinError" class="notice notice--error hide" role="alert"></p>
+        </section>
+
+        <section id="quizPanel" class="hide">
+            <div class="panel">
+                <div class="session-header">
+                    <div>
+                        <p class="eyebrow">Verbonden met quiz</p>
+                        <p id="participantCode" class="session-code" style="font-size: 1.8rem">------</p>
+                    </div>
+                    <span id="participantPhase" class="badge">Wachtkamer</span>
+                </div>
+            </div>
+
+            <section id="waitingParticipant" class="panel">
+                <h2>U bent verbonden</h2>
+                <p>Wacht rustig tot de quizmaster de eerste vraag opent.</p>
+                <p class="notice">Laat deze pagina open. Nieuwe vragen verschijnen automatisch.</p>
+            </section>
+
+            <section id="questionParticipant" class="panel hide">
+                <p id="questionNumberParticipant" class="eyebrow">Vraag 1 van 10</p>
+                <div class="question-card">
+                    <p id="questionTextParticipant" class="question-card__text"></p>
+                </div>
+                <div id="answerButtons" class="options" aria-label="Antwoordmogelijkheden"></div>
+                <div id="answerFeedback" class="feedback feedback--neutral" role="status" aria-live="assertive">
+                    Kies één antwoord.
+                </div>
+            </section>
+
+            <section id="finishedParticipant" class="panel hide">
+                <p class="eyebrow">Uw resultaat</p>
+                <h1 id="finalScore">0 / 10</h1>
+                <p id="finalSummary" class="lead"></p>
+                <div id="incorrectSection" class="hide">
+                    <h2 style="margin-top: 1.5rem">Bekijk uw foute antwoorden</h2>
+                    <ol id="incorrectList" class="incorrect-list"></ol>
+                </div>
+                <p class="notice">Bedankt voor uw deelname. U kunt dit scherm nu sluiten.</p>
+            </section>
+        </section>
+    </main>
+
+    <script type="module" src="assets/deelnemer.js?v=2"></script>
+</body>
+</html>
