@@ -4,7 +4,7 @@ import {
     optionLetter,
     queryCode,
     setConnection,
-} from "./app.js?v=8";
+} from "./app.js?v=9";
 import {
     ensureAuth,
     resolveLatestSessionCode,
@@ -29,6 +29,7 @@ const projectorAnswered = document.querySelector("#projectorAnswered");
 const projectorParticipants = document.querySelector("#projectorParticipants");
 
 let code = queryCode() || localStorage.getItem(storageCodeKey) || "";
+const openExactSession = new URLSearchParams(window.location.search).get("exact") === "1";
 let stopWatch = null;
 let latestState = null;
 let switchingSession = false;
@@ -92,13 +93,13 @@ async function switchProjection(nextCode) {
     switchingSession = true;
     setConnection(connectionStatus, "busy", "Nieuwe quiz openen…");
     try {
-        await openProjection(nextCode);
+        await openProjection(nextCode, true);
     } finally {
         switchingSession = false;
     }
 }
 
-async function openProjection(nextCode) {
+async function openProjection(nextCode, exactSession = false) {
     const requestedCode = normalizeCode(nextCode);
     if (requestedCode.length !== 3) {
         showError("Voer de drie cijfers van de quizcode in.");
@@ -108,7 +109,7 @@ async function openProjection(nextCode) {
     stopWatch?.();
     stopWatch = null;
     latestState = null;
-    code = await resolveLatestSessionCode(requestedCode);
+    code = exactSession ? requestedCode : await resolveLatestSessionCode(requestedCode);
     localStorage.setItem(storageCodeKey, code);
     const currentUrl = new URL(window.location.href);
     currentUrl.pathname = currentUrl.pathname.replace(/[^/]+$/, "projectie.html");
@@ -150,7 +151,7 @@ try {
     await ensureAuth();
     if (code.length === 3) {
         projectorCodeInput.value = code;
-        await openProjection(code);
+        await openProjection(code, openExactSession);
     } else {
         setConnection(connectionStatus, "online", "Klaar voor quizcode");
         projectorCodeInput.focus();

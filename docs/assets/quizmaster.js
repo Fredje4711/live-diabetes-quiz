@@ -7,7 +7,7 @@ import {
     projectorUrl,
     renderQr,
     setConnection,
-} from "./app.js?v=8";
+} from "./app.js?v=9";
 import {
     controlSession,
     createSession,

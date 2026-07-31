@@ -49,6 +49,7 @@ export function participantUrl(code) {
 
 export function projectorUrl(code) {
     const url = new URL(`projectie.html?code=${encodeURIComponent(code)}`, window.location.href);
+    url.searchParams.set("exact", "1");
     if (new URLSearchParams(window.location.search).get("emulator") === "1") {
         url.searchParams.set("emulator", "1");
     }
