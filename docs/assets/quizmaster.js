@@ -69,6 +69,7 @@ if (storedPreviousCode && !previousCode) {
 let latestState = null;
 let stopWatch = null;
 let commandBusy = false;
+let restoringStoredSession = Boolean(code);
 
 function showError(element, message = "") {
     element.textContent = message;
@@ -196,6 +197,23 @@ function renderControls(state) {
 }
 
 function renderState(state) {
+    if (restoringStoredSession) {
+        restoringStoredSession = false;
+        if (state.session.phase === "finished") {
+            localStorage.removeItem(storageCodeKey);
+            code = "";
+            latestState = null;
+            controlPanel.classList.add("hide");
+            setupPanel.classList.remove("hide");
+            setConnection(connectionStatus, "online", "Klaar om te starten");
+            setTimeout(() => {
+                stopWatch?.();
+                stopWatch = null;
+            }, 0);
+            return;
+        }
+    }
+
     latestState = state;
     sessionCode.textContent = state.session.code;
     phaseBadge.textContent = formatPhase(state.session.phase);
@@ -220,6 +238,10 @@ function renderState(state) {
         questionTextMaster.textContent = state.question.question;
         renderOptions(state.question, state.session.phase);
         renderBars(masterResultBars, state.question, state.statistics, state.session.phase);
+    }
+
+    if (state.session.phase === "finished") {
+        localStorage.removeItem(storageCodeKey);
     }
 
     if (state.session.phase === "finished" && state.analysis) {
