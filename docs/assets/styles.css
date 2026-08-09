@@ -712,14 +712,29 @@ h3 {
     padding: 2rem 0;
 }
 
-.projector-question {
-    font-size: clamp(2.1rem, 4vw, 4.5rem);
+.projector #projectorQuestionNumber {
+    margin-bottom: 0.7rem;
     text-align: center;
+}
+
+.projector-question-panel {
+    padding: clamp(1.5rem, 2.5vw, 2.5rem);
+}
+
+.projector-question {
+    width: min(1280px, 100%);
+    max-width: none;
+    margin: 0 auto;
+    font-size: clamp(2.1rem, 4vw, 4.5rem);
+    line-height: 1.08;
+    text-align: center;
+    text-wrap: balance;
 }
 
 .projector .options {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
+    margin-top: clamp(1.5rem, 3vw, 2.25rem);
 }
 
 .projector .option {
