@@ -25,21 +25,21 @@ Canva-aanwijzing: Zet “Voorkeur: eigen mobiele data” duidelijk bovenaan. Too
 
 ----------------------------------------
 
-DIA 4 — Thuis: oefen vóór u de definitieve sessie maakt
-Duur: 45 seconden
+DIA 4 — Thuis of op kantoor: voer eerst de volledige proefquiz uit
+Duur: 50 seconden
 
-Wilt u de volledige werking vooraf testen, doe dat dan nu met een tijdelijke sessie van vijf vragen en bijvoorbeeld enkele bestuursleden. Doorloop samen de wachtkamer, een paar vragen, de antwoordtellers en de eindanalyse. Maak na deze oefening pas de definitieve sessie voor de zaal. Dat is belangrijk: iedere nieuwe sessie krijgt een nieuwe quizcode. Briefjes die al gedrukt zijn voor een oude of tijdelijke sessie zouden daardoor niet meer bij de definitieve quiz passen.
+Wilt u de volledige werking testen, doe dat dan thuis of op kantoor, vóór u de definitieve sessie maakt en vóór u deelnemersbriefjes afdrukt. Maak een tijdelijke sessie van vijf vragen en oefen bijvoorbeeld met enkele bestuursleden. Doorloop de wachtkamer, de vragen, de antwoordtellers, de oplossingen en de eindanalyse. Dit is de volledige functionele proefquiz. Rond deze tijdelijke proef af. Maak pas daarna de definitieve sessie voor de echte zaalactiviteit. Iedere nieuwe sessie krijgt namelijk een andere quizcode; daarom mogen er voor de tijdelijke proef nog geen definitieve briefjes worden afgedrukt.
 
-Canva-aanwijzing: Toon “5 vragen — demonstratie”, daarna “proef afronden” en pas dan “definitieve sessie”.
+Canva-aanwijzing: Toon duidelijk “thuis of kantoor”, vervolgens “tijdelijke proef — 5 vragen”, “volledig doorlopen” en pas daarna “definitieve sessie”.
 
 ----------------------------------------
 
-DIA 5 — Thuis: maak de definitieve quizsessie
-Duur: 45 seconden
+DIA 5 — Na de proef: maak de definitieve quizsessie en code
+Duur: 50 seconden
 
-Gebruik de laptop en de gewone browser die u later in de zaal meeneemt. Open Nieuwe quiz starten en kies het gewenste aantal vragen. Tien vragen is aanbevolen voor een gewone activiteit en twintig is het aanbevolen maximum. Klik daarna op Nieuwe quizsessie maken. Nu ontstaat de definitieve driecijferige quizcode. Wis vanaf dit moment geen browsergegevens en maak niet nogmaals een nieuwe sessie. Anders verandert de code en kloppen de briefjes niet meer.
+Is de volledige proefquiz afgerond en werkt alles zoals verwacht, maak dan op de laptop en in de gewone browser die later meegaan de definitieve zaalquiz. Kies het gewenste aantal vragen. Tien vragen is aanbevolen voor een gewone activiteit en twintig is het aanbevolen maximum. Klik op Nieuwe quizsessie maken. Nu ontstaat de definitieve driecijferige code die straks op alle deelnemersbriefjes komt. Vanaf dit moment maakt u geen nieuwe sessie meer en wist u geen browsergegevens. Anders verandert de code en komen de vooraf afgedrukte briefjes niet meer overeen met de zaalquiz.
 
-Canva-aanwijzing: Markeer de keuzelijst, daarna Nieuwe quizsessie maken en ten slotte de driecijferige code.
+Canva-aanwijzing: Begin met “proef geslaagd”, markeer daarna de keuzelijst, Nieuwe quizsessie maken en ten slotte “definitieve code voor de briefjes”.
 
 ----------------------------------------
 
@@ -88,12 +88,12 @@ Canva-aanwijzing: Laat laptopcode en papiercode naast elkaar verschijnen met een
 
 ----------------------------------------
 
-DIA 11 — In de zaal: test alleen tot aan de wachtkamer
-Duur: 45 seconden
+DIA 11 — In de zaal: alleen technisch controleren, geen vragen starten
+Duur: 50 seconden
 
-Neem één reservebriefje en scan het met uw eigen gsm. Maak verbinding zoals een deelnemer en controleer of de wachtkamer met U bent verbonden verschijnt. Kijk daarna of de teller op de laptop en het zaalscherm met één deelnemer stijgt. Start de definitieve quiz nog niet als proef. Een volledige proefquiz is thuis al met de tijdelijke sessie uitgevoerd. Nu controleert u alleen de echte toegang, de verbinding en de projectie.
+Neem één reservebriefje en scan het met uw eigen gsm. Controleer of de juiste definitieve code opent, of de wachtkamer met U bent verbonden verschijnt en of de deelnemersteller op de laptop en het zaalscherm met één stijgt. Kijk ook of de projectie goed leesbaar is. Stop de controle daar: start geen enkele quizvraag. De volledige proefquiz werd thuis of op kantoor met een tijdelijke sessie uitgevoerd. De sessie die nu openstaat is de definitieve zaalquiz waarvan de code op alle afgedrukte briefjes staat. Die wordt pas gestart wanneer de deelnemers aanwezig en verbonden zijn.
 
-Canva-aanwijzing: Toon de scan, de wachtkamer en teller één. Plaats een duidelijk stopsymbool bij “quiz nog niet starten”.
+Canva-aanwijzing: Toon codecontrole, wachtkamer, teller één en leesbare projectie. Plaats daarna een duidelijk stopsymbool bij “geen vragen starten”.
 
 ----------------------------------------
 
