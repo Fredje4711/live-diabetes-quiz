@@ -16,12 +16,12 @@ Canva-aanwijzing: Toon de drie schermen één voor één en zoom daarna in op de
 
 ----------------------------------------
 
-DIA 3 — Thuis: beslis eerst over de internetverbinding
-Duur: 55 seconden
+DIA 3 — Thuis: mobiele data heeft de voorkeur, wifi blijft beschikbaar
+Duur: 75 seconden
 
-Begin ruim vóór de activiteit met de zaalgegevens. Vraag hoeveel deelnemers ongeveer verwacht worden en of betrouwbare gastenwifi beschikbaar is. Is er wifi, noteer dan de exacte wifinaam en het wachtwoord en vraag of veel toestellen tegelijk mogen verbinden. Is er geen wifi, dan gebruiken deelnemers hun mobiele data. Controleer in dat geval vooraf of er in de zaal voldoende mobiel bereik is, liefst met toestellen van verschillende netwerken. Vermeld zo mogelijk al in de uitnodiging dat deelnemers een gsm met internet nodig hebben. Deze keuze bepaalt later wat er op het deelnemersbriefje verschijnt.
+Begin ruim vóór de activiteit met de zaalgegevens. De eenvoudigste keuze is dat iedere deelnemer de eigen mobiele data gebruikt. Veel mensen zijn tegenwoordig voortdurend online en hebben een datapakket dat hiervoor ruim volstaat. Ze hoeven dan geen nieuw netwerk te kiezen of een wifiwachtwoord in te voeren. Is er gratis zaalwifi, bied die keuze dan toch aan op het briefje. Sommige deelnemers gebruiken liever wifi of hebben weinig mobiele data. De organisator test vooraf in de zaal beide mogelijkheden: de zaalwifi met meerdere toestellen én de mobiele ontvangst, liefst met verschillende mobiele netwerken. Is de mobiele ontvangst goed, zeg dan bij het onthaal dat de eigen mobiele data de gemakkelijkste keuze is. Is de mobiele ontvangst zwak of onbetrouwbaar, vraag deelnemers dan uitdrukkelijk de zaalwifi en de wifi-QR-code op hun briefje te gebruiken. Noteer daarom vooraf de exacte wifinaam en het wachtwoord. Zonder zaalwifi vermeldt het briefje alleen mobiele data. Deze voorbereiding en duidelijke communicatie voorkomen het grootste deel van het oponthoud bij de start.
 
-Canva-aanwijzing: Laat een duidelijke splitsing zien: “Wifi beschikbaar” en “Geen wifi — mobiele data”.
+Canva-aanwijzing: Zet “Voorkeur: eigen mobiele data” duidelijk bovenaan. Toon daarnaast “Gratis zaalwifi: vrije keuze en reserve”. Eindig met de beslisregel: goed mobiel bereik is mobiele data; slecht mobiel bereik is zaalwifi adviseren.
 
 ----------------------------------------
 
