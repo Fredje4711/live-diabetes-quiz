@@ -1,0 +1,105 @@
+DIA 1 — Live Diabetes Quiz
+Duur: 20 seconden
+
+Welkom bij de Live Diabetes Quiz. In deze korte handleiding doorlopen we rustig alle stappen, vanaf het voorbereiden van de quiz tot en met de eindanalyse. U ziet telkens dezelfde schermen en knoppen die u later ook werkelijk gebruikt. Zo kunt u vooraf vertrouwd raken met de werking en zonder haast aan een quiz beginnen.
+
+Canva-aanwijzing: Laat eerst het logo verschijnen. Daarna komen titel en ondertitel rustig in beeld.
+
+----------------------------------------
+
+DIA 2 — Drie schermen vormen samen één quiz
+Duur: 35 seconden
+
+De quiz gebruikt drie verschillende schermen. De quizmaster bedient de quiz op de laptop. Iedere deelnemer antwoordt anoniem op de eigen gsm. Op het grote zaalscherm ziet iedereen dezelfde vraag en de vier mogelijke antwoorden. Onderaan verschijnen het aantal verbonden deelnemers en het aantal ontvangen antwoorden. Zo kan de quizmaster rustig wachten tot de zaal klaar is.
+
+Canva-aanwijzing: Toon achtereenvolgens de drie regels links. Zoom daarna kort in op de twee aantallen onderaan het zaalscherm.
+
+----------------------------------------
+
+DIA 3 — Begin met een passend aantal vragen
+Duur: 35 seconden
+
+Open de startpagina en kies Nieuwe quiz starten. U komt op het scherm Quiz voorbereiden. Kies hier het aantal vragen. Vijf vragen is handig voor een korte demonstratie. Tien vragen is aanbevolen voor een gewone quiz. Twintig vragen is het aanbevolen maximum. Klik daarna op Nieuwe quizsessie maken. De quizcode wordt automatisch aangemaakt.
+
+Canva-aanwijzing: Markeer eerst de keuzelijst en daarna de knop Nieuwe quizsessie maken.
+
+----------------------------------------
+
+DIA 4 — Eén sessie maakt de zaal klaar
+Duur: 40 seconden
+
+Na het maken van de sessie verschijnt de quizcode. Op dit scherm staan ook de twee belangrijke voorbereidingsknoppen. Open groot zaalscherm opent het venster dat u op de beamer of grote televisie toont. Deelnemersbriefjes afdrukken maakt twee briefjes per A4. De QR-code op dit scherm is alleen een controlevoorbeeld. Deelnemers gebruiken uitsluitend hun vooraf afgedrukte briefje.
+
+Canva-aanwijzing: Laat eerst de code oplichten, daarna de knop voor het zaalscherm en ten slotte de afdrukknop.
+
+----------------------------------------
+
+DIA 5 — Het briefje wijst iedere deelnemer de weg
+Duur: 45 seconden
+
+Geef iedere deelnemer bij het binnenkomen een briefje. Bovenaan staat eerst de vraag om de gsm met internet te verbinden. Mobiele data is meestal het eenvoudigst. Wie liever de wifi van de zaal gebruikt, kan de wifi-QR-code scannen. Daarna scant de deelnemer de quiz-QR-code. Lukt scannen niet, dan staan ook de internetlink en de driecijferige quizcode duidelijk op het briefje.
+
+Canva-aanwijzing: Volg het briefje van boven naar beneden: internet, wifi, quiz-QR, link en quizcode.
+
+----------------------------------------
+
+DIA 6 — Na het verbinden hoeft men alleen te wachten
+Duur: 30 seconden
+
+Na het scannen komt de deelnemer op het mobiele deelnemersscherm. Zodra de verbinding gelukt is, ziet hij of zij de quizcode, de status Wachtkamer en de melding U bent verbonden. De pagina moet gewoon open blijven staan. Wanneer de quizmaster de eerste vraag start, verschijnt die automatisch. De deelnemer hoeft niets te vernieuwen en geen naam in te vullen.
+
+Canva-aanwijzing: Zoom rustig in op U bent verbonden en daarna op Laat deze pagina open.
+
+----------------------------------------
+
+DIA 7 — Iedere deelnemer kiest één antwoord
+Duur: 35 seconden
+
+Wanneer de quiz begint, ziet de deelnemer één vraag met vier grote antwoordknoppen. Tik één keer op het gekozen antwoord. Het antwoord wordt onmiddellijk en anoniem bewaard. Daarna verschijnt een bevestiging. Per vraag wordt maar één antwoord aanvaard. De deelnemer wacht vervolgens rustig tot de quizmaster het juiste antwoord toont of de volgende vraag opent.
+
+Canva-aanwijzing: Laat de vraag verschijnen en markeer daarna één antwoordknop als voorbeeld, zonder een echte keuze voor te schrijven.
+
+----------------------------------------
+
+DIA 8 — De quizmaster houdt het overzicht
+Duur: 45 seconden
+
+Op het quizmasterscherm staat dezelfde vraag, maar met extra bedieningsinformatie. U ziet hoeveel deelnemers verbonden zijn en hoeveel antwoorden al ontvangen werden. Wacht rustig tot bijna iedereen geantwoord heeft. Daarna kunt u de antwoorden sluiten. De juiste oplossing is voor de quizmaster al herkenbaar, maar wordt pas aan de zaal getoond wanneer u daar bewust voor kiest.
+
+Canva-aanwijzing: Markeer eerst de twee aantallen, daarna Sluit antwoorden en ten slotte de aanduiding van het juiste antwoord.
+
+----------------------------------------
+
+DIA 9 — Toon de oplossing en bespreek ze kort
+Duur: 40 seconden
+
+Klik op Toon juiste antwoord wanneer de antwoordtijd voorbij is. Het juiste antwoord wordt dan duidelijk zichtbaar op alle schermen. De quizmaster ziet ook hoe de antwoorden over de vier mogelijkheden verdeeld zijn. Neem even tijd om de oplossing kort toe te lichten. Klik daarna op Volgende vraag. De nieuwe vraag verschijnt automatisch bij alle deelnemers en op het grote zaalscherm.
+
+Canva-aanwijzing: Laat de groene oplossing oplichten, toon kort de antwoordverdeling en eindig bij Volgende vraag.
+
+----------------------------------------
+
+DIA 10 — Iedere deelnemer krijgt een persoonlijk resultaat
+Duur: 30 seconden
+
+Na de laatste vraag krijgt iedere deelnemer op de eigen gsm een persoonlijk resultaat. De score en de eigen fout beantwoorde vragen worden overzichtelijk weergegeven. Er wordt geen naam gevraagd en er verschijnt geen publieke rangschikking. Andere deelnemers kunnen dit persoonlijke overzicht dus niet zien. Daarna mag de deelnemer het scherm sluiten.
+
+Canva-aanwijzing: Zoom eerst in op de score en daarna langzaam op één voorbeeld van een fout antwoord.
+
+----------------------------------------
+
+DIA 11 — De zaal sluit af met drie leerpunten
+Duur: 35 seconden
+
+Op het grote zaalscherm verschijnt de gezamenlijke eindanalyse. Die toont de drie vragen die het vaakst fout werden beantwoord. Bij iedere vraag staat ook het juiste antwoord. Dit is een goed moment om de belangrijkste leerpunten nog eens rustig te herhalen. Persoonlijke scores worden niet op het grote scherm getoond.
+
+Canva-aanwijzing: Laat de titel Eindanalyse verschijnen en toon daarna de nummers één, twee en drie na elkaar.
+
+----------------------------------------
+
+DIA 12 — Afronden of opnieuw beginnen
+Duur: 40 seconden
+
+De quizmaster ziet op de laptop de volledige groepsanalyse. Wilt u nog een quiz spelen, kies dan Nieuwe sessie voorbereiden en selecteer opnieuw het aantal vragen. De gsm’s en het zaalscherm gaan automatisch mee naar de nieuwe sessie. Oefen vóór de eerste echte activiteit gerust eens met vijf vragen en enkele bestuursleden. De volledige handleiding blijft beschikbaar wanneer u later iets opnieuw wilt bekijken.
+
+Canva-aanwijzing: Toon kort de analyse en eindig met een rustige markering rond Nieuwe sessie voorbereiden.
