@@ -47,13 +47,25 @@ function renderHandouts() {
         target.querySelector(".wifi-details").textContent = wifiText();
         const wifiCard = target.querySelector(".handout-wifi-card");
         const wifiQr = target.querySelector(".handout-wifi-qr");
+        const wifiHeading = target.querySelector(".wifi-heading");
+        const wifiInstruction = target.querySelector(".wifi-instruction");
         const wifiValue = wifiQrValue();
         wifiCard.classList.toggle("handout-wifi-card--inactive", !wifiValue);
+        wifiCard.classList.toggle("handout-wifi-card--mobile", !wifiValue);
         if (wifiValue) {
+            wifiHeading.textContent = "Wifi van de zaal (alleen indien gewenst)";
+            wifiInstruction.innerHTML =
+                "Scan met uw gewone camera-app of QR-app en tik op <strong>Verbinden</strong>.";
+            wifiQr.classList.remove("hide");
             renderQr(wifiQr, wifiValue, 125);
         } else {
+            wifiHeading.textContent = "Mobiele data gebruiken";
+            wifiInstruction.textContent =
+                "Zet mobiele data aan op uw gsm. Er is geen zaalwifi voorzien.";
+            target.querySelector(".wifi-details").textContent =
+                "Controleer eventueel of een gewone website opent.";
             wifiQr.replaceChildren();
-            wifiQr.textContent = "Mobiele data gebruiken";
+            wifiQr.classList.add("hide");
         }
         renderQr(target.querySelector(".handout-quiz-qr"), participantUrl(code), 145);
     });

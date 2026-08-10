@@ -16,10 +16,10 @@ Canva-aanwijzing: Toon de drie taken één voor één en zoom daarna in op de tw
 
 ----------------------------------------
 
-DIA 3 — Controleer de zaal vóór het publiek binnenkomt
-Duur: 40 seconden
+DIA 3 — Bereid materiaal en briefjes liefst vooraf thuis voor
+Duur: 60 seconden
 
-Voorzie een laptop met oplader en internet, een beamer of groot televisiescherm en de juiste kabels. Vraag vooraf de naam en het wachtwoord van de gastenwifi als u die wilt aanbieden. Maak ook één korte testsessie met uw eigen gsm. Controleer of het zaalscherm goed leesbaar is, of antwoorden aankomen en of de printer werkt. Leg voldoende papier en enkele reservebriefjes klaar. Deze proef voorkomt tijdsdruk wanneer de deelnemers binnenkomen.
+Vraag ruim vooraf de naam en het wachtwoord van de gastenwifi wanneer u die wilt aanbieden. Is er geen wifi, test dan vóór de activiteit in de zaal of mobiele ontvangst goed werkt, liefst met meer dan één mobiel netwerk. Vermeld zo mogelijk al in de uitnodiging dat deelnemers een gsm met actieve mobiele internetverbinding nodig hebben. Zodra de zaalgegevens en het verwachte aantal deelnemers bekend zijn, maakt u thuis of op kantoor de definitieve quizsessie en drukt u daar de briefjes af. Zo gebruikt u de grotere printer zonder hem mee te nemen. Neem dezelfde laptop, gesneden briefjes en reserves mee. In de zaal controleert u alleen nog internet, projectie en één proef met de eigen gsm.
 
 Canva-aanwijzing: Laat de controlepunten achtereenvolgens verschijnen en eindig bij “één proef met eigen gsm”.
 
@@ -34,10 +34,10 @@ Canva-aanwijzing: Markeer de keuzelijst, daarna de aanbevolen keuzes en ten slot
 
 ----------------------------------------
 
-DIA 5 — De sessiecode bepaalt welke briefjes u nodig hebt
-Duur: 35 seconden
+DIA 5 — Maak thuis de definitieve sessie vóór het afdrukken
+Duur: 50 seconden
 
-Na het maken van de sessie verschijnt de quizcode. Open nu het grote zaalscherm en laat dat venster op de beamer zien. Kies daarna Deelnemersbriefjes afdrukken. Druk de definitieve briefjes pas af nadat deze sessie is gemaakt, want de juiste quizcode wordt automatisch op ieder briefje gezet. Zo komt niemand per ongeluk in een oude sessie terecht. De QR-code op de laptop is alleen een controlevoorbeeld.
+Na het maken van de sessie verschijnt de quizcode. Deze stap mag gerust thuis gebeuren, bijvoorbeeld enkele dagen of de avond vooraf. Kies daarna Deelnemersbriefjes afdrukken, want de juiste code wordt automatisch op ieder exemplaar gezet. Gebruik in de zaal dezelfde laptop en dezelfde gewone browser waarmee u de sessie hebt gemaakt. Wis geen browsergegevens en maak daar niet opnieuw een sessie, want dan ontstaat een andere code die niet meer overeenkomt met de reeds afgedrukte briefjes. Open in de zaal gewoon opnieuw het quizmasterscherm en daarna het grote zaalscherm.
 
 Canva-aanwijzing: Laat eerst de code oplichten, vervolgens Open groot zaalscherm en daarna Deelnemersbriefjes afdrukken.
 
@@ -46,34 +46,34 @@ Canva-aanwijzing: Laat eerst de code oplichten, vervolgens Open groot zaalscherm
 DIA 6 — Bereid de briefjes stap voor stap voor
 Duur: 45 seconden
 
-Op de afdrukpagina ziet u bovenaan de voorbereiding. Wilt u de wifi van de zaal aanbieden, vul dan exact de wifinaam en het wachtwoord in. Het systeem maakt daarvan automatisch een wifi-QR-code. Gebruikt u alleen mobiele data, laat beide velden dan leeg. Controleer in het voorbeeld of de quizcode klopt en of de quizlink en QR-code zichtbaar zijn. Klik daarna op Nu afdrukken. Er verschijnen twee verticale deelnemersbriefjes op één A4.
+Op de afdrukpagina ziet u bovenaan de voorbereiding. Wilt u de wifi van de zaal aanbieden, vraag dan vooraf de juiste gegevens op en vul de wifinaam en het wachtwoord exact in. Het systeem maakt automatisch een wifi-QR-code. Is er geen zaalwifi, laat dan beide velden leeg. De wifi-keuze en wifi-QR-code verdwijnen dan volledig van het briefje en stap één vermeldt alleen mobiele data. Zo krijgen deelnemers geen onmogelijke of verwarrende keuze. Controleer daarna het voorbeeld en klik op Nu afdrukken.
 
 Canva-aanwijzing: Zoom achtereenvolgens in op wifinaam, wachtwoord, quizcode, voorbeeldbriefje en Nu afdrukken.
 
 ----------------------------------------
 
-DIA 7 — Controleer de afdruk vóór u alle exemplaren maakt
-Duur: 40 seconden
+DIA 7 — Gebruik vooraf de geschikte printer voor de hele oplage
+Duur: 50 seconden
 
-Maak eerst één proefafdruk. Gebruik A4 in staande richting en laat de schaal op honderd procent of standaard staan. Controleer of beide QR-codes volledig scherp zijn en nergens worden afgesneden. Scan beide codes zelf met een gsm en vergelijk de drie cijfers met de quizcode op de laptop. Druk daarna voldoende A4-vellen af, snijd ieder vel in twee en maak enkele reservebriefjes voor onverwachte deelnemers of een beschadigd exemplaar.
+Maak thuis of op kantoor eerst één proefafdruk. Gebruik A4 in staande richting en laat de schaal op honderd procent of standaard staan. Controleer of beide QR-codes volledig scherp zijn en nergens worden afgesneden. Scan beide codes zelf met een gsm en vergelijk de drie cijfers met de quizcode op de laptop. Druk daarna met de grotere printer de volledige oplage af. Twee briefjes staan op één A4: voor zestig deelnemers zijn dus dertig vellen nodig, plus enkele reservevellen. Snijd de briefjes vooraf en neem ze in een map of bundel mee naar de zaal.
 
 Canva-aanwijzing: Toon een vinkje bij formaat, QR-codes, quizcode, proefscan en reservebriefjes.
 
 ----------------------------------------
 
-DIA 8 — Waarom iedere deelnemer een papieren briefje krijgt
-Duur: 40 seconden
+DIA 8 — Waarom iedere deelnemer een vooraf gedrukt briefje krijgt
+Duur: 50 seconden
 
-Het briefje is bewust de vaste toegang tot de quiz. Oudere deelnemers hoeven geen QR-code op een ver zaalscherm te richten en niemand hoeft een lange uitleg te onthouden. Op papier staan de gemakkelijkste route én een reserveweg: eerst internet, daarna de quiz-QR-code, en bij problemen de link met de driecijferige code. Het briefje vermeldt ook dat deelname anoniem is en dat men een hand mag opsteken. Dat geeft rust en maakt persoonlijke hulp mogelijk.
+Het vooraf gedrukte briefje is bewust de vaste toegang tot de quiz. Deelnemers hoeven geen QR-code van een ver zaalscherm te scannen en de organisator hoeft tijdens het binnenkomen niet telkens dezelfde technische uitleg te herhalen. Iedereen heeft de stappen letterlijk in handen: eerst internet, daarna de quiz-QR-code, en bij problemen de link met de driecijferige code. Het briefje werkt dus als instructie, toegangsbewijs en reserveoplossing tegelijk. Het vermeldt ook dat deelname anoniem is en dat men hulp mag vragen. Dat geeft vooral onzekere of oudere deelnemers rust.
 
 Canva-aanwijzing: Laat de onderdelen internet, quiz-QR, link, code, anonimiteit en hulp na elkaar oplichten.
 
 ----------------------------------------
 
-DIA 9 — Deel de briefjes uit vóór iedereen plaatsneemt
-Duur: 35 seconden
+DIA 9 — Plan verbinding maken als een apart onthaalmoment
+Duur: 60 seconden
 
-Geef bij de ingang één briefje aan iedere deelnemer en vraag om het meteen bij de hand te houden. Zeg kort: zet eerst internet aan, scan daarna de quizcode en laat de geopende pagina staan. Laat één of twee begeleiders in de zaal rondlopen. Zij kunnen helpen zonder namen of antwoorden te vragen. Begin de quiz pas wanneer de teller met verbonden deelnemers overeenkomt met het aantal mensen dat wil meespelen.
+Verbinding maken zal waarschijnlijk het meeste oponthoud geven. Plan dit daarom als een afzonderlijk onthaalmoment en voorzie bij een grotere zaal ongeveer vijftien tot twintig minuten vóór de geplande quizstart. Leg de thuis afgedrukte briefjes bij de ingang klaar en geef één vaste instructie: zet eerst internet aan, scan daarna de quizcode en laat de pagina openstaan. Laat minstens één helper bij de ingang uitleg geven en één helper in de zaal rondlopen. Wie U bent verbonden ziet, hoeft niets meer te doen. Begin niet op het aangekondigde uur omdat u haast krijgt, maar pas wanneer de verbindingsteller overeenkomt met het aantal deelnemers dat wil meespelen.
 
 Canva-aanwijzing: Toon één briefje per persoon, daarna de begeleider en eindig bij de teller verbonden deelnemers.
 
@@ -82,7 +82,7 @@ Canva-aanwijzing: Toon één briefje per persoon, daarna de begeleider en eindig
 DIA 10 — Deelnemer stap één: zorg voor internet
 Duur: 45 seconden
 
-De gemakkelijkste keuze is meestal de eigen mobiele data van de deelnemer. Wie liever de zaalwifi gebruikt, scant eerst de wifi-QR-code met de gewone camera-app of een vertrouwde QR-app en tikt op Verbinden. Er hoeft geen foto gemaakt te worden. Lukt de QR-code niet, open dan Instellingen, kies Wifi, selecteer de naam van het briefje en typ het wachtwoord precies over. Test eventueel kort of een gewone website opent. Pas daarna wordt de quiz geopend.
+Kijk eerst wat werkelijk op het briefje staat. Zonder zaalwifi vermeldt stap één uitsluitend dat mobiele data moet worden aangezet. Is vooraf zaalwifi ingevuld, dan kan de deelnemer kiezen: de eigen mobiele data gebruiken of eerst de wifi-QR-code scannen en op Verbinden tikken. Lukt die QR-code niet, open dan Instellingen, kies Wifi, selecteer de vermelde naam en typ het wachtwoord precies over. Test eventueel kort of een gewone website opent. Pas daarna wordt de quiz geopend.
 
 Canva-aanwijzing: Volg op het briefje stap één: mobiele data, wifi-QR, Verbinden en de handmatige wifi-instellingen.
 
@@ -142,9 +142,9 @@ Canva-aanwijzing: Toon eerst de persoonlijke score op de gsm en daarna de gezame
 
 ----------------------------------------
 
-DIA 17 — Opnieuw beginnen en de briefjes bewaren of vervangen
+DIA 17 — Dezelfde activiteit of een volledig nieuwe activiteit
 Duur: 40 seconden
 
-De quizmaster kan na afloop de groepsanalyse bekijken of Nieuwe sessie voorbereiden kiezen. De gsm’s en het zaalscherm volgen automatisch wanneer dezelfde deelnemers aangesloten blijven. Maakt u later een volledig nieuwe activiteit met een nieuwe code, druk dan ook nieuwe briefjes af. Bewaar voor de organisator altijd enkele blanco A4-vellen, de zaalgegevens en deze handleiding. Oefen vóór de eerste echte zaalquiz eenmaal met vijf vragen en enkele bestuursleden.
+De quizmaster kan na afloop de groepsanalyse bekijken of binnen dezelfde activiteit Nieuwe sessie voorbereiden kiezen. De gsm’s en het zaalscherm volgen automatisch wanneer de deelnemers verbonden blijven; daarvoor hoeft u niet opnieuw uit te delen. Voor een volledig nieuwe activiteit op een andere dag maakt u vooraf thuis een nieuwe definitieve sessie en drukt u de bijbehorende briefjes af. Bewaar de zaalgegevens, neem reserves mee en oefen vóór de eerste echte zaalquiz eenmaal met vijf vragen en enkele bestuursleden.
 
 Canva-aanwijzing: Toon Nieuwe sessie voorbereiden, daarna nieuwe briefjes en eindig met de korte oefensessie.

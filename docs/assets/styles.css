@@ -968,6 +968,10 @@ h3 {
     background: #f5f7f8;
 }
 
+.handout-wifi-card--mobile {
+    grid-template-columns: 1.8rem 1fr;
+}
+
 .handout-privacy {
     margin: 0.6rem 0 0;
     border-top: 1px solid var(--line);
@@ -1157,6 +1161,10 @@ h3 {
         gap: 2mm;
         border-radius: 2mm;
         padding: 2mm;
+    }
+
+    .handout-wifi-card--mobile {
+        grid-template-columns: 6mm minmax(0, 1fr);
     }
 
     .handout-access-card__number {
