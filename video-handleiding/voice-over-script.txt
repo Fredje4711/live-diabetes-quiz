@@ -142,9 +142,9 @@ Canva-aanwijzing: Toon eerst de persoonlijke score op de gsm, daarna de knop Ein
 
 ----------------------------------------
 
-DIA 17 — Na afloop: dezelfde groep of een nieuwe activiteit
-Duur: 45 seconden
+DIA 17 — Na afloop: herhalen of zaal en online samenbrengen
+Duur: 65 seconden
 
-Wilt u met dezelfde aanwezige groep nog een quiz spelen, kies dan Nieuwe sessie voorbereiden. De gsm’s en het zaalscherm kunnen die nieuwe sessie automatisch volgen zolang iedereen verbonden blijft; nieuwe briefjes zijn dan niet nodig. Voor een activiteit op een andere dag begint u opnieuw bij de thuisvoorbereiding: controleer de zaalverbinding, maak na een eventuele proef de definitieve sessie en druk de daarbij horende briefjes af. Zo blijft de werkwijze iedere keer dezelfde en overzichtelijk.
+Wilt u met dezelfde aanwezige groep nog een quiz spelen, kies dan Nieuwe sessie voorbereiden. De gsm’s en het zaalscherm kunnen die nieuwe sessie automatisch volgen zolang iedereen verbonden blijft; nieuwe briefjes zijn dan niet nodig. Omdat de quiz volledig via internet werkt, kunnen ook mensen deelnemen die de voorafgaande infosessie online volgen. Deel vlak vóór de quiz de deelnemerslink en de driecijferige code via de online vergaderchat of stuur die informatie vooraf mee. De online deelnemer opent de quiz op een gsm, tablet of tweede browservenster en ziet daar dezelfde vragen en antwoorden. De quizmaster hoeft geen aparte sessie te maken: zaal- en online deelnemers verschijnen samen in de tellers voor verbonden deelnemers en ontvangen antwoorden. Zo kan de quiz een vaste gezamenlijke afsluiter worden na iedere infosessie. Voor een activiteit op een andere dag begint u opnieuw bij de thuisvoorbereiding en maakt u een nieuwe definitieve sessie met nieuwe briefjes.
 
-Canva-aanwijzing: Toon twee routes: “dezelfde groep — geen nieuwe briefjes” en “nieuwe dag — opnieuw thuis voorbereiden”.
+Canva-aanwijzing: Toon eerst “dezelfde groep — geen nieuwe briefjes”. Voeg daarna “zaal + online in dezelfde quiz” toe met één gedeelde teller. Eindig met “nieuwe dag — opnieuw thuis voorbereiden”.
