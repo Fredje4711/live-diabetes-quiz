@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Canva-productieplan — Live Diabetes Quiz</title>
+  <style>
+    :root { --blue:#005b82; --cyan:#24acd4; --ink:#17212d; --muted:#58697a; --green:#168044; --paper:#fff; --bg:#eef5f8; --line:#c9dce5; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; color:var(--ink); background:var(--bg); line-height:1.55; }
+    header { color:white; background:linear-gradient(120deg,var(--blue),#087da6); padding:42px 24px; }
+    header > div, main { max-width:1120px; margin:auto; }
+    h1 { margin:0 0 8px; font-size:clamp(2rem,5vw,3.5rem); line-height:1.08; }
+    h2 { margin-top:0; color:var(--blue); }
+    h3 { margin:0 0 6px; }
+    header p { max-width:800px; margin:0; font-size:1.15rem; }
+    main { padding:28px 20px 60px; }
+    .summary, .phase, .slide, .checklist { background:var(--paper); border:1px solid var(--line); border-radius:18px; box-shadow:0 9px 28px rgba(25,69,88,.08); }
+    .summary, .checklist { padding:24px; margin-bottom:22px; }
+    .files { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+    .button { display:inline-block; padding:11px 15px; border-radius:10px; color:white; background:var(--blue); text-decoration:none; font-weight:700; }
+    .button.secondary { color:var(--blue); background:#e2f2f8; }
+    .metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin:18px 0 0; }
+    .metric { padding:15px; border-radius:12px; background:#f5fafc; border:1px solid var(--line); }
+    .metric strong { display:block; color:var(--blue); font-size:1.45rem; }
+    .rule { border-left:5px solid var(--green); padding:12px 16px; background:#f0faf4; margin:16px 0; }
+    .phase { margin:26px 0 12px; padding:18px 22px; border-left:8px solid var(--cyan); }
+    .phase p { margin:3px 0 0; color:var(--muted); }
+    .slide { display:grid; grid-template-columns:88px 1fr; gap:18px; padding:20px; margin:12px 0; }
+    .number { width:64px; height:64px; border-radius:50%; display:grid; place-items:center; background:var(--blue); color:white; font-size:1.45rem; font-weight:800; }
+    .meta { display:flex; flex-wrap:wrap; gap:8px 16px; color:var(--muted); font-size:.95rem; margin:4px 0 12px; }
+    .steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; }
+    .step { padding:13px 15px; background:#f7fafb; border:1px solid var(--line); border-radius:12px; }
+    .step b { color:var(--blue); }
+    label.done { display:flex; gap:10px; margin-top:13px; font-weight:700; color:var(--green); cursor:pointer; }
+    input[type=checkbox] { width:20px; height:20px; accent-color:var(--green); }
+    ol, ul { padding-left:22px; }
+    .small { color:var(--muted); font-size:.94rem; }
+    .warn { color:#8a4700; background:#fff7e8; border-left:5px solid #e99b23; padding:12px 16px; }
+    footer { text-align:center; color:var(--muted); padding:10px 20px 35px; }
+    @media (max-width:650px) { .slide { grid-template-columns:1fr; } .number { width:52px; height:52px; } }
+    @media print { body { background:white; font-size:10pt; } header { padding:20px; } main { padding:12px; } .summary,.phase,.slide,.checklist { box-shadow:none; break-inside:avoid; } .button { color:var(--blue); background:white; border:1px solid var(--blue); } .slide { padding:12px; } }
+  </style>
+</head>
+<body>
+  <header><div>
+    <h1>Canva-productieplan</h1>
+    <p>Live Diabetes Quiz — van het bestaande storyboard naar een rustige, duidelijke instructievideo voor organisatoren.</p>
+  </div></header>
+  <main>
+    <section class="summary">
+      <h2>Gebruik dit als vaste werkwijze</h2>
+      <p>Importeer de PowerPoint in Canva en gebruik iedere PowerPoint-dia als één videopagina. Bouw de video niet opnieuw vanaf een lege pagina: de juiste teksten, schermbeelden en volgorde staan al klaar.</p>
+      <div class="files">
+        <a class="button" href="https://www.canva.com/d/zZUMuc5op7uvqj2">Open de Canva-presentatie</a>
+        <a class="button" href="Live-Diabetes-Quiz-storyboard.pptx">Open het storyboard</a>
+        <a class="button secondary" href="voice-over-script.txt">Open het voice-overscript</a>
+        <a class="button secondary" href="storyboard-overzicht.png">Bekijk alle dia’s</a>
+      </div>
+      <div class="metrics">
+        <div class="metric"><strong>17 dia’s</strong>één duidelijke tijdlijn</div>
+        <div class="metric"><strong>± 14:25</strong>geraamde spreektijd</div>
+        <div class="metric"><strong>16:9</strong>video voor laptop en groot scherm</div>
+        <div class="metric"><strong>1080p</strong>aanbevolen MP4-uitvoer</div>
+      </div>
+      <div class="rule"><strong>Vaste stijl:</strong> overgang “Oplossen” of “Vervagen”, ongeveer 0,5 seconde. Gebruik geen draaiende, springende of flitsende effecten.</div>
+    </section>
+
+    <section class="checklist">
+      <h2>Eenmalige instelling in Canva</h2>
+      <ol>
+        <li>Upload <strong>Live-Diabetes-Quiz-storyboard.pptx</strong> en laat Canva de 17 pagina’s importeren.</li>
+        <li>Controleer dat het ontwerp breedbeeld 16:9 is en dat alle teksten en schermafbeeldingen volledig zichtbaar zijn.</li>
+        <li>Zet dezelfde rustige paginaovergang op alle dia’s: ongeveer 0,5 seconde.</li>
+        <li>Neem de voice-over bij voorkeur per dia afzonderlijk op. Zo kan één fout hernomen worden zonder de hele video opnieuw in te spreken.</li>
+        <li>Begin en eindig iedere opname met ongeveer een halve seconde stilte.</li>
+        <li>Gebruik duidelijke Nederlandse ondertitels en controleer technische woorden zoals “quizmaster”, “wifi”, “QR-code” en “deelnemersbriefje”.</li>
+        <li>Gebruik geen achtergrondmuziek. Als u toch muziek kiest, houd die nauwelijks hoorbaar onder de stem.</li>
+      </ol>
+      <p class="warn"><strong>Belangrijk:</strong> spreek rustig en natuurlijk. Pauzeer kort na een belangrijke opdracht, zodat de kijker tijd krijgt om ook het scherm te bekijken.</p>
+    </section>
+
+    <div class="phase"><h2>Opening</h2><p>Wat is de quiz en hoe werken de drie schermen samen?</p></div>
+    <article class="slide"><div class="number">1</div><div><h3>Live Diabetes Quiz voor organisatoren</h3><div class="meta"><span>25 seconden</span><span>Bestandsnaam audio: dia-01.wav</span></div><div class="steps"><div class="step"><b>0–3 s</b><br>Logo rustig laten verschijnen.</div><div class="step"><b>3–8 s</b><br>Titel en ondertitel vervagen in beeld.</div><div class="step"><b>8–25 s</b><br>Vier fasen benoemen; laatste beeld rustig laten staan.</div></div><label class="done"><input type="checkbox" data-key="d1"> Dia 1 is klaar en gecontroleerd</label></div></article>
+    <article class="slide"><div class="number">2</div><div><h3>Drie schermen met elk een eigen taak</h3><div class="meta"><span>35 seconden</span><span>dia-02.wav</span></div><div class="steps"><div class="step"><b>Start</b><br>Toon het volledige zaalscherm.</div><div class="step"><b>Tijdens uitleg</b><br>Accentueer achtereenvolgens laptop, gsm en zaal.</div><div class="step"><b>Einde</b><br>Zoom zacht in op “verbonden” en “antwoorden ontvangen”.</div></div><label class="done"><input type="checkbox" data-key="d2"> Dia 2 is klaar en gecontroleerd</label></div></article>
+
+    <div class="phase"><h2>Fase 1 — thuis of op kantoor</h2><p>Internetkeuze, volledige proefquiz, definitieve sessie en deelnemersbriefjes.</p></div>
+    <article class="slide"><div class="number">3</div><div><h3>Mobiele data als voorkeur; zaalwifi als keuze en reserve</h3><div class="meta"><span>75 seconden</span><span>dia-03.wav</span></div><div class="steps"><div class="step"><b>0–25 s</b><br>Markeer: “Voorkeur: eigen mobiele data”.</div><div class="step"><b>25–50 s</b><br>Toon zaalwifi als vrije keuze en reserve.</div><div class="step"><b>50–75 s</b><br>Beslisregel: beide testen; bij slecht mobiel bereik wifi adviseren.</div></div><label class="done"><input type="checkbox" data-key="d3"> Dia 3 is klaar en gecontroleerd</label></div></article>
+    <article class="slide"><div class="number">4</div><div><h3>Volledige proefquiz vóór de definitieve sessie</h3><div class="meta"><span>50 seconden</span><span>dia-04.wav</span></div><div class="steps"><div class="step"><b>Start</b><br>“Thuis of kantoor” en “tijdelijke sessie” tonen.</div><div class="step"><b>Midden</b><br>Wachtkamer, vragen, tellers en eindanalyse opsommen.</div><div class="step"><b>Einde</b><br>Duidelijk tonen: nog geen definitieve briefjes.</div></div><label class="done"><input type="checkbox" data-key="d4"> Dia 4 is klaar en gecontroleerd</label></div></article>
+    <article class="slide"><div class="number">5</div><div><h3>Na de proef de definitieve sessie en code maken</h3><div class="meta"><span>50 seconden</span><span>dia-05.wav</span></div><div class="steps"><div class="step"><b>Start</b><br>“Proef geslaagd” kort accentueren.</div><div class="step"><b>Midden</b><br>Aantal vragen en knop Nieuwe quizsessie maken markeren.</div><div class="step"><b>Einde</b><br>Definitieve code tonen; daarna niet meer vervangen.</div></div><label class="done"><input type="checkbox" data-key="d5"> Dia 5 is klaar en gecontroleerd</label></div></article>
+    <article class="slide"><div class="number">6</div><div><h3>Deelnemersbriefjes juist instellen</h3><div class="meta"><span>60 seconden</span><span>dia-06.wav</span></div><div class="steps"><div class="step"><b>0–25 s</b><br>Met zaalwifi: naam en wachtwoord invullen.</div><div class="step"><b>25–45 s</b><br>Zonder zaalwifi: velden leeg en mobiele data tonen.</div><div class="step"><b>45–60 s</b><br>Quiz-QR-code en drie cijfers controleren.</div></div><label class="done"><input type="checkbox" data-key="d6"> Dia 6 is klaar en gecontroleerd</label></div></article>
+    <article class="slide"><div class="number">7</div><div><h3>Proefdruk, testen, afdrukken en snijden</h3><div class="meta"><span>60 seconden</span><span>dia-07.wav</span></div><div class="steps"><div class="step"><b>Start</b><br>A4 staand en twee briefjes per vel.</div><div class="step"><b>Midden</b><br>Beide QR-codes en drie cijfers controleren.</div><div class="step"><b>Einde</b><br>Oplage, reserves, snijden en bundelen.</div></div><label class="done"><input type="checkbox" data-key="d7"> Dia 7 is klaar en gecontroleerd</label></div></article>
+    <article class="slide"><div class="number">8</div><div><h3>Alles inpakken voor de zaal</h3><div class="meta"><span>40 seconden</span><span>dia-08.wav</span></div><div class="steps"><div class="step"><b>Checklist 1</b><br>Dezelfde laptop, oplader en beeldkabels.</div><div class="step"><b>Checklist 2</b><br>Briefjes, reserves en zaalgegevens.</div><div class="step"><b>Laatste regel</b><br>Geen browsergegevens verwijderen.</div></div><label class="done"><input type="checkbox" data-key="d8"> Dia 8 is klaar en gecontroleerd</label></div></article>
+
+    <div class="phase"><h2>Fase 2 — ongeveer 90 minuten vóór de zaal opent</h2><p>Techniek aansluiten en de definitieve sessie veilig controleren.</p></div>
+    <article class="slide"><div class="number">9</div><div><h3>Laptop, internet en projector opstellen</h3><div class="meta"><span>50 seconden</span><span>dia-09.wav</span></div><div class="steps"><div class="step"><b>Start</b><br>“Ongeveer 90 minuten vooraf”.</div><div class="step"><b>Midden</b><br>Stroom, internet en uitgebreid bureaublad.</div><div class="step"><b>Einde</b><br>Leesbaarheid vanuit de achterste rij controleren.</div></div><label class="done"><input type="checkbox" data-key="d9"> Dia 9 is klaar en gecontroleerd</label></div></article>
+    <article class="slide"><div class="number">10</div><div><h3>De bestaande definitieve sessie openen</h3><div class="meta"><span>45 seconden</span><span>dia-10.wav</span></div><div class="steps"><div class="step"><b>Start</b><br>Dezelfde laptop en browser benadrukken.</div><div class="step"><b>Midden</b><br>Code op scherm en briefje vergelijken.</div><div class="step"><b>Einde</b><br>Groot zaalscherm openen; geen nieuwe sessie.</div></div><label class="done"><input type="checkbox" data-key="d10"> Dia 10 is klaar en gecontroleerd</label></div></article>
+    <article class="slide"><div class="number">11</div><div><h3>Alleen technisch controleren, geen vragen starten</h3><div class="meta"><span>50 seconden</span><span>dia-11.wav</span></div><div class="steps"><div class="step"><b>Controle</b><br>Reservebriefje, definitieve code en wachtkamer.</div><div class="step"><b>Controle</b><br>Teller stijgt en projectie is leesbaar.</div><div class="step"><b>Stop</b><br>Geen enkele vraag starten vóór het publiek klaarzit.</div></div><label class="done"><input type="checkbox" data-key="d11"> Dia 11 is klaar en gecontroleerd</label></div></article>
+    <article class="slide"><div class="number">12</div><div><h3>Ingang en helpers voorbereiden</h3><div class="meta"><span>50 seconden</span><span>dia-12.wav</span></div><div class="steps"><div class="step"><b>Start</b><br>Briefjes en reserves bij de ingang.</div><div class="step"><b>Midden</b><br>Eén vaste instructie voor alle helpers.</div><div class="step"><b>Einde</b><br>15–20 minuten verbindingstijd tonen.</div></div><label class="done"><input type="checkbox" data-key="d12"> Dia 12 is klaar en gecontroleerd</label></div></article>
+
+    <div class="phase"><h2>Fase 3 — ontvangst van de deelnemers</h2><p>Briefje uitdelen, internet activeren, quiz openen en wachten.</p></div>
+    <article class="slide"><div class="number">13</div><div><h3>Bij binnenkomst één briefje per persoon</h3><div class="meta"><span>55 seconden</span><span>dia-13.wav</span></div><div class="steps"><div class="step"><b>Start</b><br>Briefje geven vóór men plaatsneemt.</div><div class="step"><b>Voorkeur</b><br>Eigen mobiele data is het eenvoudigst.</div><div class="step"><b>Alternatief</b><br>Wifi-QR-code gebruiken als dat nodig of gewenst is.</div></div><label class="done"><input type="checkbox" data-key="d13"> Dia 13 is klaar en gecontroleerd</label></div></article>
+    <article class="slide"><div class="number">14</div><div><h3>Quiz openen en in de wachtkamer blijven</h3><div class="meta"><span>50 seconden</span><span>dia-14.wav</span></div><div class="steps"><div class="step"><b>Route 1</b><br>Quiz-QR-code scannen.</div><div class="step"><b>Route 2</b><br>Link en drie cijfers handmatig invoeren.</div><div class="step"><b>Einde</b><br>“U bent verbonden”; pagina openlaten.</div></div><label class="done"><input type="checkbox" data-key="d14"> Dia 14 is klaar en gecontroleerd</label></div></article>
+
+    <div class="phase"><h2>Fase 4 — spelen en afronden</h2><p>Antwoorden opvolgen, oplossingen bespreken en zaal plus online samenbrengen.</p></div>
+    <article class="slide"><div class="number">15</div><div><h3>Met de tellers samen verdergaan</h3><div class="meta"><span>60 seconden</span><span>dia-15.wav</span></div><div class="steps"><div class="step"><b>Voorbeeld</b><br>30 verbonden en 28 antwoorden: wachten.</div><div class="step"><b>Voorbeeld</b><br>30 verbonden en 30 antwoorden: iedereen klaar.</div><div class="step"><b>Daarna</b><br>Sluiten, juiste antwoord tonen, toelichten, verdergaan.</div></div><label class="done"><input type="checkbox" data-key="d15"> Dia 15 is klaar en gecontroleerd</label></div></article>
+    <article class="slide"><div class="number">16</div><div><h3>Persoonlijke score en gezamenlijke eindanalyse</h3><div class="meta"><span>45 seconden</span><span>dia-16.wav</span></div><div class="steps"><div class="step"><b>Start</b><br>Persoonlijke score uitsluitend op eigen gsm.</div><div class="step"><b>Midden</b><br>Knop Eindanalyse markeren.</div><div class="step"><b>Einde</b><br>Top drie leerpunten op het zaalscherm.</div></div><label class="done"><input type="checkbox" data-key="d16"> Dia 16 is klaar en gecontroleerd</label></div></article>
+    <article class="slide"><div class="number">17</div><div><h3>Herhalen of zaal en online samenbrengen</h3><div class="meta"><span>65 seconden</span><span>dia-17.wav</span></div><div class="steps"><div class="step"><b>Dezelfde groep</b><br>Gsm’s blijven verbonden; geen nieuwe briefjes.</div><div class="step"><b>Online</b><br>Deel link en code; iedereen telt mee in dezelfde sessie.</div><div class="step"><b>Nieuwe dag</b><br>Nieuwe definitieve sessie en nieuwe briefjes.</div></div><label class="done"><input type="checkbox" data-key="d17"> Dia 17 is klaar en gecontroleerd</label></div></article>
+
+    <section class="checklist">
+      <h2>Laatste controle vóór MP4-export</h2>
+      <ul>
+        <li>Luister de volledige video met een hoofdtelefoon én via gewone laptopluidsprekers.</li>
+        <li>Controleer of de stem nergens wordt afgesneden door een paginaovergang.</li>
+        <li>Lees alle ondertitels na en laat ze minimaal lang genoeg in beeld staan.</li>
+        <li>Controleer QR-codes en kleine schermafbeeldingen op een groot scherm; ze dienen als herkenning, niet om vanuit de video te scannen.</li>
+        <li>Laat minstens één persoon die de quiz nog niet kent de proefvideo bekijken en noteer waar die persoon vragen heeft.</li>
+        <li>Exporteer als MP4 in 1080p en bekijk het geëxporteerde bestand volledig vóór verspreiding.</li>
+      </ul>
+      <label class="done"><input type="checkbox" data-key="final"> Volledige proefvideo bekeken en goedgekeurd</label>
+    </section>
+  </main>
+  <footer>Live Diabetes Quiz — productieplan voor organisatoren</footer>
+  <script>
+    document.querySelectorAll('input[data-key]').forEach((box) => {
+      box.checked = localStorage.getItem('canva-' + box.dataset.key) === '1';
+      box.addEventListener('change', () => localStorage.setItem('canva-' + box.dataset.key, box.checked ? '1' : '0'));
+    });
+  </script>
+</body>
+</html>
