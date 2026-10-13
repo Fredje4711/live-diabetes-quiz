@@ -14,6 +14,7 @@ import {
     serverTimestamp,
     setDoc,
     updateDoc,
+    writeBatch,
 } from "firebase/firestore";
 
 let environment;
@@ -185,4 +186,54 @@ test("alleen de sessie-eigenaar kan de quizfase wijzigen", async () => {
         }),
     );
     assert.ok(true);
+});
+
+const activityId = "abcdef123456";
+const secret = "a".repeat(64);
+const firstRound = "b".repeat(32);
+const secondRound = "c".repeat(32);
+function newRound(uid, code, id = activityId) {
+    return { activityId: id, code, masterUid: uid, phase: "waiting", activePosition: 0,
+        questionOrder: [0,1,2,3,4], totalQuestions: 5, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
+}
+test("activiteit: vaste toegang, privébeheer, nieuwe ronde, definitief sluiten", async () => {
+    const master = environment.authenticatedContext("activity-owner").firestore();
+    const participant = environment.authenticatedContext("activity-player").firestore();
+    const replacement = environment.authenticatedContext("other-laptop").firestore();
+    const batch = writeBatch(master);
+    batch.set(doc(master,"activities",activityId), {title:"Testavond",ownerUid:"activity-owner",status:"open",currentSession:firstRound,roundNumber:1,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
+    batch.set(doc(master,"sessions",firstRound),newRound("activity-owner",firstRound));
+    batch.set(doc(master,"activityKeys",secret),{activityId,ownerUid:"activity-owner"});
+    await assertSucceeds(batch.commit());
+    const publicData = (await assertSucceeds(getDoc(doc(participant,"activities",activityId)))).data();
+    assert.equal(publicData.currentSession, firstRound);
+    assert.equal(publicData.key, undefined);
+    await assertFails(getDocs(collection(participant,"activities")));
+    await assertFails(getDocs(collection(participant,"activityKeys")));
+    await assertFails(setDoc(doc(participant,"activities",activityId,"managers","activity-player"),{key:"d".repeat(64)}));
+    await assertFails(setDoc(doc(participant,"activityKeys","d".repeat(64)),{activityId,ownerUid:"activity-player"}));
+    await assertFails(updateDoc(doc(participant,"activities",activityId),{status:"closed",updatedAt:serverTimestamp()}));
+    await assertFails(updateDoc(doc(participant,"sessions",firstRound),{phase:"open",updatedAt:serverTimestamp()}));
+    await assertSucceeds(setDoc(doc(replacement,"activities",activityId,"managers","other-laptop"),{key:secret}));
+    await assertFails(getDoc(doc(participant,"activities",activityId,"managers","other-laptop")));
+    await assertSucceeds(updateDoc(doc(replacement,"sessions",firstRound),{phase:"open",updatedAt:serverTimestamp()}));
+    const answer = {participantUid:"activity-player",questionPosition:0,optionIndex:1,answeredAt:serverTimestamp()};
+    await assertSucceeds(setDoc(doc(participant,"sessions",firstRound,"answers","activity-player_0"),answer));
+    const restart = writeBatch(replacement);
+    restart.set(doc(replacement,"sessions",secondRound),newRound("other-laptop",secondRound));
+    restart.update(doc(replacement,"activities",activityId),{currentSession:secondRound,roundNumber:2,updatedAt:serverTimestamp()});
+    await assertSucceeds(restart.commit());
+    assert.equal((await getDoc(doc(participant,"activities",activityId))).data().currentSession,secondRound);
+    await assertFails(updateDoc(doc(master,"sessions",firstRound),{phase:"open",updatedAt:serverTimestamp()}));
+    await assertFails(updateDoc(doc(master,"activities",activityId),{currentSession:firstRound,roundNumber:3,updatedAt:serverTimestamp()}));
+    await assertSucceeds(updateDoc(doc(master,"sessions",secondRound),{phase:"open",updatedAt:serverTimestamp()}));
+    await assertSucceeds(setDoc(doc(participant,"sessions",secondRound,"answers","activity-player_0"),answer));
+    await assertSucceeds(updateDoc(doc(replacement,"activities",activityId),{status:"closed",updatedAt:serverTimestamp()}));
+    assert.equal((await getDoc(doc(participant,"activities",activityId))).data().status,"closed");
+    await assertFails(updateDoc(doc(master,"activities",activityId),{status:"open",updatedAt:serverTimestamp()}));
+    await assertFails(updateDoc(doc(master,"sessions",secondRound),{phase:"open",updatedAt:serverTimestamp()}));
+    const newcomer = environment.authenticatedContext("late-player").firestore();
+    await assertFails(setDoc(doc(newcomer,"sessions",secondRound,"answers","late-player_0"),{...answer,participantUid:"late-player"}));
+    await assertFails(setDoc(doc(newcomer,"sessions",secondRound,"participants","late-player"),{uid:"late-player",joinedAt:serverTimestamp(),lastSeen:serverTimestamp()}));
+    await assertFails(setDoc(doc(newcomer,"activities",activityId,"managers","late-player"),{key:secret}));
 });

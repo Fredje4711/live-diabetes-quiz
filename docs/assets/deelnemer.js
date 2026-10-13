@@ -4,13 +4,15 @@ import {
     optionLetter,
     queryCode,
     setConnection,
-} from "./app.js?v=8";
+} from "./app.js?v=13";
 import {
     ensureAuth,
     resolveLatestSessionCode,
     submitAnswer as saveAnswer,
     watchQuiz,
-} from "./firebase-service.js?v=8";
+} from "./firebase-service.js?v=13";
+import { queryActivity, watchActivity } from "./activity-service.js?v=13";
+const activityId = queryActivity();
 
 const storageCodeKey = "dlq-participant-code";
 const connectionStatus = document.querySelector("#connectionStatus");
@@ -141,7 +143,7 @@ function renderState(state) {
     latestState = state;
     joinPanel.classList.add("hide");
     quizPanel.classList.remove("hide");
-    participantCode.textContent = state.session.code;
+    participantCode.textContent = state.activity?.title || state.session.code;
     participantPhase.textContent = formatPhase(state.session.phase);
 
     waitingParticipant.classList.toggle("hide", state.session.phase !== "waiting");
@@ -254,7 +256,29 @@ quizCodeInput.addEventListener("input", () => {
 
 try {
     await ensureAuth();
-    if (code.length === 3) {
+    if (activityId) {
+        joinPanel.classList.add("hide");
+        stopWatch = await watchActivity(activityId, "participant", state => {
+            if (state.closed || state.loading) {
+                latestState = null; renderedQuestionKey = "";
+                quizPanel.classList.add("hide");
+                const notice = document.querySelector("#activityNotice");
+                notice.classList.remove("hide");
+                notice.querySelector("h1").textContent = state.closed ? "Deze activiteit is afgelopen" : "Even geduld…";
+                notice.querySelector("p").textContent = state.closed ? "Bedankt voor uw deelname. U kunt dit scherm sluiten." : "De quizmaster zet een nieuwe ronde klaar. U hoeft niets te doen.";
+                setConnection(connectionStatus, "online", state.closed ? "Afgesloten" : "Verbinden…");
+                return;
+            }
+            document.querySelector("#activityNotice").classList.add("hide");
+            code = state.session.code;
+            renderState(state);
+        }, error => {
+            latestState = null; quizPanel.classList.add("hide");
+            joinPanel.classList.remove("hide");
+            showError(error.message);
+            setConnection(connectionStatus, "error", "Verbinding controleren");
+        });
+    } else if (code.length === 3) {
         quizCodeInput.value = code;
         await joinQuiz(code);
     } else {

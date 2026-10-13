@@ -1,0 +1,26 @@
+<!doctype html><meta charset="utf-8"><title>Afdrukcontrole deelnemersbriefjes</title>
+<pre id="result">Controle bezig…</pre><iframe id="sheet" style="width:196mm;height:283mm;border:1px solid #aaa"></iframe>
+<script type="module">
+const html = await (await fetch('../docs/briefje.html')).text();
+const css = await (await fetch('../docs/assets/styles.css')).text();
+const start = css.indexOf('@media print');
+let cursor=css.indexOf('{',start)+1,depth=1,end=cursor;
+while(depth && end<css.length){if(css[end]==='{')depth++;if(css[end]==='}')depth--;end++;}
+const printCss=css.slice(cursor,end-1);
+const frame=document.querySelector('iframe');
+frame.srcdoc=html.replace('<head>','<head><base href="/docs/">').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,'')
+ .replace('</head>','<style>'+printCss+'</style></head>');
+frame.onload=()=>{
+ const d=frame.contentDocument;
+ for(const target of d.querySelectorAll('.participant-handout__content')){
+  target.append(d.querySelector('template').content.cloneNode(true));
+  target.querySelector('.handout-activity').textContent='Ledenfeest Diabetes Liga Midden-Limburg — samen spelen tijdens onze jaarlijkse dag';
+  target.querySelector('.handout-code-instruction').classList.add('hide');
+  target.querySelector('.wifi-details').textContent='GastenWifi'.repeat(3)+' — wachtwoord: '+'abcdefghij'.repeat(6)+'123';
+  target.querySelector('.handout-address').textContent='fredje4711.github.io/live-diabetes-quiz/deelnemer.html?a=123456789abc';
+ }
+ const cards=[...d.querySelectorAll('.participant-handout')];
+ const results=cards.map(c=>({height:c.clientHeight,content:c.scrollHeight,overflow:c.scrollHeight>c.clientHeight}));
+ document.querySelector('#result').textContent=JSON.stringify({cards:results,sheetHeight:d.documentElement.scrollHeight,availableHeight:frame.clientHeight,onePage:d.documentElement.scrollHeight<=frame.clientHeight},null,2);
+};
+</script>

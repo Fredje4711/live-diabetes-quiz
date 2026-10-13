@@ -4,12 +4,14 @@ import {
     optionLetter,
     queryCode,
     setConnection,
-} from "./app.js?v=9";
+} from "./app.js?v=13";
 import {
     ensureAuth,
     resolveLatestSessionCode,
     watchQuiz,
-} from "./firebase-service.js?v=9";
+} from "./firebase-service.js?v=13";
+import { queryActivity, watchActivity } from "./activity-service.js?v=13";
+const activityId = queryActivity();
 
 const storageCodeKey = "dlq-projector-code";
 const connectionStatus = document.querySelector("#connectionStatus");
@@ -75,7 +77,9 @@ function renderFinalAnalysis(analysis) {
         const content = document.createElement("div");
         const meta = document.createElement("p");
         meta.className = "projector-analysis__meta";
-        meta.textContent = `Vraag ${entry.number} · ${entry.incorrect} fout (${entry.percentage}%)`;
+        meta.textContent = entry.total === 1
+            ? `Vraag ${entry.number} — Het enige ontvangen antwoord was fout (100%)`
+            : `Vraag ${entry.number} — ${entry.incorrect} van de ${entry.total} ontvangen antwoorden ${entry.incorrect === 1 ? "was" : "waren"} fout (${entry.percentage}%)`;
 
         const question = document.createElement("h2");
         question.textContent = entry.question;
@@ -105,7 +109,8 @@ function renderState(state) {
     );
     projectorFinished.classList.toggle("hide", state.session.phase !== "finished");
     projectorPhase.textContent = formatPhase(state.session.phase);
-    projectorSessionCode.textContent = state.session.code;
+    projectorSessionCode.textContent = state.activity?.title || state.session.code;
+    if (state.activity) projectorSessionCode.classList.add("projector-activity-name");
 
     if (state.question && state.session.phase !== "finished") {
         projectorQuestionNumber.textContent =
@@ -185,7 +190,26 @@ projectorCodeInput.addEventListener("input", () => {
 
 try {
     await ensureAuth();
-    if (code.length === 3) {
+    if (activityId) {
+        projectorJoin.classList.add("hide");
+        stopWatch = await watchActivity(activityId, "projector", state => {
+            if (state.closed || state.loading) {
+                latestState = null;
+                [projectorWaiting,projectorQuestion,projectorFinished].forEach(el => el.classList.add("hide"));
+                const notice = document.querySelector("#activityNotice");
+                notice.classList.remove("hide");
+                notice.querySelector("h1").textContent = state.closed ? "Bedankt voor uw deelname" : "Een nieuwe ronde komt eraan";
+                notice.querySelector("p").textContent = state.closed ? "Deze activiteit is afgelopen." : "Blijf verbonden op uw gsm. Dezelfde briefjes blijven geldig.";
+                projectorPhase.textContent = state.closed ? "Afgesloten" : "Even geduld";
+                return;
+            }
+            document.querySelector("#activityNotice").classList.add("hide");
+            code = state.session.code; renderState(state);
+        }, error => {
+            setConnection(connectionStatus, "error", "Verbinding controleren");
+            projectorJoin.classList.remove("hide"); showError(error.message);
+        });
+    } else if (code.length === 3) {
         projectorCodeInput.value = code;
         await openProjection(code, openExactSession);
     } else {

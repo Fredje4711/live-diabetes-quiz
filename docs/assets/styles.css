@@ -800,6 +800,21 @@ h3 {
     letter-spacing: 0.18em;
 }
 
+.projector-code.projector-activity-name {
+    font-size: clamp(1.5rem, 3vw, 3rem);
+    letter-spacing: normal;
+}
+
+.confirm-dialog { width: min(600px, calc(100% - 2rem)); border: 2px solid var(--brand); border-radius: 16px; padding: 1.5rem; color: var(--ink); }
+.confirm-dialog::backdrop { background: rgba(0,0,0,.5); }
+.confirm-dialog p { line-height: 1.6; }
+
+@media (max-width: 640px) {
+    .site-header__inner { flex-wrap: wrap; padding-block: 8px; gap: 8px; }
+    .status-line { flex-shrink: 0; white-space: nowrap; }
+    #participantCode { font-size: 1.2rem !important; letter-spacing: normal; }
+}
+
 .qr-card {
     display: flex;
     align-items: center;

@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Startpagina van de anonieme Live Diabetes Quiz voor gebruik in een zaal.">
     <title>Live Diabetes Quiz starten</title>
-    <link rel="stylesheet" href="assets/styles.css?v=6">
-    <link rel="stylesheet" href="assets/start.css?v=2">
+    <link rel="stylesheet" href="assets/styles.css?v=13">
+    <link rel="stylesheet" href="assets/start.css?v=4">
 </head>
 <body>
     <header class="site-header">
@@ -21,43 +21,51 @@
 
     <main class="page-shell start-page">
         <section class="start-hero" aria-labelledby="start-title">
-            <p class="eyebrow">Voor de quizmaster</p>
-            <h1 id="start-title">Een nieuwe zaalquiz starten</h1>
+            <p class="eyebrow">Voor organisatoren en quizmasters</p>
+            <h1 id="start-title">Welkom bij de Live Diabetes Quiz</h1>
             <p class="lead">
-                Kies straks het aantal vragen. Daarna krijgt u vanzelf alle knoppen voor
-                de deelnemersbriefjes, het grote zaalscherm en het starten van de quiz.
+                Deelnemers antwoorden op hun gsm. De quizmaster bedient de quiz op de laptop;
+                het publiek volgt de vragen op het grote scherm.
             </p>
 
-            <a class="start-primary" href="quizmaster.html">
-                <span>Nieuwe quiz starten</span>
-                <small>Open het quizmasterscherm</small>
-            </a>
-
-            <p class="session-note">
-                <strong>Goed om te weten:</strong> stond er op deze laptop nog een quiz open,
-                dan wordt die eerst automatisch hervat.
-            </p>
         </section>
+
+        <div class="start-choices">
+            <section class="start-choice start-choice--first" aria-labelledby="first-title">
+                <p class="eyebrow">Eerste keer?</p>
+                <h2 id="first-title">Maak eerst kennis</h2>
+                <p>Bekijk kort hoe de quiz werkt. Daarna kunt u stap voor stap oefenen met een testquiz van vijf vragen.</p>
+                <a class="start-primary" href="kennismaken.html"><span>Maak kennis met de quiz</span></a>
+                <p class="session-note">De volledige handleiding blijft beschikbaar als u iets wilt opzoeken.</p>
+            </section>
+            <section class="start-choice" aria-labelledby="ready-title">
+                <p class="eyebrow">Al vertrouwd met de quiz?</p>
+                <h2 id="ready-title">Bereid uw quiz voor</h2>
+                <p>Maak een activiteit met vaste deelnemersbriefjes. Kies het aantal vragen en bewaar uw privébeheerlink.</p>
+                <a class="start-secondary" href="quizmaster.html">Quiz voorbereiden</a>
+                <p class="session-note">Staat er nog een eerdere quiz open? Dan wordt die eerst hervat.</p>
+            </section>
+        </div>
 
         <section class="start-steps" aria-labelledby="steps-title">
             <div class="start-section-heading">
                 <p class="eyebrow">Zo eenvoudig werkt het</p>
-                <h2 id="steps-title">Vier stappen in de zaal</h2>
+                <h2 id="steps-title">Van voorbereiding tot spelen</h2>
             </div>
 
             <ol>
                 <li>
                     <span class="step-number">1</span>
                     <div>
-                        <strong>Maak de quiz</strong>
-                        <p>Kies het aantal vragen en maak een nieuwe quizsessie.</p>
+                        <strong>Maak uw activiteit</strong>
+                        <p>Kies het aantal vragen en bewaar uw privébeheerlink.</p>
                     </div>
                 </li>
                 <li>
                     <span class="step-number">2</span>
                     <div>
                         <strong>Bereid de zaal voor</strong>
-                        <p>Druk de deelnemersbriefjes af en open het grote zaalscherm.</p>
+                        <p>Druk vooraf de deelnemersbriefjes af. Open in de zaal uw beheerlink en het grote zaalscherm.</p>
                     </div>
                 </li>
                 <li>
@@ -79,8 +87,8 @@
 
         <section class="start-help" aria-labelledby="help-title">
             <div>
-                <p class="eyebrow">Eerste keer of een tijdje geleden?</p>
-                <h2 id="help-title">Bekijk rustig de handleiding</h2>
+                <p class="eyebrow">Iets opzoeken?</p>
+                <h2 id="help-title">De uitleg blijft bij de hand</h2>
                 <p>
                     Daar vindt u de volledige voorbereiding, duidelijke afbeeldingen,
                     uitleg bij alle knoppen en het verloop tot en met de eindanalyse.
@@ -88,6 +96,8 @@
             </div>
             <a class="start-secondary" href="handleiding.html">Handleiding bekijken</a>
         </section>
+
+        <p class="participant-note"><a href="uitleg/oefenen.html">Opnieuw oefenen</a> · <a href="uitleg/organiseren.html">Stappen voor de echte activiteit</a></p>
 
         <p class="participant-note">
             <strong>Deelnemer?</strong> Gebruik de QR-code of internetlink op het briefje dat u in de zaal ontvangt.

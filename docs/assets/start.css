@@ -94,6 +94,15 @@
     line-height: 1.55;
 }
 
+.start-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.start-choice { min-width: 0; padding: clamp(1.5rem, 3vw, 2rem); border: 1px solid var(--start-border); border-radius: 22px; background: #fff; }
+.start-choice--first { border: 2px solid var(--start-blue); background: var(--start-blue-soft); }
+.start-choice h2 { margin: .5rem 0 1rem; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.2; }
+.start-choice p { line-height: 1.6; }
+.start-choice .start-primary { width: 100%; min-height: 66px; margin: 1.5rem 0 1rem; padding: 1rem; }
+.start-choice .start-primary span { font-size: 1.2rem; }
+.start-choice .start-secondary { margin: 1.5rem 0 1rem; }
+
 .start-steps,
 .start-help {
     border: 1px solid var(--start-border);
@@ -211,6 +220,7 @@
 }
 
 @media (max-width: 640px) {
+    .start-choices { grid-template-columns: 1fr; }
     .site-header__inner {
         gap: 0.75rem;
     }

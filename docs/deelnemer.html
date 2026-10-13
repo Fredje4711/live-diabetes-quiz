@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Anoniem deelnemen aan de Live Diabetes Quiz.">
     <title>Deelnemer – Live Diabetes Quiz</title>
-    <link rel="stylesheet" href="assets/styles.css?v=6">
+    <link rel="stylesheet" href="assets/styles.css?v=13">
 </head>
 <body>
     <header class="site-header">
@@ -23,8 +23,9 @@
     <main class="page-shell page-shell--narrow">
         <section id="joinPanel" class="panel">
             <p class="eyebrow">Anoniem deelnemen</p>
-            <h1>Voer de quizcode in</h1>
-            <p class="lead">De code bestaat uit drie cijfers en staat duidelijk op uw quizbriefje.</p>
+            <h1>Open uw deelnemersbriefje</h1>
+            <p class="lead">Scan de QR-code met uw camera of open de volledige link op uw briefje. U hoeft geen cijfercode in te voeren.</p>
+            <details><summary>Ik heb nog een oud briefje met drie cijfers</summary>
             <form id="joinForm" style="margin-top: 1.5rem">
                 <div class="field">
                     <label for="quizCode">Quizcode</label>
@@ -44,9 +45,12 @@
                     <button class="button-primary" type="submit">Deelnemen</button>
                 </div>
             </form>
+            </details>
             <p class="notice">Uw naam of e-mailadres wordt niet gevraagd.</p>
             <p id="joinError" class="notice notice--error hide" role="alert"></p>
         </section>
+
+        <section id="activityNotice" class="panel hide"><h1>Even geduld…</h1><p>We openen uw activiteit.</p></section>
 
         <section id="quizPanel" class="hide">
             <div class="panel">
@@ -84,11 +88,11 @@
                     <h2 style="margin-top: 1.5rem">Bekijk uw foute antwoorden</h2>
                     <ol id="incorrectList" class="incorrect-list"></ol>
                 </div>
-                <p class="notice">Bedankt voor uw deelname. U kunt dit scherm nu sluiten.</p>
+                <p class="notice">Blijf op deze pagina als er nog een ronde volgt. De quizmaster geeft aan wanneer de activiteit afgelopen is.</p>
             </section>
         </section>
     </main>
 
-    <script type="module" src="assets/deelnemer.js?v=8"></script>
+    <script type="module" src="assets/deelnemer.js?v=13"></script>
 </body>
 </html>

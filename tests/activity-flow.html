@@ -1,0 +1,63 @@
+<!doctype html><html lang="nl"><meta charset="utf-8"><title>Activiteiten — lokale integratietest</title>
+<button id="run">Test alleen in emulator</button><pre id="result">Klaar</pre>
+<script type="module">
+if (new URLSearchParams(location.search).get('emulator') !== '1') throw Error('Emulator verplicht');
+const service = await import('../docs/assets/activity-service.js?v=13');
+const quiz = await import('../docs/assets/firebase-service.js?v=13');
+const {getAuth, signOut} = await import('https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js');
+const output = document.querySelector('#result');
+const check = (value, message) => { if (!value) throw Error(message); output.textContent += '\nOK: ' + message; };
+function stateOnce(id, role, predicate = state => !state.loading) {
+ return new Promise((resolve,reject) => {
+  let stop, settled = false;
+  const timer = setTimeout(() => done(Error('Geen toestand binnen 15 seconden')),15000);
+  function done(error,state) { if(settled)return; settled=true;clearTimeout(timer);stop?.(); error?reject(error):resolve(state); }
+  service.watchActivity(id,role,state => { if(predicate(state))done(null,state); },error=>done(error)).then(fn=>{stop=fn;if(settled)stop();},error=>done(error));
+ });
+}
+document.querySelector('#run').onclick = async () => {
+ document.querySelector('#run').disabled = true; output.textContent = 'Test gestart (geen productiegegevens)';
+ try {
+  const a = await service.createActivity({title:'Integratietest',questionCount:5,shuffle:false});
+  const b = await service.createActivity({title:'Andere activiteit',questionCount:10,shuffle:true});
+  let state = await stateOnce(a.id,'master');
+  const link = service.activityUrl('deelnemer.html',a.id);
+  const original = state.session.code;
+  await stateOnce(a.id,'participant');
+  await quiz.controlSession(original,'start');
+  await quiz.submitAnswer({code:original,questionPosition:0,optionIndex:0});
+  state = await stateOnce(a.id,'participant',s=>s.participantAnswer);
+  check(state.participantAnswer.optionIndex===0,'antwoord ontvangen');
+  for(let i=0;i<15;i++) {
+   await service.startRound(a.id,state.session.code,{questionCount:i%2?10:5,shuffle:false});
+   state = await stateOnce(a.id,'master',s=>!s.loading && s.activity.roundNumber===i+2);
+  }
+  check(link===service.activityUrl('deelnemer.html',a.id),'vaste link na vijftien herstarts');
+  check(state.activity.roundNumber===16,'geen limiet door een keten van oude sessies');
+  state = await stateOnce(a.id,'participant');
+  check(!state.participantAnswer && state.session.phase==='waiting','nieuwe ronde heeft geen oude antwoorden');
+  let denied=false;
+  try{ await quiz.submitAnswer({code:original,questionPosition:0,optionIndex:1}); }catch{denied=true;}
+  check(denied,'oude ronde accepteert geen antwoord');
+  const expected = state.session.code;
+  const results = await Promise.allSettled([service.startRound(a.id,expected,{questionCount:5}),service.startRound(a.id,expected,{questionCount:10})]);
+  check(results.filter(r=>r.status==='fulfilled').length===1,'gelijktijdige herstarts maken maar één nieuwe ronde');
+  await signOut(getAuth()); await quiz.ensureAuth();
+  denied=false; try{await service.authorizeActivity(a.id,'');}catch{denied=true;}
+  check(denied,'nieuwe browser zonder beheerlink krijgt geen bediening');
+  denied=false; try{await service.authorizeActivity(b.id,a.key);}catch{denied=true;}
+  check(denied,'beheerlink van activiteit A werkt niet voor B');
+  await service.authorizeActivity(a.id,a.key);
+  state=await stateOnce(a.id,'master',s=>!s.loading && s.activity.roundNumber===17);
+  await quiz.controlSession(state.session.code,'start');
+  check((await stateOnce(a.id,'master',s=>s.session?.phase==='open')).session.phase==='open','bediening hersteld in nieuwe browser');
+  await service.closeActivity(a.id,state.session.code);
+  check((await stateOnce(a.id,'participant',s=>s.closed)).closed,'oude deelnemerslink toont afgesloten');
+  denied=false;try{await service.startRound(a.id,state.session.code,{questionCount:5});}catch{denied=true;}
+  check(denied,'afgesloten activiteit kan niet herstarten');
+  check((await service.readActivity(b.id)).status==='open','andere activiteit blijft onaangeroerd');
+  output.textContent+='\nALLE TESTS GESLAAGD';
+ } catch(error) {output.textContent+='\nMISLUKT: '+error.message;console.error(error);}
+ finally{document.querySelector('#run').disabled=false;}
+};
+</script></html>

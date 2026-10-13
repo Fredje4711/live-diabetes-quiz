@@ -1,5 +1,6 @@
 import {
     copyText,
+    confirmAction,
     formatPhase,
     handoutUrl,
     optionLetter,
@@ -7,13 +8,83 @@ import {
     projectorUrl,
     renderQr,
     setConnection,
-} from "./app.js?v=9";
+} from "./app.js?v=13";
 import {
     controlSession,
-    createSession,
     ensureAuth,
     watchQuiz,
-} from "./firebase-service.js?v=9";
+} from "./firebase-service.js?v=13";
+import { activityUrl, managementUrl, queryActivity, validActivity, validKey,
+    createActivity, authorizeActivity, startRound, closeActivity, watchActivity } from "./activity-service.js?v=13";
+
+const identityKey = "dlq-activity-manager";
+let savedIdentity = {};
+try { savedIdentity = JSON.parse(localStorage.getItem(identityKey) || "{}"); } catch {}
+let activityId = queryActivity() || (validActivity(savedIdentity.id) ? savedIdentity.id : "");
+let managementKey = new URLSearchParams(location.hash.slice(1)).get("beheer") ||
+    (savedIdentity.id === activityId ? savedIdentity.key || "" : "");
+let activityState = null;
+let preparingRound = false;
+let expectedRound = "";
+const activityName = document.querySelector("#activityName");
+const setupTitle = document.querySelector("#setupTitle");
+const setupLead = document.querySelector("#setupLead");
+const closeActivityButton = document.querySelector("#closeActivityButton");
+const managementPanel = document.querySelector("#managementPanel");
+const closedPanel = document.querySelector("#closedPanel");
+const cancelRound = document.querySelector("#cancelRound");
+
+function linkFor(page) {
+    if (activityId) return activityUrl(page, activityId);
+    return page === "briefje.html" ? handoutUrl(code) : page === "projectie.html" ? projectorUrl(code) : participantUrl(code);
+}
+function rememberActivity() {
+    localStorage.setItem(identityKey, JSON.stringify({id: activityId, key: managementKey}));
+    history.replaceState(null, "", validKey(managementKey) ? managementUrl(activityId, managementKey) : activityUrl("quizmaster.html", activityId));
+}
+function resetSetup() {
+    preparingRound = false;
+    setupTitle.textContent = "Activiteit voorbereiden";
+    setupLead.textContent = "Eén vast briefje voor deze activiteit, ook als u opnieuw begint. Bewaar straks uw privébeheerlink.";
+    activityName.closest(".field").classList.remove("hide");
+    activityName.required = true;
+    createSessionForm.querySelector("button[type=submit]").textContent = "Activiteit maken";
+    cancelRound.classList.add("hide");
+}
+function activityUpdate(state) {
+    activityState = state.activity;
+    if (state.closed) {
+        latestState = null;
+        setupPanel.classList.add("hide"); controlPanel.classList.add("hide");
+        closedPanel.classList.remove("hide");
+        setConnection(connectionStatus, "online", "Activiteit afgesloten");
+        return;
+    }
+    closedPanel.classList.add("hide");
+    if (state.loading) {
+        latestState = null;
+        Object.values(buttons).forEach(b => b.disabled = true);
+        setConnection(connectionStatus, "busy", "Nieuwe ronde openen…");
+        return;
+    }
+    code = state.session.code;
+    renderState(state);
+    if (!preparingRound) { setupPanel.classList.add("hide"); controlPanel.classList.remove("hide"); }
+}
+async function beginActivity() {
+    await authorizeActivity(activityId, managementKey);
+    rememberActivity();
+    stopWatch?.();
+    managementPanel.classList.remove("hide");
+    document.querySelector("#copyManagementLink").disabled = !validKey(managementKey);
+    document.querySelector("#saveManagementLink").disabled = !validKey(managementKey);
+    renderQr(participantQr, linkFor("deelnemer.html"));
+    closeActivityButton.classList.remove("hide");
+    stopWatch = await watchActivity(activityId, "master", activityUpdate, error => {
+        setConnection(connectionStatus, "error", "Verbinding controleren");
+        showError(controlError, error.message); showError(setupError, error.message);
+    });
+}
 
 const storageCodeKey = "dlq-master-code";
 const previousStorageCodeKey = "dlq-master-previous-code";
@@ -69,7 +140,7 @@ if (storedPreviousCode && !previousCode) {
 let latestState = null;
 let stopWatch = null;
 let commandBusy = false;
-let restoringStoredSession = Boolean(code);
+let restoringStoredSession = !activityId && Boolean(code);
 
 function showError(element, message = "") {
     element.textContent = message;
@@ -167,7 +238,9 @@ function renderAnalysis(analysis) {
     analysis.difficultQuestions.forEach((entry) => {
         const item = document.createElement("li");
         const title = document.createElement("strong");
-        title.textContent = `${entry.incorrect} fout (${entry.percentage}%) – vraag ${entry.number}`;
+        title.textContent = entry.total === 1
+            ? `Vraag ${entry.number} — Het enige ontvangen antwoord was fout (100%)`
+            : `Vraag ${entry.number} — ${entry.incorrect} van de ${entry.total} ontvangen antwoorden ${entry.incorrect === 1 ? "was" : "waren"} fout (${entry.percentage}%)`;
         const text = document.createElement("p");
         text.textContent = entry.question;
         item.append(title, text);
@@ -215,14 +288,15 @@ function renderState(state) {
     }
 
     latestState = state;
-    sessionCode.textContent = state.session.code;
+    sessionCode.textContent = activityState?.title || `Oude sessie ${state.session.code}`;
     phaseBadge.textContent = formatPhase(state.session.phase);
     questionPhase.textContent = formatPhase(state.session.phase);
     activeParticipants.textContent = state.participants.active;
     totalParticipants.textContent = state.participants.total;
     answeredCount.textContent = state.statistics?.total ?? 0;
-    openProjectorLink.href = projectorUrl(code);
-    printHandoutsLink.href = handoutUrl(code);
+    openProjectorLink.href = linkFor("projectie.html");
+    printHandoutsLink.href = linkFor("briefje.html");
+    newSessionButton.textContent = state.session.phase === "finished" ? "Nog een quiz spelen" : "Quiz opnieuw beginnen";
 
     waitingMaster.classList.toggle("hide", state.session.phase !== "waiting");
     questionMaster.classList.toggle(
@@ -291,16 +365,19 @@ createSessionForm.addEventListener("submit", async (event) => {
     setConnection(connectionStatus, "busy", "Sessie maken…");
 
     try {
-        const result = await createSession({
-            questionCount: Number(questionCount.value),
-            shuffle: shuffleQuestions.checked,
-            previousCode,
-        });
-        code = result.code;
-        previousCode = "";
-        localStorage.removeItem(previousStorageCodeKey);
-        localStorage.setItem(storageCodeKey, code);
-        await beginControl();
+        const options = { questionCount: Number(questionCount.value), shuffle: shuffleQuestions.checked };
+        if (activityId) {
+            await startRound(activityId, expectedRound, options);
+            preparingRound = false;
+            setupPanel.classList.add("hide"); controlPanel.classList.remove("hide");
+        } else {
+            const result = await createActivity({ ...options, title: activityName.value });
+            activityId = result.id; managementKey = result.key;
+            rememberActivity();
+            localStorage.removeItem(storageCodeKey);
+            localStorage.removeItem(previousStorageCodeKey);
+            await beginActivity();
+        }
     } catch (error) {
         showError(setupError, error.message);
         setConnection(connectionStatus, "error", "Sessie niet gemaakt");
@@ -330,9 +407,9 @@ buttons.lock.addEventListener("click", () => runCommand("lock"));
 buttons.reveal.addEventListener("click", () => runCommand("reveal"));
 buttons.next.addEventListener("click", () => runCommand("next"));
 
-buttons.previous.addEventListener("click", () => {
+buttons.previous.addEventListener("click", async () => {
     if (
-        window.confirm(
+        await confirmAction(
             "Teruggaan opent de vorige vraag opnieuw. Reeds gegeven antwoorden blijven bewaard. Doorgaan?",
         )
     ) {
@@ -340,44 +417,85 @@ buttons.previous.addEventListener("click", () => {
     }
 });
 
-buttons.finish.addEventListener("click", () => {
-    if (window.confirm("Wilt u de quiz nu beëindigen en de eindscores tonen?")) {
+buttons.finish.addEventListener("click", async () => {
+    if (await confirmAction("Wilt u deze ronde stoppen en de eindanalyse tonen? De activiteit en de briefjes blijven geldig.", "Ronde stoppen")) {
         runCommand("finish");
     }
 });
 
 copyParticipantLink.addEventListener("click", () =>
-    copyText(participantUrl(code), copyParticipantLink),
+    copyText(linkFor("deelnemer.html"), copyParticipantLink),
 );
 
-newSessionButton.addEventListener("click", () => {
+newSessionButton.addEventListener("click", async () => {
     if (
-        !window.confirm(
-            "Een nieuwe quiz voorbereiden? De verbonden gsm’s en het zaalscherm gaan na het maken automatisch mee naar de nieuwe quiz.",
+        !await confirmAction(
+            activityId ? "Een nieuwe ronde voorbereiden? Na het bevestigen begint iedereen met een lege score. Dezelfde briefjes blijven geldig." : "Dit is een oude sessie met cijfercode. Maak een nieuwe activiteit en druk daarvoor nieuwe briefjes af. Doorgaan?",
         )
     ) {
         return;
     }
-    stopWatch?.();
-    stopWatch = null;
-    previousCode = code;
-    localStorage.setItem(previousStorageCodeKey, previousCode);
-    localStorage.removeItem(storageCodeKey);
-    code = "";
-    latestState = null;
+    if (activityId) {
+        preparingRound = true;
+        expectedRound = activityState.currentSession;
+        activityName.required = false;
+        activityName.closest(".field").classList.add("hide");
+        setupTitle.textContent = "Nieuwe ronde, dezelfde briefjes";
+        setupLead.textContent = "Kies het aantal vragen. Iedereen gaat daarna automatisch naar de wachtkamer. De huidige ronde blijft staan tot u bevestigt.";
+        createSessionForm.querySelector("button[type=submit]").textContent = "Nieuwe ronde klaarzetten";
+        cancelRound.classList.remove("hide");
+    } else { stopWatch?.(); stopWatch = null; code = ""; resetSetup(); }
     controlPanel.classList.add("hide");
     setupPanel.classList.remove("hide");
     setConnection(connectionStatus, "online", "Klaar voor nieuwe sessie");
 });
 
+cancelRound.addEventListener("click", () => {
+    preparingRound = false; setupPanel.classList.add("hide"); controlPanel.classList.remove("hide");
+});
+document.querySelector("#copyManagementLink").addEventListener("click", event => copyText(managementUrl(activityId, managementKey), event.currentTarget));
+document.querySelector("#saveManagementLink").addEventListener("click", () => {
+    const text = `PRIVÉ — beheerlink Live Diabetes Quiz\nActiviteit: ${activityState?.title || ""}\n\n${managementUrl(activityId, managementKey)}\n\nBewaar dit bestand. Open deze link op uw laptop, ook na een herstart of op een andere laptop. Deel hem alleen met een medeorganisator: wie de link heeft kan de quiz bedienen en afsluiten. Niet voor deelnemers.\n`;
+    const url = URL.createObjectURL(new Blob([text], {type:"text/plain;charset=utf-8"}));
+    const a = document.createElement("a"); a.href = url; a.download = `quiz-beheerlink-${activityId}.txt`; a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+closeActivityButton.addEventListener("click", async () => {
+    if (!activityState || !await confirmAction("Activiteit DEFINITIEF afsluiten? Alle uitgedeelde briefjes stoppen met werken. Dit kan niet ongedaan worden gemaakt. Kies Annuleren als u nog een ronde wilt spelen.", "Ja, definitief afsluiten")) return;
+    closeActivityButton.disabled = true;
+    try { await closeActivity(activityId, activityState.currentSession); }
+    catch (error) { showError(controlError, error.message); }
+    finally { closeActivityButton.disabled = false; }
+});
+document.querySelector("#newActivityButton").addEventListener("click", () => {
+    stopWatch?.(); stopWatch = null;
+    activityId = ""; managementKey = ""; activityState = null; code = "";
+    localStorage.removeItem(identityKey); localStorage.removeItem(storageCodeKey);
+    const url = new URL(location.href); url.searchParams.delete("a"); url.hash = "";
+    history.replaceState(null, "", url);
+    closedPanel.classList.add("hide"); managementPanel.classList.add("hide");
+    resetSetup(); setupPanel.classList.remove("hide");
+});
+
 try {
     await ensureAuth();
-    if (code) {
+    if (activityId) {
+        await beginActivity();
+    } else if (code) {
         await beginControl();
     } else {
+        setupPanel.classList.remove("hide");
         setConnection(connectionStatus, "online", "Klaar om te starten");
     }
 } catch (error) {
-    setConnection(connectionStatus, "error", "Firebase niet beschikbaar");
+    setupPanel.classList.remove("hide");
+    if (activityId) {
+        setupTitle.textContent = "Activiteit niet geopend";
+        setupLead.textContent = "Open de volledige privébeheerlink die u bij deze activiteit hebt bewaard. Controleer ook uw internetverbinding.";
+        createSessionForm.classList.add("hide");
+    }
+    setConnection(connectionStatus, "error", "Bediening niet geopend");
     showError(setupError, error.message);
+} finally {
+    document.querySelector("#loadingPanel").classList.add("hide");
 }

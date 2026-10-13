@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Bediening van de Live Diabetes Quiz.">
+    <meta name="referrer" content="no-referrer">
     <title>Quizmaster – Live Diabetes Quiz</title>
-    <link rel="stylesheet" href="assets/styles.css?v=6">
+    <link rel="stylesheet" href="assets/styles.css?v=13">
 </head>
 <body>
     <header class="site-header">
@@ -21,12 +22,17 @@
     </header>
 
     <main class="page-shell">
-        <section id="setupPanel" class="panel">
+        <section id="loadingPanel" class="panel" role="status"><h1>Even geduld…</h1><p>De quizbediening wordt geopend.</p></section>
+        <section id="setupPanel" class="panel hide">
             <p class="eyebrow">Nieuwe activiteit</p>
-            <h1>Quiz voorbereiden</h1>
-            <p class="lead">Kies het aantal vragen. Daarna krijgt u automatisch een quizcode voor de deelnemers.</p>
+            <h1 id="setupTitle">Activiteit voorbereiden</h1>
+            <p id="setupLead" class="lead">Eén vast briefje voor deze activiteit, ook als u opnieuw begint. Bewaar straks uw privébeheerlink.</p>
 
             <form id="createSessionForm" style="margin-top: 1.5rem">
+                <div class="field">
+                    <label for="activityName">Naam van de activiteit (zichtbaar voor deelnemers)</label>
+                    <input id="activityName" maxlength="80" placeholder="Bijvoorbeeld: Ledenfeest 18 oktober" required>
+                </div>
                 <div class="form-row">
                     <div class="field">
                         <label for="questionCount">Aantal vragen</label>
@@ -50,21 +56,37 @@
                     </label>
                 </div>
                 <div class="button-row">
-                    <button class="button-primary" type="submit">Nieuwe quizsessie maken</button>
+                    <button class="button-primary" type="submit">Activiteit maken</button>
+                    <button id="cancelRound" class="button-secondary hide" type="button">Annuleren — huidige ronde behouden</button>
                     <a class="button-link button-secondary" href="index.html">Terug naar startpagina</a>
                 </div>
             </form>
             <p id="setupError" class="notice notice--error hide" role="alert"></p>
         </section>
 
+        <section id="closedPanel" class="panel hide">
+            <h1>Deze activiteit is afgesloten</h1>
+            <p>De oude briefjes geven geen toegang meer tot een quiz. Voor een andere gelegenheid maakt u een nieuwe activiteit met nieuwe briefjes.</p>
+            <button id="newActivityButton" class="button-primary" type="button">Nieuwe activiteit maken</button>
+            <a class="button-link button-secondary" href="index.html">Terug naar startpagina</a>
+        </section>
+
         <section id="controlPanel" class="hide">
             <div class="panel">
                 <div class="session-header">
                     <div>
-                        <p class="eyebrow">Quizcode voor deelnemers</p>
-                        <p id="sessionCode" class="session-code">---</p>
+                        <p class="eyebrow">Uw activiteit — vaste deelnemerslink</p>
+                        <h2 id="sessionCode">Verbinden…</h2>
                     </div>
                     <span id="phaseBadge" class="badge">Wachtkamer</span>
+                </div>
+                <div id="managementPanel" class="notice hide">
+                    <strong>Bewaar eerst uw privébeheerlink.</strong>
+                    <p>Hiermee opent u deze bediening opnieuw, ook op een andere laptop. Deel deze link alleen met medeorganisatoren, nooit met deelnemers.</p>
+                    <div class="button-row">
+                        <button id="saveManagementLink" type="button" class="button-primary">Beheerlink bewaren als bestand</button>
+                        <button id="copyManagementLink" type="button" class="button-secondary">Beheerlink kopiëren</button>
+                    </div>
                 </div>
 
                 <div class="button-row">
@@ -90,7 +112,7 @@
                     <section class="panel">
                         <div id="waitingMaster">
                             <h2>Wachtkamer is geopend</h2>
-                            <p>Laat deelnemers de code invoeren. Start wanneer iedereen klaar is.</p>
+                            <p>Laat deelnemers de QR-code op hun briefje scannen of de volledige link openen. Geen cijfercode nodig. Start wanneer iedereen klaar is.</p>
                         </div>
 
                         <div id="questionMaster" class="hide">
@@ -116,7 +138,7 @@
                             <button id="revealButton" class="button-success hide" type="button">Toon juiste antwoord</button>
                             <button id="nextButton" class="button-primary hide" type="button">Volgende vraag</button>
                             <button id="previousButton" class="button-secondary hide" type="button">Vorige vraag</button>
-                            <button id="finishButton" class="button-danger hide" type="button">Quiz beëindigen</button>
+                            <button id="finishButton" class="button-warning hide" type="button">Ronde stoppen en eindanalyse tonen</button>
                         </div>
                         <p id="controlError" class="notice notice--error hide" role="alert"></p>
                     </section>
@@ -156,7 +178,12 @@
                     <section class="panel panel--soft">
                         <h2>Veilige bediening</h2>
                         <p>Antwoorden worden per deelnemer maar één keer aanvaard. Teruggaan verandert eerdere antwoorden niet.</p>
-                        <button id="newSessionButton" class="button-quiet" type="button">Nieuwe sessie voorbereiden</button>
+                        <p>Opnieuw beginnen? Dezelfde briefjes blijven werken. Alleen definitief afsluiten maakt ze ongeldig.</p>
+                        <div class="button-row">
+                            <button id="newSessionButton" class="button-secondary" type="button">Quiz opnieuw beginnen</button>
+                            <button id="closeActivityButton" class="button-danger hide" type="button">Activiteit definitief afsluiten</button>
+                        </div>
+                        <p><a href="activiteit-uitleg.html">Hulp bij voorbereiden, herstarten en afsluiten</a></p>
                     </section>
                 </aside>
             </div>
@@ -164,6 +191,6 @@
     </main>
 
     <script src="assets/vendor/qrcode.min.js"></script>
-    <script type="module" src="assets/quizmaster.js?v=10"></script>
+    <script type="module" src="assets/quizmaster.js?v=13"></script>
 </body>
 </html>

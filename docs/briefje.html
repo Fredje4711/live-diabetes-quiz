@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Afdrukbare deelnemersbriefjes voor de Live Diabetes Quiz.">
     <title>Deelnemersbriefjes – Live Diabetes Quiz</title>
-    <link rel="stylesheet" href="assets/styles.css?v=11">
+    <link rel="stylesheet" href="assets/styles.css?v=13">
 </head>
 <body class="handout-page">
     <header class="site-header no-print">
@@ -23,8 +23,8 @@
             <p class="eyebrow">Vooraf voorbereiden</p>
             <h1>Deelnemersbriefjes afdrukken</h1>
             <p class="lead">
-                Vul eventueel de wifi van de zaal in. De QR-code, internetlink en
-                driecijferige quizcode staan daarna op ieder briefje.
+                Vul eventueel de wifi van de zaal in. De vaste QR-code en volledige deelnemerslink
+                staan op ieder briefje. Geen cijfercode nodig. Deze briefjes blijven geldig tot u de activiteit definitief afsluit.
             </p>
             <div class="form-row" style="margin-top: 1.5rem">
                 <div class="field">
@@ -58,7 +58,7 @@
             <img class="brand__logo" src="assets/logo-diabetes-liga-midden-limburg.png" alt="">
             <div>
                 <p class="eyebrow">Anoniem deelnemen</p>
-                <h2>Live Diabetes Quiz</h2>
+                <h2 class="handout-activity">Live Diabetes Quiz</h2>
             </div>
         </div>
         <p class="handout-start">
@@ -82,7 +82,7 @@
                     <p>Scan deze QR-code met uw camera-app of QR-app en tik op de link.</p>
                     <p>Lukt scannen niet? Typ in de adresbalk van Google, Chrome of Safari:</p>
                     <strong class="handout-address"></strong>
-                    <p>Vul indien gevraagd quizcode <strong class="handout-code"></strong> in.</p>
+                    <p class="handout-code-instruction">Vul indien gevraagd quizcode <strong class="handout-code"></strong> in.</p>
                 </div>
                 <div class="handout-quiz-qr qr-output" aria-label="QR-code naar het deelnemerscherm"></div>
             </div>
@@ -94,6 +94,6 @@
     </template>
 
     <script src="assets/vendor/qrcode.min.js"></script>
-    <script type="module" src="assets/briefje.js?v=6"></script>
+    <script type="module" src="assets/briefje.js?v=13"></script>
 </body>
 </html>

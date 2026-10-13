@@ -29,11 +29,11 @@ const firebaseConfig = {
     appId: "1:294763855066:web:b89433cbf262acdb63b9e3",
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
 const useEmulators =
     new URLSearchParams(window.location.search).get("emulator") === "1";
+const app = initializeApp(useEmulators ? { ...firebaseConfig, projectId: "demo-dlq-activities" } : firebaseConfig);
+const auth = getAuth(app);
+export const db = getFirestore(app);
 
 if (useEmulators) {
     connectAuthEmulator(auth, "http://127.0.0.1:9099", {
@@ -73,6 +73,7 @@ export function ensureAuth() {
                 if (user) {
                     settled = true;
                     unsubscribe();
+                    authPromise = null;
                     resolve(user);
                     return;
                 }
@@ -80,6 +81,7 @@ export function ensureAuth() {
                     const credential = await signInAnonymously(auth);
                     settled = true;
                     unsubscribe();
+                    authPromise = null;
                     resolve(credential.user);
                 } catch (error) {
                     settled = true;
@@ -191,7 +193,12 @@ export async function controlSession(code, command) {
             if (!snapshot.exists()) throw new Error("Quizcode niet gevonden.");
 
             const session = snapshot.data();
-            if (session.masterUid !== user.uid) {
+            const manager = session.activityId
+                ? await transaction.get(doc(db, "activities", session.activityId, "managers", user.uid))
+                : null;
+            const activity = session.activityId
+                ? await transaction.get(doc(db, "activities", session.activityId)) : null;
+            if (session.masterUid !== user.uid && !manager?.exists() && activity?.data()?.ownerUid !== user.uid) {
                 throw new Error("Deze quiz hoort bij een andere quizmaster.");
             }
 
@@ -394,6 +401,7 @@ function analysisFor(session, answers) {
                     QUESTIONS[session.questionOrder[position]]?.correctOption
                 ] || "",
             incorrect: item.incorrect,
+            total: item.total,
             percentage: Math.round((item.incorrect / item.total) * 100),
         }))
         .sort((a, b) => b.percentage - a.percentage || b.incorrect - a.incorrect)
@@ -425,14 +433,16 @@ export async function watchQuiz(code, role, onState, onError) {
     let answerUnsubscribe = null;
     let participantUnsubscribe = null;
     let heartbeat = null;
+    let delegatedMaster = false;
+    let accessReady = false;
 
     const fail = (error) => {
         if (!stopped) onError(friendlyError(error));
     };
 
     const emit = () => {
-        if (stopped || !session) return;
-        const isMaster = session.masterUid === user.uid;
+        if (stopped || !session || !accessReady) return;
+        const isMaster = session.masterUid === user.uid || delegatedMaster;
         if (role === "master" && !isMaster) {
             fail(new Error("De quizmastertoegang is niet meer geldig."));
             return;
@@ -488,6 +498,7 @@ export async function watchQuiz(code, role, onState, onError) {
     const startRoleSubscriptions = async () => {
         if (role === "participant") {
             await registerParticipant(code, user);
+            if (stopped) return;
             heartbeat = window.setInterval(() => {
                 touchParticipant(code).catch(() => {});
             }, 20000);
@@ -534,6 +545,13 @@ export async function watchQuiz(code, role, onState, onError) {
             if (!subscriptionsStarted) {
                 subscriptionsStarted = true;
                 try {
+                    if (role === "master" && session.activityId && session.masterUid !== user.uid) {
+                        const activity = await getDoc(doc(db, "activities", session.activityId));
+                        delegatedMaster = activity.data()?.ownerUid === user.uid ||
+                            (await getDoc(doc(db, "activities", session.activityId, "managers", user.uid))).exists();
+                    }
+                    if (stopped) return;
+                    accessReady = true;
                     await startRoleSubscriptions();
                 } catch (error) {
                     fail(error);

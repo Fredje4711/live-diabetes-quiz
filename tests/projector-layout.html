@@ -1,0 +1,33 @@
+<!doctype html><meta charset="utf-8"><title>Controle eindanalyse (zonder live sessie)</title>
+<style>body{margin:0;font:16px system-ui} iframe{display:block;border:1px solid #aaa}pre{white-space:pre-wrap}</style>
+<label>Scherm: <select id="size"><option>1920x1080</option><option>1366x768</option><option selected>1280x720</option><option>1024x768</option><option>960x540</option></select></label>
+<pre id="result"></pre><iframe id="screen"></iframe>
+<script type="module">
+import { QUESTIONS } from '../docs/assets/questions.js';
+const template = await (await fetch('../docs/projectie.html')).text();
+const source = await (await fetch('../docs/assets/projectie.js')).text();
+const render = source.slice(source.indexOf('function renderFinalAnalysis('), source.indexOf('\nfunction ', source.indexOf('function renderFinalAnalysis(') + 1));
+const frame = document.querySelector('iframe');
+frame.srcdoc = template.replace('<head>', '<head><base href="/docs/">').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+frame.onload = () => {
+ const doc = frame.contentDocument;
+ doc.querySelectorAll('main > section').forEach(el => el.classList.toggle('hide', el.id !== 'projectorFinished'));
+ const draw = new Function('projectorAnalysisList', 'projectorAnalysisEmpty', 'analysis', render + '\nrenderFinalAnalysis(analysis);');
+ // Triple each real question as a conservative height test, plus mixed groups and empty state.
+ const entries = QUESTIONS.map((q,i) => ({number:i+1, question:q.question, correctAnswer:q.options[q.correctOption], total:100, incorrect:100, percentage:100}));
+ window.runCheck = () => {
+  const [width,height] = document.querySelector('select').value.split('x').map(Number);
+  frame.width = width; frame.height = height;
+  const groups = Array.from({length:Math.ceil(entries.length/3)}, (_,i)=>entries.slice(i*3,i*3+3));
+  groups.push([], ...entries.map(entry => [entry, entry, entry]));
+  groups.push([...entries].sort((a,b)=>(b.question+b.correctAnswer).length-(a.question+a.correctAnswer).length).slice(0,3));
+  const results = groups.map(group => {
+   draw(doc.querySelector('#projectorAnalysisList'),doc.querySelector('#projectorAnalysisEmpty'),{difficultQuestions:group});
+   return {questions:group.map(x=>x.number), height:doc.documentElement.scrollHeight, width:doc.documentElement.scrollWidth};
+  });
+  document.querySelector('pre').textContent = JSON.stringify({viewport:[width,height], groups:groups.length, maxHeight:Math.max(...results.map(x=>x.height)), maxWidth:Math.max(...results.map(x=>x.width)), failures:results.filter(x=>x.height>height || x.width>width)},null,2);
+ };
+ document.querySelector('select').onchange = window.runCheck;
+ window.runCheck();
+};
+</script>

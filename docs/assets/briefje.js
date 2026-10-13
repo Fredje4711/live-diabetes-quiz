@@ -3,7 +3,17 @@ import {
     participantUrl,
     queryCode,
     renderQr,
-} from "./app.js?v=4";
+} from "./app.js?v=13";
+import { activityUrl, queryActivity, readActivity } from "./activity-service.js?v=13";
+const activityId = queryActivity();
+if (activityId) {
+    document.querySelectorAll('a[href="quizmaster.html"]').forEach(link => {
+        link.href = activityUrl("quizmaster.html", activityId);
+    });
+}
+let activity = null;
+let ready = false;
+const joinLink = () => activityId ? activityUrl("deelnemer.html", activityId) : participantUrl(code);
 
 const code = normalizeCode(queryCode());
 const handoutError = document.querySelector("#handoutError");
@@ -14,8 +24,8 @@ const template = document.querySelector("#handoutTemplate");
 const targets = [...document.querySelectorAll(".participant-handout__content")];
 
 function readableParticipantAddress() {
-    const url = new URL(participantUrl(code));
-    return `${url.host}${url.pathname}`;
+    const url = new URL(joinLink());
+    return `${url.host}${url.pathname}${activityId ? url.search : ""}`;
 }
 
 function wifiText() {
@@ -40,9 +50,12 @@ function wifiQrValue() {
 }
 
 function renderHandouts() {
+    if (!ready) return;
     targets.forEach((target) => {
         target.replaceChildren(template.content.cloneNode(true));
         target.querySelector(".handout-code").textContent = code;
+        target.querySelector(".handout-code-instruction").classList.toggle("hide", Boolean(activityId));
+        target.querySelector(".handout-activity").textContent = activity?.title || "Live Diabetes Quiz";
         target.querySelector(".handout-address").textContent = readableParticipantAddress();
         target.querySelector(".wifi-details").textContent = wifiText();
         const wifiCard = target.querySelector(".handout-wifi-card");
@@ -67,19 +80,27 @@ function renderHandouts() {
             wifiQr.replaceChildren();
             wifiQr.classList.add("hide");
         }
-        renderQr(target.querySelector(".handout-quiz-qr"), participantUrl(code), 145);
+        renderQr(target.querySelector(".handout-quiz-qr"), joinLink(), 145);
     });
 }
 
-if (code.length !== 3) {
+printButton.disabled = true;
+if (activityId) {
+    try {
+        activity = await readActivity(activityId);
+        if (activity.status !== "open") throw new Error("Deze activiteit is afgesloten. Maak voor een volgende gelegenheid een nieuwe activiteit en nieuwe briefjes.");
+        ready = true; printButton.disabled = false; renderHandouts();
+    } catch (error) { handoutError.textContent = error.message; handoutError.classList.remove("hide"); }
+} else if (code.length !== 3) {
     handoutError.textContent =
-        "Maak eerst in het quizmasterscherm een sessie. Daarna kunt u de briefjes met de juiste code afdrukken.";
+        "Maak eerst in het quizmasterscherm een activiteit. Open daar ‘Deelnemersbriefjes afdrukken’.";
     handoutError.classList.remove("hide");
     printButton.disabled = true;
 } else {
+    ready = true; printButton.disabled = false;
     renderHandouts();
 }
 
 wifiName.addEventListener("input", renderHandouts);
 wifiPassword.addEventListener("input", renderHandouts);
-printButton.addEventListener("click", () => window.print());
+printButton.addEventListener("click", () => { if (ready) window.print(); });

@@ -3,6 +3,23 @@ export function queryCode() {
     return value.replace(/\D/g, "").slice(0, 3);
 }
 
+export function confirmAction(message, confirmLabel = "Doorgaan") {
+    return new Promise(resolve => {
+        const dialog = document.createElement("dialog");
+        dialog.className = "confirm-dialog";
+        const title = document.createElement("h2"); title.textContent = "Even controleren";
+        const text = document.createElement("p"); text.textContent = message;
+        const row = document.createElement("div"); row.className = "button-row";
+        const cancel = document.createElement("button"); cancel.textContent = "Annuleren"; cancel.className = "button-secondary";
+        const accept = document.createElement("button"); accept.textContent = confirmLabel; accept.className = "button-primary";
+        const done = answer => { dialog.close(); dialog.remove(); resolve(answer); };
+        cancel.onclick = () => done(false); accept.onclick = () => done(true);
+        dialog.addEventListener("cancel", event => { event.preventDefault(); done(false); });
+        row.append(cancel, accept); dialog.append(title,text,row); document.body.append(dialog);
+        dialog.showModal(); cancel.focus();
+    });
+}
+
 export function normalizeCode(value) {
     return String(value || "").replace(/\D/g, "").slice(0, 3);
 }

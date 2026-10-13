@@ -15,7 +15,65 @@ service cloud.firestore {
     }
 
     function isMaster(code) {
-      return signedIn() && session(code).masterUid == request.auth.uid;
+      return signedIn() && (session(code).masterUid == request.auth.uid
+        || ('activityId' in session(code) && manages(session(code).activityId)));
+    }
+
+    function activityPath(id) {
+      return /databases/$(database)/documents/activities/$(id);
+    }
+    function manages(id) {
+      return signedIn() && (get(activityPath(id)).data.ownerUid == request.auth.uid
+        || exists(/databases/$(database)/documents/activities/$(id)/managers/$(request.auth.uid)));
+    }
+    function currentRound(code) {
+      return !('activityId' in session(code))
+        || (get(activityPath(session(code).activityId)).data.status == 'open'
+          && get(activityPath(session(code).activityId)).data.currentSession == code);
+    }
+    function validRound(id, code) {
+      let s = getAfter(sessionPath(code)).data;
+      return s.activityId == id && s.phase == 'waiting' && s.createdAt == request.time;
+    }
+
+    // Public activity documents never contain the private management key.
+    match /activities/{id} {
+      allow get: if signedIn();
+      allow list, delete: if false;
+      allow create: if signedIn() && id.matches('^[a-f0-9]{12}$')
+        && request.resource.data.keys().hasOnly(['title','ownerUid','status','currentSession','roundNumber','createdAt','updatedAt'])
+        && request.resource.data.title is string && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 80
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.status == 'open' && request.resource.data.roundNumber == 1
+        && request.resource.data.createdAt == request.time && request.resource.data.updatedAt == request.time
+        && validRound(id, request.resource.data.currentSession);
+      allow update: if manages(id) && resource.data.status == 'open'
+        && request.resource.data.updatedAt == request.time
+        && ((request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','updatedAt'])
+              && request.resource.data.status == 'closed')
+          || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['currentSession','roundNumber','updatedAt'])
+              && request.resource.data.roundNumber == resource.data.roundNumber + 1
+              && request.resource.data.currentSession != resource.data.currentSession
+              && validRound(id, request.resource.data.currentSession)));
+      match /managers/{uid} {
+        allow get: if signedIn() && uid == request.auth.uid;
+        allow list, update, delete: if false;
+        allow create: if signedIn() && uid == request.auth.uid
+          && request.resource.data.keys().hasOnly(['key'])
+          && request.resource.data.key.matches('^[a-f0-9]{64}$')
+          && get(activityPath(id)).data.status == 'open'
+          && get(/databases/$(database)/documents/activityKeys/$(request.resource.data.key)).data.activityId == id;
+      }
+    }
+    match /activityKeys/{key} {
+      // 256-bit capability. Known-key lookup only; enumeration is forbidden.
+      allow get: if signedIn() && key.matches('^[a-f0-9]{64}$');
+      allow list, update, delete: if false;
+      allow create: if signedIn() && key.matches('^[a-f0-9]{64}$')
+        && request.resource.data.keys().hasOnly(['activityId','ownerUid'])
+        && request.resource.data.ownerUid == request.auth.uid
+        && getAfter(activityPath(request.resource.data.activityId)).data.ownerUid == request.auth.uid
+        && getAfter(activityPath(request.resource.data.activityId)).data.status == 'open';
     }
 
     match /sessions/{code} {
@@ -31,9 +89,15 @@ service cloud.firestore {
           'totalQuestions',
           'createdAt',
           'updatedAt'
+          ,'activityId'
         ])
         && request.resource.data.code == code
-        && code.matches('^[0-9]{3}$')
+        && ((!('activityId' in request.resource.data) && code.matches('^[0-9]{3}$'))
+          || ('activityId' in request.resource.data && code.matches('^[a-f0-9]{32}$')
+            && getAfter(activityPath(request.resource.data.activityId)).data.status == 'open'
+            && getAfter(activityPath(request.resource.data.activityId)).data.currentSession == code
+            && (getAfter(activityPath(request.resource.data.activityId)).data.ownerUid == request.auth.uid
+              || exists(/databases/$(database)/documents/activities/$(request.resource.data.activityId)/managers/$(request.auth.uid)))))
         && request.resource.data.masterUid == request.auth.uid
         && request.resource.data.phase == 'waiting'
         && request.resource.data.activePosition == 0
@@ -43,7 +107,7 @@ service cloud.firestore {
         && request.resource.data.createdAt == request.time
         && request.resource.data.updatedAt == request.time;
 
-      allow update: if isMaster(code)
+      allow update: if isMaster(code) && currentRound(code)
         && request.resource.data.diff(resource.data).affectedKeys()
           .hasOnly(['phase', 'activePosition', 'nextSessionCode', 'updatedAt'])
         && request.resource.data.phase in [
@@ -68,14 +132,14 @@ service cloud.firestore {
         // het aantal verbonden deelnemers in de zaal te kunnen tonen.
         allow read: if signedIn();
 
-        allow create: if signedIn()
+        allow create: if signedIn() && currentRound(code)
           && request.auth.uid == participantId
           && request.resource.data.keys().hasOnly(['uid', 'joinedAt', 'lastSeen'])
           && request.resource.data.uid == request.auth.uid
           && request.resource.data.joinedAt == request.time
           && request.resource.data.lastSeen == request.time;
 
-        allow update: if signedIn()
+        allow update: if signedIn() && currentRound(code)
           && request.auth.uid == participantId
           && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lastSeen'])
           && request.resource.data.uid == resource.data.uid
@@ -90,7 +154,7 @@ service cloud.firestore {
         // het live projectiescherm; wijzigen of verwijderen is nooit toegestaan.
         allow read: if signedIn();
 
-        allow create: if signedIn()
+        allow create: if signedIn() && currentRound(code)
           && request.resource.data.keys().hasOnly([
             'participantUid',
             'questionPosition',
