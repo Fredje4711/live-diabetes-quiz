@@ -41,6 +41,16 @@ let switchingSession = false;
 function showError(message = "") {
     projectorError.textContent = message;
     projectorError.classList.toggle("hide", !message);
+    if (message) {
+        const notice = document.querySelector("#activityNotice");
+        projectorJoin.classList.toggle("hide", Boolean(activityId));
+        notice.classList.toggle("hide", !activityId);
+        if (activityId) {
+            [projectorWaiting, projectorQuestion, projectorFinished].forEach(el => el.classList.add("hide"));
+            notice.querySelector("h1").textContent = "Verbinding controleren";
+            notice.querySelector("p").textContent = message;
+        }
+    }
 }
 
 function renderOptions(state) {
@@ -101,6 +111,7 @@ function renderState(state) {
     }
 
     latestState = state;
+    document.querySelector("#activityNotice").classList.add("hide");
     projectorJoin.classList.add("hide");
     projectorWaiting.classList.toggle("hide", state.session.phase !== "waiting");
     projectorQuestion.classList.toggle(
@@ -214,6 +225,8 @@ try {
         await openProjection(code, openExactSession);
     } else {
         setConnection(connectionStatus, "online", "Klaar voor quizcode");
+        document.querySelector("#activityNotice").classList.add("hide");
+        projectorJoin.classList.remove("hide");
         projectorCodeInput.focus();
     }
 } catch (error) {

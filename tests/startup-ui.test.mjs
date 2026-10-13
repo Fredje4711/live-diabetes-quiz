@@ -1,0 +1,57 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+
+const read = file => fs.readFileSync(new URL('../docs/' + file, import.meta.url), 'utf8');
+const element = () => {
+    const classes = new Set();
+    return { textContent: '', disabled: false, classList: {
+        add: name => classes.add(name),
+        remove: name => classes.delete(name),
+        toggle: (name, force) => force ? classes.add(name) : classes.delete(name),
+        contains: name => classes.has(name),
+    }};
+};
+for (const [page, joinId, errorId] of [['deelnemer','joinPanel','joinError'], ['projectie','projectorJoin','projectorError']]) {
+    test(`${page}: alleen laadmelding zichtbaar vóór JavaScript start`, () => {
+        const html = read(page + '.html');
+        assert.match(html, new RegExp(`id="${joinId}" class="[^"]*\\bhide\\b`));
+        const notice = html.match(/<section id="activityNotice"[^>]*>/)[0];
+        assert.doesNotMatch(notice, /\bhide\b/);
+        assert.match(html, /Even geduld…/);
+        assert.match(html, new RegExp(`${page}\\.js\\?v=14`));
+    });
+    test(`${page}: fout toont melding, geen oud formulier bij vaste activiteit`, () => {
+        const source = read('assets/' + page + '.js');
+        const start = source.indexOf('function showError(');
+        const fn = source.slice(start, source.indexOf('\nfunction ', start + 1));
+        for (const activityId of ['abcdef123456', '']) {
+            const notice = element(), heading = element(), text = element(), join = element();
+            notice.querySelector = selector => selector === 'h1' ? heading : text;
+            const context = { activityId, document: {querySelector: () => notice},
+                [joinId]: join, [errorId]: element(), quizPanel: element(),
+                projectorWaiting: element(), projectorQuestion: element(), projectorFinished: element() };
+            vm.runInNewContext(fn + '\nshowError("Testfout");', context);
+            assert.equal(join.classList.contains('hide'), Boolean(activityId));
+            assert.equal(notice.classList.contains('hide'), !activityId);
+            if (activityId) assert.equal(text.textContent, 'Testfout');
+        }
+    });
+}
+test('bediening zonder sluitknop; oplossing blijft direct beschikbaar', () => {
+    const source = read('assets/quizmaster.js');
+    assert.doesNotMatch(source + read('quizmaster.html'), /lockButton|buttons\.lock|Sluit antwoorden/);
+    const start = source.indexOf('function renderControls(');
+    const fn = source.slice(start, source.indexOf('\nfunction ', start + 1));
+    for (const phase of ['waiting', 'open', 'locked', 'revealed', 'finished']) {
+        const buttons = Object.fromEntries(['start','reveal','next','previous','finish'].map(key => [key, element()]));
+        vm.runInNewContext(fn + '\nrenderControls(state);', {
+            buttons, commandBusy: false,
+            setButtonVisibility: (button, visible) => button.classList.toggle('hide', !visible),
+            state: {session: {phase, activePosition: 4, totalQuestions: 5}},
+        });
+        assert.equal(buttons.reveal.classList.contains('hide'), !['open','locked'].includes(phase));
+        if (phase === 'revealed') assert.equal(buttons.next.textContent, 'Eindanalyse');
+    }
+});

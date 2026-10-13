@@ -45,6 +45,16 @@ let switchingSession = false;
 function showError(message = "") {
     joinError.textContent = message;
     joinError.classList.toggle("hide", !message);
+    if (message) {
+        const notice = document.querySelector("#activityNotice");
+        joinPanel.classList.toggle("hide", Boolean(activityId));
+        notice.classList.toggle("hide", !activityId);
+        if (activityId) {
+            quizPanel.classList.add("hide");
+            notice.querySelector("h1").textContent = "Verbinding controleren";
+            notice.querySelector("p").textContent = message;
+        }
+    }
 }
 
 function setFeedback(kind, message) {
@@ -141,6 +151,7 @@ function renderState(state) {
     }
 
     latestState = state;
+    document.querySelector("#activityNotice").classList.add("hide");
     joinPanel.classList.add("hide");
     quizPanel.classList.remove("hide");
     participantCode.textContent = state.activity?.title || state.session.code;
@@ -283,6 +294,8 @@ try {
         await joinQuiz(code);
     } else {
         setConnection(connectionStatus, "online", "Klaar om te verbinden");
+        document.querySelector("#activityNotice").classList.add("hide");
+        joinPanel.classList.remove("hide");
         quizCodeInput.focus();
     }
 } catch (error) {

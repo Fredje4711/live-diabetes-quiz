@@ -122,7 +122,6 @@ const newSessionButton = document.querySelector("#newSessionButton");
 
 const buttons = {
     start: document.querySelector("#startButton"),
-    lock: document.querySelector("#lockButton"),
     reveal: document.querySelector("#revealButton"),
     next: document.querySelector("#nextButton"),
     previous: document.querySelector("#previousButton"),
@@ -257,7 +256,6 @@ function renderControls(state) {
     });
 
     setButtonVisibility(buttons.start, phase === "waiting");
-    setButtonVisibility(buttons.lock, phase === "open");
     setButtonVisibility(buttons.reveal, phase === "open" || phase === "locked");
     setButtonVisibility(buttons.next, phase === "revealed");
     setButtonVisibility(buttons.previous, position > 0 && !["waiting", "finished"].includes(phase));
@@ -403,7 +401,6 @@ async function runCommand(command) {
 }
 
 buttons.start.addEventListener("click", () => runCommand("start"));
-buttons.lock.addEventListener("click", () => runCommand("lock"));
 buttons.reveal.addEventListener("click", () => runCommand("reveal"));
 buttons.next.addEventListener("click", () => runCommand("next"));
 
