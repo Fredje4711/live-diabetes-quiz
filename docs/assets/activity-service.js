@@ -53,12 +53,12 @@ export async function createActivity({ title, questionCount, shuffle }) {
 export async function authorizeActivity(id, key) {
     const user = await ensureAuth();
     const activity = await getDoc(doc(db, "activities", id));
-    if (!activity.exists()) throw new Error("Deze activiteit bestaat niet. Controleer uw beheerlink.");
+    if (!activity.exists()) throw new Error("Deze activiteit bestaat niet. Controleer uw quizmasterlink.");
     if (activity.data().status === "closed") return;
     if (activity.data().ownerUid === user.uid) return;
     const ref = doc(db, "activities", id, "managers", user.uid);
     if ((await getDoc(ref)).exists()) return;
-    if (!validKey(key)) throw new Error("Open de bewaarde privébeheerlink om deze activiteit te bedienen.");
+    if (!validKey(key)) throw new Error("Open de bewaarde quizmasterlink om deze activiteit te bedienen.");
     await setDoc(ref, { key });
 }
 export async function readActivity(id) {

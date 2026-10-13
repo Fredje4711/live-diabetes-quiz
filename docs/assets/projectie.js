@@ -10,7 +10,7 @@ import {
     resolveLatestSessionCode,
     watchQuiz,
 } from "./firebase-service.js?v=13";
-import { queryActivity, watchActivity } from "./activity-service.js?v=13";
+import { queryActivity, watchActivity } from "./activity-service.js?v=15";
 const activityId = queryActivity();
 
 const storageCodeKey = "dlq-projector-code";

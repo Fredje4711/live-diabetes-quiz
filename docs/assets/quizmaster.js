@@ -15,7 +15,7 @@ import {
     watchQuiz,
 } from "./firebase-service.js?v=13";
 import { activityUrl, managementUrl, queryActivity, validActivity, validKey,
-    createActivity, authorizeActivity, startRound, closeActivity, watchActivity } from "./activity-service.js?v=13";
+    createActivity, authorizeActivity, startRound, closeActivity, watchActivity } from "./activity-service.js?v=15";
 
 const identityKey = "dlq-activity-manager";
 let savedIdentity = {};
@@ -45,7 +45,7 @@ function rememberActivity() {
 function resetSetup() {
     preparingRound = false;
     setupTitle.textContent = "Activiteit voorbereiden";
-    setupLead.textContent = "Eén vast briefje voor deze activiteit, ook als u opnieuw begint. Bewaar straks uw privébeheerlink.";
+    setupLead.textContent = "Eén vast briefje voor deze activiteit, ook als u opnieuw begint. Bewaar straks uw quizmasterlink.";
     activityName.closest(".field").classList.remove("hide");
     activityName.required = true;
     createSessionForm.querySelector("button[type=submit]").textContent = "Activiteit maken";
@@ -452,9 +452,9 @@ cancelRound.addEventListener("click", () => {
 });
 document.querySelector("#copyManagementLink").addEventListener("click", event => copyText(managementUrl(activityId, managementKey), event.currentTarget));
 document.querySelector("#saveManagementLink").addEventListener("click", () => {
-    const text = `PRIVÉ — beheerlink Live Diabetes Quiz\nActiviteit: ${activityState?.title || ""}\n\n${managementUrl(activityId, managementKey)}\n\nBewaar dit bestand. Open deze link op uw laptop, ook na een herstart of op een andere laptop. Deel hem alleen met een medeorganisator: wie de link heeft kan de quiz bedienen en afsluiten. Niet voor deelnemers.\n`;
+    const text = `PRIVÉ — quizmasterlink Live Diabetes Quiz\nActiviteit: ${activityState?.title || ""}\n\n${managementUrl(activityId, managementKey)}\n\nBewaar dit bestand. Open deze link op uw laptop, ook na een herstart of op een andere laptop. Deel hem alleen met een medeorganisator: wie de link heeft kan de quiz bedienen en afsluiten. Niet voor deelnemers.\n`;
     const url = URL.createObjectURL(new Blob([text], {type:"text/plain;charset=utf-8"}));
-    const a = document.createElement("a"); a.href = url; a.download = `quiz-beheerlink-${activityId}.txt`; a.click();
+    const a = document.createElement("a"); a.href = url; a.download = `quizmasterlink-${activityId}.txt`; a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
 });
 closeActivityButton.addEventListener("click", async () => {
@@ -488,7 +488,7 @@ try {
     setupPanel.classList.remove("hide");
     if (activityId) {
         setupTitle.textContent = "Activiteit niet geopend";
-        setupLead.textContent = "Open de volledige privébeheerlink die u bij deze activiteit hebt bewaard. Controleer ook uw internetverbinding.";
+        setupLead.textContent = "Open de volledige quizmasterlink die u bij deze activiteit hebt bewaard. Controleer ook uw internetverbinding.";
         createSessionForm.classList.add("hide");
     }
     setConnection(connectionStatus, "error", "Bediening niet geopend");

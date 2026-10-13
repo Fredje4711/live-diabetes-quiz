@@ -20,7 +20,7 @@ for (const [page, joinId, errorId] of [['deelnemer','joinPanel','joinError'], ['
         const notice = html.match(/<section id="activityNotice"[^>]*>/)[0];
         assert.doesNotMatch(notice, /\bhide\b/);
         assert.match(html, /Even geduld…/);
-        assert.match(html, new RegExp(`${page}\\.js\\?v=14`));
+        assert.match(html, new RegExp(`${page}\\.js\\?v=15`));
     });
     test(`${page}: fout toont melding, geen oud formulier bij vaste activiteit`, () => {
         const source = read('assets/' + page + '.js');
@@ -54,4 +54,12 @@ test('bediening zonder sluitknop; oplossing blijft direct beschikbaar', () => {
         assert.equal(buttons.reveal.classList.contains('hide'), !['open','locked'].includes(phase));
         if (phase === 'revealed') assert.equal(buttons.next.textContent, 'Eindanalyse');
     }
+});
+
+test('duidelijke rolnamen met behoud van bestaande quizmasterlinks', () => {
+    const html = read('quizmaster.html');
+    for (const label of ['Quizmasterlink bewaren', 'Quizmasterlink kopiëren', 'Deelnemerslink kopiëren', 'Zaalscherm openen']) assert.ok(html.includes(label));
+    for (const file of ['quizmaster.html', 'handleiding.html', 'index.html', 'uitleg/oefenen.html', 'uitleg/organiseren.html', 'assets/quizmaster.js', 'assets/activity-service.js']) assert.doesNotMatch(read(file), /beheerlink/i);
+    assert.ok(read('assets/activity-service.js').includes('#beheer='));
+    assert.ok(read('assets/quizmaster.js').includes('.get("beheer")'));
 });

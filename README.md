@@ -4,7 +4,7 @@ Anonieme live quiz voor Diabetes Liga Midden-Limburg.
 
 ## Onderdelen
 
-- **Quizmaster:** maakt een activiteit en bedient de vragen via een privébeheerlink, ook op een andere computer.
+- **Quizmaster:** maakt een activiteit en bedient de vragen via een quizmasterlink, ook op een andere computer.
 - **Deelnemer:** opent de vaste QR-code of volledige link op het vooraf afgedrukte briefje; geen cijfercode nodig.
 - **Groot zaalscherm:** toont dezelfde vraag en antwoorden als de gsm, plus de live aantallen.
 - **Deelnemersbriefje:** twee briefjes per A4 met vaste QR-code, volledige deelnemerslink en optionele zaalwifi.
@@ -23,7 +23,7 @@ Na publicatie:
 - Deelnemer: `https://fredje4711.github.io/live-diabetes-quiz/deelnemer.html`
 - Groot zaalscherm: `https://fredje4711.github.io/live-diabetes-quiz/projectie.html`
 
-Maak eerst een activiteit en bewaar de privébeheerlink. Gebruik daarna in het quizmasterscherm de knop
+Maak eerst een activiteit en bewaar de quizmasterlink. Gebruik daarna in het quizmasterscherm de knop
 **Deelnemersbriefjes afdrukken**. De unieke QR-code op het briefje opent
 rechtstreeks het deelnemerscherm van die activiteit. Bij een nieuwe ronde blijven
 de briefjes geldig en gaan verbonden deelnemers automatisch mee. Alleen
@@ -38,9 +38,9 @@ op de handleiding staat daarom een waarschuwing bij deze video's.
 ### Techniek en controle
 
 `activities/{id}` verwijst naar de huidige ronde in `sessions/{id}`. De 256-bit
-beheerlink staat niet in het openbare activiteitsdocument. De geheime sleutel
+quizmasterlink staat niet in het openbare activiteitsdocument. De geheime sleutel
 geeft een nieuwe anonieme organisator toestemming om dezelfde activiteit te bedienen.
-Sluiten is definitief; oude antwoorden worden niet verwijderd. Deel een beheerlink
+Sluiten is definitief; oude antwoorden worden niet verwijderd. Deel een quizmasterlink
 nooit met deelnemers. Als zowel de bewaarde link als de bevoegde browser verloren
 zijn, is een nieuwe activiteit nodig.
 

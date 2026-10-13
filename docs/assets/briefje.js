@@ -4,7 +4,7 @@ import {
     queryCode,
     renderQr,
 } from "./app.js?v=13";
-import { activityUrl, queryActivity, readActivity } from "./activity-service.js?v=13";
+import { activityUrl, queryActivity, readActivity } from "./activity-service.js?v=15";
 const activityId = queryActivity();
 if (activityId) {
     document.querySelectorAll('a[href="quizmaster.html"]').forEach(link => {
