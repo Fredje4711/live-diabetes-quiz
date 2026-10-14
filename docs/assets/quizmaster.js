@@ -18,6 +18,7 @@ import { activityUrl, managementUrl, queryActivity, validActivity, validKey,
     createActivity, authorizeActivity, startRound, closeActivity, watchActivity } from "./activity-service.js?v=15";
 
 const identityKey = "dlq-activity-manager";
+import { makeQuizStartFile } from "./quiz-startbestand.js?v=17";
 let savedIdentity = {};
 try { savedIdentity = JSON.parse(localStorage.getItem(identityKey) || "{}"); } catch {}
 let activityId = queryActivity() || (validActivity(savedIdentity.id) ? savedIdentity.id : "");
@@ -453,10 +454,11 @@ cancelRound.addEventListener("click", () => {
 });
 document.querySelector("#copyManagementLink").addEventListener("click", event => copyText(managementUrl(activityId, managementKey), event.currentTarget));
 document.querySelector("#saveManagementLink").addEventListener("click", () => {
-    const text = `PRIVÉ — quizmasterlink Live Diabetes Quiz\nActiviteit: ${activityState?.title || ""}\n\n${managementUrl(activityId, managementKey)}\n\nBewaar dit bestand. Open deze link op uw laptop, ook na een herstart of op een andere laptop. Deel hem alleen met een medeorganisator: wie de link heeft kan de quiz bedienen en afsluiten. Niet voor deelnemers.\n`;
-    const url = URL.createObjectURL(new Blob([text], {type:"text/plain;charset=utf-8"}));
-    const a = document.createElement("a"); a.href = url; a.download = `quizmasterlink-${activityId}.txt`; a.click();
+    const file = makeQuizStartFile(activityState?.title, managementUrl(activityId, managementKey));
+    const url = URL.createObjectURL(new Blob([file.html], {type:"text/html;charset=utf-8"}));
+    const a = document.createElement("a"); a.href = url; a.download = file.filename; a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
+    document.querySelector("#saveLinkHelp").textContent = "Het startbestand is gedownload (meestal in Downloads). Zet het op uw bureaublad. Dubbelklik er later op om deze quiz te openen. Gebruik een andere computer? Neem dit bestand dan mee, bijvoorbeeld op een USB-stick. Bewaar het privé.";
 });
 closeActivityButton.addEventListener("click", async () => {
     if (!activityState || !await confirmAction("Activiteit DEFINITIEF afsluiten? Alle uitgedeelde briefjes stoppen met werken. Dit kan niet ongedaan worden gemaakt. Kies Annuleren als u nog een ronde wilt spelen.", "Ja, definitief afsluiten")) return;
