@@ -20,7 +20,7 @@ for (const [page, joinId, errorId] of [['deelnemer','joinPanel','joinError'], ['
         const notice = html.match(/<section id="activityNotice"[^>]*>/)[0];
         assert.doesNotMatch(notice, /\bhide\b/);
         assert.match(html, /Even geduld…/);
-        assert.match(html, new RegExp(`${page}\\.js\\?v=15`));
+        assert.match(html, new RegExp(`${page}\\.js\\?v=${page === 'projectie' ? 16 : 15}`));
     });
     test(`${page}: fout toont melding, geen oud formulier bij vaste activiteit`, () => {
         const source = read('assets/' + page + '.js');
@@ -62,4 +62,25 @@ test('duidelijke rolnamen met behoud van bestaande quizmasterlinks', () => {
     for (const file of ['quizmaster.html', 'handleiding.html', 'index.html', 'uitleg/oefenen.html', 'uitleg/organiseren.html', 'assets/quizmaster.js', 'assets/activity-service.js']) assert.doesNotMatch(read(file), /beheerlink/i);
     assert.ok(read('assets/activity-service.js').includes('#beheer='));
     assert.ok(read('assets/quizmaster.js').includes('.get("beheer")'));
+});
+
+test('eindanalyse toont aantallen vóór het afzonderlijke percentage', () => {
+    const source = read('assets/projectie.js');
+    const start = source.indexOf('function renderFinalAnalysis(');
+    const fn = source.slice(start, source.indexOf('\nfunction ', start + 1));
+    const makeNode = () => ({ ...element(), children: [],
+        append(...nodes) { this.children.push(...nodes); },
+        replaceChildren() { this.children = []; },
+    });
+    const list = makeNode();
+    vm.runInNewContext(fn + '\nrenderFinalAnalysis(analysis);', {
+        document: {createElement: makeNode}, projectorAnalysisList: list,
+        projectorAnalysisEmpty: makeNode(),
+        analysis: {difficultQuestions: [{number: 4, total: 50, incorrect: 30, percentage: 60, question: 'Voorbeeldvraag', correctAnswer: 'Voorbeeldantwoord'}]},
+    });
+    const content = list.children[0].children[1].children;
+    assert.equal(content[0].textContent, 'Vraag 4 · 30 van de 50 deelnemers hadden deze vraag fout.');
+    assert.equal(content[1].textContent, 'Dat is 60%.');
+    assert.equal(content[1].className, 'projector-analysis__percentage');
+    assert.ok(source.includes('Bedankt voor uw deelname aan de quiz!'));
 });

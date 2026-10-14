@@ -237,12 +237,13 @@ function renderAnalysis(analysis) {
     analysis.difficultQuestions.forEach((entry) => {
         const item = document.createElement("li");
         const title = document.createElement("strong");
-        title.textContent = entry.total === 1
-            ? `Vraag ${entry.number} — Het enige ontvangen antwoord was fout (100%)`
-            : `Vraag ${entry.number} — ${entry.incorrect} van de ${entry.total} ontvangen antwoorden ${entry.incorrect === 1 ? "was" : "waren"} fout (${entry.percentage}%)`;
+        title.textContent = `Vraag ${entry.number} · ${entry.incorrect} van de ${entry.total} ${entry.total === 1 ? "deelnemer" : "deelnemers"} ${entry.incorrect === 1 ? "had" : "hadden"} deze vraag fout.`;
+        const percentage = document.createElement("p");
+        percentage.className = "analysis-percentage";
+        percentage.textContent = `Dat is ${entry.percentage}%.`;
         const text = document.createElement("p");
         text.textContent = entry.question;
-        item.append(title, text);
+        item.append(title, percentage, text);
         analysisList.append(item);
     });
 }

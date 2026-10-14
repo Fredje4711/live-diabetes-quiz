@@ -687,6 +687,15 @@ h3 {
     line-height: 1.25;
 }
 
+.projector-analysis__percentage,
+.analysis-percentage {
+    margin: 0 0 0.25rem;
+    color: #8c3514;
+    font-size: clamp(20px, 2.8vh, 32px);
+    font-weight: 900;
+    line-height: 1.1;
+}
+
 .projector-analysis__answer {
     margin: 0.3rem 0 0;
     color: #0c4e28;
@@ -709,6 +718,19 @@ h3 {
     font-size: 1.35rem;
     font-weight: 850;
     text-align: center;
+}
+
+@media (max-height: 600px) {
+    .projector:has(#projectorFinished:not(.hide)) .site-header__inner {
+        min-height: 50px;
+        padding-block: 4px;
+    }
+    .projector:has(#projectorFinished:not(.hide)) .brand__logo {
+        width: 36px;
+        height: 36px;
+    }
+    .projector-analysis__list li { padding-block: 5px; }
+    .projector-analysis__list { gap: 6px; }
 }
 
 .projector .site-header__inner,

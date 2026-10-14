@@ -87,9 +87,10 @@ function renderFinalAnalysis(analysis) {
         const content = document.createElement("div");
         const meta = document.createElement("p");
         meta.className = "projector-analysis__meta";
-        meta.textContent = entry.total === 1
-            ? `Vraag ${entry.number} — Het enige ontvangen antwoord was fout (100%)`
-            : `Vraag ${entry.number} — ${entry.incorrect} van de ${entry.total} ontvangen antwoorden ${entry.incorrect === 1 ? "was" : "waren"} fout (${entry.percentage}%)`;
+        meta.textContent = `Vraag ${entry.number} · ${entry.incorrect} van de ${entry.total} ${entry.total === 1 ? "deelnemer" : "deelnemers"} ${entry.incorrect === 1 ? "had" : "hadden"} deze vraag fout.`;
+        const percentage = document.createElement("p");
+        percentage.className = "projector-analysis__percentage";
+        percentage.textContent = `Dat is ${entry.percentage}%.`;
 
         const question = document.createElement("h2");
         question.textContent = entry.question;
@@ -98,7 +99,7 @@ function renderFinalAnalysis(analysis) {
         answer.className = "projector-analysis__answer";
         answer.textContent = `Juiste antwoord: ${entry.correctAnswer}`;
 
-        content.append(meta, question, answer);
+        content.append(meta, percentage, question, answer);
         item.append(rank, content);
         projectorAnalysisList.append(item);
     });
@@ -209,8 +210,8 @@ try {
                 [projectorWaiting,projectorQuestion,projectorFinished].forEach(el => el.classList.add("hide"));
                 const notice = document.querySelector("#activityNotice");
                 notice.classList.remove("hide");
-                notice.querySelector("h1").textContent = state.closed ? "Bedankt voor uw deelname" : "Een nieuwe ronde komt eraan";
-                notice.querySelector("p").textContent = state.closed ? "Deze activiteit is afgelopen." : "Blijf verbonden op uw gsm. Dezelfde briefjes blijven geldig.";
+                notice.querySelector("h1").textContent = state.closed ? "Bedankt voor uw deelname aan de quiz!" : "Een nieuwe ronde komt eraan";
+                notice.querySelector("p").textContent = state.closed ? "Fijn dat u erbij was." : "Blijf verbonden op uw gsm. Dezelfde briefjes blijven geldig.";
                 projectorPhase.textContent = state.closed ? "Afgesloten" : "Even geduld";
                 return;
             }
