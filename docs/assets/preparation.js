@@ -16,6 +16,10 @@ export function preparationSummary(activity, prep = {}) {
     };
 }
 
+export function showPreparationOverview(activity, prep, {fresh = false, phase = 'waiting', error = ''} = {}) {
+    return !fresh || phase !== 'waiting' || Boolean(error || activity.shortLink || prep?.wifiConfigured || prep?.printedAt);
+}
+
 // Choose wording from actual preparation and quiz state, never from the URL alone.
 export function preparationMessage(activity, prep, {fresh = false, phase = 'waiting', error = ''} = {}) {
     const title = activity.title || 'Live Diabetes Quiz';
@@ -29,6 +33,6 @@ export function preparationMessage(activity, prep, {fresh = false, phase = 'wait
         ? 'Kies ‘Deelnemersbriefjes voorbereiden’. Bewaar daar de internetkeuze en maak eventueel een korte link. Druk daarna de briefjes af.'
         : 'Uw internetkeuze is bewaard. Ga naar ‘Deelnemersbriefjes voorbereiden’ en bevestig daar pas dat de briefjes klaar zijn wanneer u ze werkelijk op papier hebt.';
     return fresh
-        ? {heading:`Nieuwe activiteit aangemaakt: ${title}`, intro:'Bereid eerst hieronder de deelnemersbriefjes voor. Bewaar daarna het startbestand waarmee u deze activiteit later opnieuw opent.', next}
+        ? {heading:`Nieuwe activiteit aangemaakt: ${title}`, intro:'Uw activiteit is aangemaakt. Nu bereiden we de deelnemersbriefjes voor.', next:'Klik op ‘Deelnemersbriefjes voorbereiden’. Daar stelt u de internetgegevens en eventueel een korte link in. Daarna kunt u de briefjes afdrukken of als PDF bewaren.'}
         : {heading:`Voorbereiding verder afwerken: ${title}`, intro:'U opent een bestaande activiteit. De voorbereiding is nog niet volledig bevestigd; hieronder ziet u wat al bewaard is. Maak geen nieuwe activiteit.', next};
 }

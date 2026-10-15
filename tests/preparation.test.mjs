@@ -1,6 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {preparationSummary, preparationDate, preparationMessage} from '../docs/assets/preparation.js';
+import {preparationSummary, preparationDate, preparationMessage, showPreparationOverview} from '../docs/assets/preparation.js';
+
+test('nieuwe lege activiteit verbergt overzicht; hervatten, bewaarde gegevens en fouten blijven zichtbaar', () => {
+    const a = {title:'Test',status:'open'};
+    assert.equal(showPreparationOverview(a, {}, {fresh:true}), false);
+    assert.equal(showPreparationOverview(a, null, {fresh:true}), false);
+    assert.equal(showPreparationOverview(a, {}, {fresh:false}), true);
+    assert.equal(showPreparationOverview(a, {wifiConfigured:true}, {fresh:true}), true);
+    assert.equal(showPreparationOverview({...a,shortLink:'https://tinyurl.com/test'}, {}, {fresh:true}), true);
+    assert.equal(showPreparationOverview(a, {}, {fresh:true,error:'offline'}), true);
+});
 test('onderscheid tussen ontbrekende keuze, mobiele data en wifi', () => {
     assert.match(preparationSummary({}).wifi, /Nog niet bewaard/);
     assert.match(preparationSummary({}, {wifiConfigured:true,wifiName:''}).wifi, /mobiele data/);
@@ -11,9 +21,9 @@ test('onderscheid tussen ontbrekende keuze, mobiele data en wifi', () => {
 test('nieuwe activiteit zegt niet hervatten of voorbereiding klaar', () => {
     const message = preparationMessage({title:'Test',status:'open'}, {}, {fresh:true});
     assert.match(message.heading, /Nieuwe activiteit aangemaakt/);
-    assert.match(message.intro, /Bereid eerst.*deelnemersbriefjes.*Bewaar daarna/);
+    assert.match(message.intro, /Nu bereiden we de deelnemersbriefjes voor/);
     assert.doesNotMatch(JSON.stringify(message), /hervat|briefjes blijven|Voorbereiding klaar/);
-    assert.match(message.next, /internetkeuze/);
+    assert.match(message.next, /internetgegevens/);
 });
 test('opnieuw openen onderscheidt onvolledige voorbereiding en klaar', () => {
     const activity = {title:'Test',status:'open'};

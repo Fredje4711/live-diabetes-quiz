@@ -17,7 +17,7 @@ import {
 import { activityUrl, managementUrl, queryActivity, validActivity, validKey,
     createActivity, authorizeActivity, startRound, closeActivity, watchActivity } from "./activity-service.js?v=19";
 import { watchPreparation } from './preparation-service.js?v=19';
-import { preparationDate, preparationSummary, preparationMessage } from './preparation.js?v=21';
+import { preparationDate, preparationSummary, preparationMessage, showPreparationOverview } from './preparation.js?v=22';
 
 const identityKey = "dlq-activity-manager";
 import { makeQuizStartFile } from "./quiz-startbestand.js?v=19";
@@ -26,7 +26,11 @@ let preparation = null, preparationError = '', stopPreparation = null;
 let activityCreatedHere = false;
 function renderPreparation() {
     if (!activityState) return;
-    const message = preparationMessage(activityState, preparation, {fresh:activityCreatedHere && activityState.roundNumber === 1, phase:latestState?.session?.phase, error:preparationError});
+    const context = {fresh:activityCreatedHere && activityState.roundNumber === 1, phase:latestState?.session?.phase, error:preparationError};
+    const message = preparationMessage(activityState, preparation, context);
+    const showOverview = showPreparationOverview(activityState, preparation, context);
+    document.querySelector('#startFileDate').classList.toggle('hide', !showOverview);
+    document.querySelector('#preparationChecklist').classList.toggle('hide', !showOverview);
     document.querySelector('#preparationHeading').textContent = message.heading;
     document.querySelector('#preparationIntro').textContent = message.intro;
     const stamp = preparationDate(startFileStamp);
