@@ -19,5 +19,5 @@ const savePreparation = async (id, value, short) => { sessionStorage.setItem('te
 const script = mocks + helpers.replaceAll('export ', '') + prepHelpers.replaceAll('export ', '') + source.replace(/import\s+[\s\S]*?from\s+["'][^"']+["'];/g, '');
 const blob = URL.createObjectURL(new Blob([script],{type:'text/javascript'}));
 document.querySelector('iframe').srcdoc = html.replace('<head>','<head><base href="/docs/">')
-    .replace('assets/briefje.js?v=19',blob);
+    .replace('assets/briefje.js?v=21',blob);
 </script>

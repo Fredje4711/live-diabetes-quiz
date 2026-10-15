@@ -4,6 +4,19 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 
 const read = file => fs.readFileSync(new URL('../docs/' + file, import.meta.url), 'utf8');
+test('voorbereiding staat vóór startbestand en zaal; printen staat vóór papieren bevestiging', () => {
+    const master = read('quizmaster.html');
+    assert.ok(master.indexOf('id="printHandoutsLink"') < master.indexOf('id="saveManagementLink"'));
+    assert.ok(master.indexOf('id="saveManagementLink"') < master.indexOf('id="openProjectorLink"'));
+    assert.equal((master.match(/id="printHandoutsLink"/g) || []).length, 1);
+    const handout = read('briefje.html');
+    assert.ok(handout.indexOf('id="saveWifi"') < handout.indexOf('id="printButton"'));
+    assert.ok(handout.indexOf('id="printButton"') < handout.indexOf('id="printedConfirmed"'));
+    assert.equal((handout.match(/id="printButton"/g) || []).length, 1);
+    for (const file of ['quizmaster.html','briefje.html','handleiding.html','uitleg/oefenen.html','uitleg/organiseren.html','assets/preparation.js','assets/briefje.js']) {
+        assert.doesNotMatch(read(file), /Deelnemersbriefjes afdrukken|Bewaar eerst uw HTML-startbestand|Klik meteen op/);
+    }
+});
 const element = () => {
     const classes = new Set();
     return { textContent: '', disabled: false, classList: {
@@ -58,7 +71,7 @@ test('bediening zonder sluitknop; oplossing blijft direct beschikbaar', () => {
 
 test('duidelijke rolnamen met behoud van bestaande quizmasterlinks', () => {
     const html = read('quizmaster.html');
-    for (const label of ['Quizmasterlink bewaren', 'Quizmasterlink kopiëren', 'Deelnemerslink kopiëren', 'Zaalscherm openen']) assert.ok(html.includes(label));
+    for (const label of ['Startbestand voor de quizmaster bewaren', 'Quizmasterlink kopiëren', 'Deelnemerslink kopiëren', 'Zaalscherm openen']) assert.ok(html.includes(label));
     for (const file of ['quizmaster.html', 'handleiding.html', 'index.html', 'uitleg/oefenen.html', 'uitleg/organiseren.html', 'assets/quizmaster.js', 'assets/activity-service.js']) assert.doesNotMatch(read(file), /beheerlink/i);
     assert.ok(read('assets/activity-service.js').includes('#beheer='));
     assert.ok(read('assets/quizmaster.js').includes('.get("beheer")'));

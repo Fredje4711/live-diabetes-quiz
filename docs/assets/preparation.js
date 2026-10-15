@@ -26,9 +26,9 @@ export function preparationMessage(activity, prep, {fresh = false, phase = 'wait
     const ready = prep.wifiConfigured && preparationSummary(activity, prep).printed;
     if (ready) return {heading:`Voorbereiding klaar: ${title}`, intro:'Uw internetkeuze is bewaard en u hebt bevestigd dat de papieren briefjes klaar zijn.', next:'In de zaal: open uw bewaarde HTML-startbestand en het zaalscherm. Deel de briefjes uit en laat deelnemers verbinden. Klik op ‘Start quiz’ wanneer iedereen klaar is.'};
     const next = !prep.wifiConfigured
-        ? 'Kies ‘Deelnemersbriefjes afdrukken’. Bewaar daar de internetkeuze en maak eventueel een korte link. Druk daarna de briefjes af.'
-        : 'Uw internetkeuze is bewaard. Ga naar ‘Deelnemersbriefjes afdrukken’ en bevestig daar pas dat de briefjes klaar zijn wanneer u ze werkelijk op papier hebt.';
+        ? 'Kies ‘Deelnemersbriefjes voorbereiden’. Bewaar daar de internetkeuze en maak eventueel een korte link. Druk daarna de briefjes af.'
+        : 'Uw internetkeuze is bewaard. Ga naar ‘Deelnemersbriefjes voorbereiden’ en bevestig daar pas dat de briefjes klaar zijn wanneer u ze werkelijk op papier hebt.';
     return fresh
-        ? {heading:`Nieuwe activiteit aangemaakt: ${title}`, intro:'Bewaar eerst uw HTML-startbestand via ‘Quizmasterlink bewaren’. Daarna bereidt u de deelnemersbriefjes voor.', next}
+        ? {heading:`Nieuwe activiteit aangemaakt: ${title}`, intro:'Bereid eerst hieronder de deelnemersbriefjes voor. Bewaar daarna het startbestand waarmee u deze activiteit later opnieuw opent.', next}
         : {heading:`Voorbereiding verder afwerken: ${title}`, intro:'U opent een bestaande activiteit. De voorbereiding is nog niet volledig bevestigd; hieronder ziet u wat al bewaard is. Maak geen nieuwe activiteit.', next};
 }

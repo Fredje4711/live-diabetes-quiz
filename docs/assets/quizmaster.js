@@ -17,7 +17,7 @@ import {
 import { activityUrl, managementUrl, queryActivity, validActivity, validKey,
     createActivity, authorizeActivity, startRound, closeActivity, watchActivity } from "./activity-service.js?v=19";
 import { watchPreparation } from './preparation-service.js?v=19';
-import { preparationDate, preparationSummary, preparationMessage } from './preparation.js?v=20';
+import { preparationDate, preparationSummary, preparationMessage } from './preparation.js?v=21';
 
 const identityKey = "dlq-activity-manager";
 import { makeQuizStartFile } from "./quiz-startbestand.js?v=19";
@@ -38,7 +38,7 @@ function renderPreparation() {
     for (const text of lines) { const li = document.createElement('li'); li.textContent = text; list.append(li); }
     document.querySelector('#preparationNext').textContent = message.next;
     document.querySelector('#startFileInstruction').textContent = activityCreatedHere
-        ? 'Bewaar dit bestand op uw bureaublad. In de zaal opent u hiermee deze activiteit, ook op een andere laptop. Niet delen met deelnemers.'
+        ? 'Briefjes voorbereid? Bewaar daarna dit HTML-startbestand op uw bureaublad. Hiermee opent u in de zaal dezelfde activiteit, ook op een andere laptop. Wilt u tussendoor stoppen? Dan kunt u het bestand ook nu al bewaren om later verder te werken.'
         : 'Gebruik uw bewaarde HTML-startbestand om deze activiteit later te openen. Hebt u het bestand nog niet? Bewaar het hieronder. Niet delen met deelnemers.';
 }
 let savedIdentity = {};
@@ -72,7 +72,7 @@ function resetSetup() {
     setConnection(connectionStatus, 'online', 'Klaar voor een nieuwe activiteit');
     showError(setupError);
     setupTitle.textContent = "Activiteit voorbereiden";
-    setupLead.textContent = "Geef uw activiteit een naam en kies het aantal vragen. Daarna bewaart u het startbestand en maakt u de deelnemersbriefjes.";
+    setupLead.textContent = "Geef uw activiteit een naam en kies het aantal vragen. Daarna bereidt u de deelnemersbriefjes voor en bewaart u het startbestand voor later.";
     activityName.closest(".field").classList.remove("hide");
     activityName.required = true;
     createSessionForm.querySelector("button[type=submit]").textContent = "Activiteit maken";

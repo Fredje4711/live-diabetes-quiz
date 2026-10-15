@@ -21,13 +21,13 @@
     <main class="handout-shell">
         <section class="panel handout-controls no-print">
             <p class="eyebrow">Vooraf voorbereiden</p>
-            <h1>Deelnemersbriefjes afdrukken</h1>
+            <h1>Deelnemersbriefjes voorbereiden</h1>
             <p class="lead">
-                Vul eventueel de wifi van de zaal in en maak desgewenst een korte link voor wie niet kan scannen.
-                Geen cijfercode nodig. Deze briefjes blijven geldig tot u de activiteit definitief afsluit.
+                Bereid hieronder eerst de gegevens op het briefje voor. Controleer daarna het afdrukvoorbeeld en druk af of bewaar een PDF.
+                Deze briefjes blijven geldig tot u de activiteit definitief afsluit.
             </p>
             <section id="shortLinkControls" class="hide" aria-labelledby="shortLinkHeading" style="margin-top:1.5rem">
-                <h2 id="shortLinkHeading">Een kortere link op het briefje (niet verplicht)</h2>
+                <h2 id="shortLinkHeading">1. Deelnemerslink — eventueel verkorten</h2>
                 <p>De QR-code werkt rechtstreeks. Een korte link maakt het overtypen gemakkelijker voor wie niet kan scannen.</p>
                 <div class="field">
                     <label for="originalParticipantLink">Oorspronkelijke deelnemerslink — blijft altijd beschikbaar</label>
@@ -47,6 +47,8 @@
                 <p id="shortLinkHelp">Eén keer per nieuwe activiteit. Bij opnieuw spelen binnen dezelfde activiteit blijft deze link bewaard, ook op een andere laptop. Zonder korte link drukken we de oorspronkelijke link af. Wilt u die weer gebruiken? Maak het vak leeg en klik op ‘Korte link bewaren’.</p>
                 <p>De QR-code blijft altijd naar de oorspronkelijke link verwijzen, ook als TinyURL niet werkt. Controleer vóór het afdrukken het voorbeeld hieronder.</p>
             </section>
+            <h2 style="margin-top:1.5rem">2. Internet voor de deelnemers instellen</h2>
+            <p>Eigen mobiele data is meestal het gemakkelijkst. Wilt u ook zaalwifi aanbieden? Vul de geteste wifi-naam en het wachtwoord in. Zonder zaalwifi laat u beide vakken leeg.</p>
             <div class="form-row" style="margin-top: 1.5rem">
                 <div class="field">
                     <label for="wifiName">Naam wifi van de zaal</label>
@@ -60,15 +62,20 @@
             <div id="preparationControls" class="hide">
                 <p>Geen zaalwifi voor deelnemers? Laat beide wifi-vakken leeg en bewaar die keuze. Deze gegevens blijven bij uw activiteit bewaard, ook op een andere laptop.</p>
                 <button id="saveWifi" type="button">Internetkeuze bewaren</button>
-                <h2 style="margin-top:1.5rem">Zijn de papieren briefjes klaar?</h2>
-                <p>U kunt hieronder afdrukken of eerst een PDF bewaren. Vink dit pas aan wanneer de briefjes werkelijk op papier klaar zijn.</p>
+            </div>
+            <h2 style="margin-top:1.5rem">3. Voorbeeld controleren en afdrukken</h2>
+            <p>Controleer onderaan de activiteitnaam, de link en de internetinstructies. Bewaar eerst uw ingevulde gegevens. Kies daarna afdrukken of ‘Opslaan als PDF’ in het afdrukvenster. Een PDF kunt u later afdrukken.</p>
+            <div class="button-row"><button id="printButton" class="button-primary" type="button">Briefjes afdrukken of PDF bewaren</button></div>
+            <div id="paperConfirmationControls" class="hide">
+                <h2 style="margin-top:1.5rem">4. Papieren briefjes bevestigen</h2>
+                <p>Vink dit pas aan wanneer de briefjes werkelijk op papier klaar zijn. Alleen een PDF bewaard? Laat dit nog uitgevinkt.</p>
                 <label class="check-field"><input id="printedConfirmed" type="checkbox">De deelnemersbriefjes zijn afgedrukt en klaar om mee te nemen.</label>
                 <p id="preparationStatus" role="status" aria-live="polite"></p>
                 <p>Na een wijziging aan wifi of korte link controleert u de papieren briefjes opnieuw en bevestigt u dit opnieuw.</p>
             </div>
+            <p><strong>Gegevens voorbereid?</strong> Ga terug naar de quizmaster en bewaar daar uw startbestand voor later. Hebt u dat al? Dan blijft hetzelfde bestand bruikbaar.</p>
             <div class="button-row">
-                <button id="printButton" class="button-primary" type="button">Nu afdrukken</button>
-                <a class="button-link" href="quizmaster.html">Terug naar quizmaster</a>
+                <a class="button-link" href="quizmaster.html">Terug naar quizmaster — startbestand bewaren</a>
             </div>
             <p id="handoutError" class="notice notice--error hide" role="alert"></p>
         </section>
@@ -124,6 +131,6 @@
     </template>
 
     <script src="assets/vendor/qrcode.min.js"></script>
-    <script type="module" src="assets/briefje.js?v=19"></script>
+    <script type="module" src="assets/briefje.js?v=21"></script>
 </body>
 </html>

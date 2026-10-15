@@ -115,6 +115,7 @@ if (activityId) {
         prep = await readPreparation(activityId);
         wifiName.value = prep.wifiName || ''; wifiPassword.value = prep.wifiPassword || '';
         document.querySelector('#preparationControls').classList.remove('hide');
+        document.querySelector('#paperConfirmationControls').classList.remove('hide');
         prepStatus.textContent = preparationSummary(activity, prep).paper;
         shortInput.value = savedShortLink;
         document.querySelector("#originalParticipantLink").value = joinLink();
@@ -123,12 +124,12 @@ if (activityId) {
         ready = true; updatePreparationControls(); renderHandouts();
     } catch (error) {
         handoutError.textContent = error.code === 'permission-denied'
-            ? 'Open eerst uw bewaarde HTML-startbestand of quizmasterlink. Kies daar ‘Deelnemersbriefjes afdrukken’ om uw voorbereiding te bekijken.' : error.message;
+            ? 'Open eerst uw bewaarde HTML-startbestand of quizmasterlink. Kies daar ‘Deelnemersbriefjes voorbereiden’ om uw voorbereiding te bekijken.' : error.message;
         handoutError.classList.remove("hide");
     }
 } else if (code.length !== 3) {
     handoutError.textContent =
-        "Maak eerst in het quizmasterscherm een activiteit. Open daar ‘Deelnemersbriefjes afdrukken’.";
+        "Maak eerst in het quizmasterscherm een activiteit. Open daar ‘Deelnemersbriefjes voorbereiden’.";
     handoutError.classList.remove("hide");
     printButton.disabled = true;
 } else {
@@ -170,7 +171,7 @@ saveShortButton.addEventListener("click", async () => {
         shortStatus.textContent = value ? "Bewaard bij deze activiteit. De korte link staat nu op beide briefjes hieronder." : "Bewaard. De oorspronkelijke lange link staat nu weer op de briefjes.";
     } catch (error) {
         shortStatus.textContent = error.code === "permission-denied"
-            ? "Bewaren lukt niet. Open eerst uw bewaarde quizmasterlink en ga vandaar naar ‘Deelnemersbriefjes afdrukken’. Controleer ook of de activiteit nog open is."
+            ? "Bewaren lukt niet. Open eerst uw bewaarde quizmasterlink en ga vandaar naar ‘Deelnemersbriefjes voorbereiden’. Controleer ook of de activiteit nog open is."
             : `Niet bewaard. ${error.message || "Controleer uw internet en probeer opnieuw."}`;
     } finally {
         saving = false; saveShortButton.disabled = false; shortInput.disabled = false;

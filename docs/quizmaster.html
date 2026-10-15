@@ -26,7 +26,7 @@
         <section id="setupPanel" class="panel hide">
             <p class="eyebrow">Nieuwe activiteit</p>
             <h1 id="setupTitle">Activiteit voorbereiden</h1>
-            <p id="setupLead" class="lead">Geef uw activiteit een naam en kies het aantal vragen. Daarna bewaart u het startbestand en maakt u de deelnemersbriefjes.</p>
+            <p id="setupLead" class="lead">Geef uw activiteit een naam en kies het aantal vragen. Daarna bereidt u de deelnemersbriefjes voor en bewaart u het startbestand voor later.</p>
 
             <form id="createSessionForm" style="margin-top: 1.5rem">
                 <div class="field">
@@ -85,23 +85,25 @@
                     <p id="preparationIntro"></p>
                     <p id="startFileDate"></p>
                     <ul id="preparationChecklist"><li>Voorbereiding ophalen…</li></ul>
+                    <h3>1. Deelnemersbriefjes voorbereiden</h3>
+                    <p>Kies hoe deelnemers internet gebruiken, vul eventueel de zaalwifi en een korte deelnemerslink in. Daarna kunt u de briefjes afdrukken of als PDF bewaren.</p>
                     <p id="preparationNext"></p>
-                    <strong>Uw HTML-startbestand voor later</strong>
+                    <a id="printHandoutsLink" class="button-link button-link--print" href="briefje.html" target="_blank" rel="noopener">Deelnemersbriefjes voorbereiden</a>
+                    <h3 style="margin-top:1.5rem">2. Startbestand voor de quizmaster bewaren</h3>
                     <p id="startFileInstruction">Bewaar het startbestand om deze activiteit later te openen. Niet delen met deelnemers.</p>
                     <div class="button-row">
-                        <button id="saveManagementLink" type="button" class="button-primary">Quizmasterlink bewaren</button>
+                        <button id="saveManagementLink" type="button" class="button-primary">Startbestand voor de quizmaster bewaren</button>
                         <button id="copyManagementLink" type="button" class="button-secondary">Quizmasterlink kopiëren</button>
                     </div>
-                    <p id="saveLinkHelp" role="status">‘Quizmasterlink bewaren’ downloadt een HTML-startbestand. Zet het op uw bureaublad. Later opent u dezelfde quiz door op dat bestand te dubbelklikken.</p>
+                    <p id="saveLinkHelp" role="status">Dit HTML-bestand opent uw activiteit op internet en haalt de laatst bewaarde gegevens op. Het is geen kopie van uw voorbereiding. Na latere wijzigingen hoeft u het niet opnieuw te bewaren. Deel het alleen met medeorganisatoren.</p>
                 </div>
 
+                <h3>3. In de zaal: zaalscherm openen en deelnemers verbinden</h3>
+                <p>Open in de zaal uw bewaarde startbestand, ook op een andere laptop met internet. Open daarna het zaalscherm, deel de briefjes uit en help de deelnemers verbinden. Start de quiz hieronder wanneer iedereen klaar is.</p>
                 <div class="button-row">
                     <button id="copyParticipantLink" class="button-secondary" type="button">Deelnemerslink kopiëren</button>
                     <a id="openProjectorLink" class="button-link" href="projectie.html" target="_blank" rel="noopener">
                         Zaalscherm openen
-                    </a>
-                    <a id="printHandoutsLink" class="button-link button-link--print" href="briefje.html" target="_blank" rel="noopener">
-                        Deelnemersbriefjes afdrukken
                     </a>
                 </div>
                 <div class="qr-card">
@@ -196,6 +198,6 @@
     </main>
 
     <script src="assets/vendor/qrcode.min.js"></script>
-    <script type="module" src="assets/quizmaster.js?v=20"></script>
+    <script type="module" src="assets/quizmaster.js?v=21"></script>
 </body>
 </html>

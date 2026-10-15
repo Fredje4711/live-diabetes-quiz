@@ -11,7 +11,7 @@ test('onderscheid tussen ontbrekende keuze, mobiele data en wifi', () => {
 test('nieuwe activiteit zegt niet hervatten of voorbereiding klaar', () => {
     const message = preparationMessage({title:'Test',status:'open'}, {}, {fresh:true});
     assert.match(message.heading, /Nieuwe activiteit aangemaakt/);
-    assert.match(message.intro, /Bewaar eerst/);
+    assert.match(message.intro, /Bereid eerst.*deelnemersbriefjes.*Bewaar daarna/);
     assert.doesNotMatch(JSON.stringify(message), /hervat|briefjes blijven|Voorbereiding klaar/);
     assert.match(message.next, /internetkeuze/);
 });
