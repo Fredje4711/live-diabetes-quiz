@@ -54,7 +54,11 @@ service cloud.firestore {
           || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['currentSession','roundNumber','updatedAt'])
               && request.resource.data.roundNumber == resource.data.roundNumber + 1
               && request.resource.data.currentSession != resource.data.currentSession
-              && validRound(id, request.resource.data.currentSession)));
+              && validRound(id, request.resource.data.currentSession))
+          || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['shortLink','updatedAt'])
+              && request.resource.data.shortLink is string
+              && (request.resource.data.shortLink == ''
+                || request.resource.data.shortLink.matches('^https://tinyurl[.]com/[a-zA-Z0-9_-]{1,100}$'))));
       match /managers/{uid} {
         allow get: if signedIn() && uid == request.auth.uid;
         allow list, update, delete: if false;

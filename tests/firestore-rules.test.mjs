@@ -192,6 +192,27 @@ const activityId = "abcdef123456";
 const secret = "a".repeat(64);
 const firstRound = "b".repeat(32);
 const secondRound = "c".repeat(32);
+test("korte link: eigenaar en andere quizmaster mogen bewaren, deelnemers niet", async () => {
+    const id = "123456abcdef";
+    await environment.withSecurityRulesDisabled(async context => {
+        await setDoc(doc(context.firestore(), 'activities', id), {ownerUid:'short-owner',status:'open',currentSession:'old',roundNumber:1});
+        await setDoc(doc(context.firestore(), 'activities', id, 'managers', 'short-manager'), {key:secret});
+    });
+    const owner = environment.authenticatedContext('short-owner').firestore();
+    const manager = environment.authenticatedContext('short-manager').firestore();
+    const player = environment.authenticatedContext('short-player').firestore();
+    const change = shortLink => ({shortLink, updatedAt:serverTimestamp()});
+    await assertSucceeds(updateDoc(doc(owner,'activities',id),change('https://tinyurl.com/test-123')));
+    assert.equal((await getDoc(doc(manager,'activities',id))).data().shortLink,'https://tinyurl.com/test-123');
+    await assertFails(updateDoc(doc(player,'activities',id),change('https://tinyurl.com/other')));
+    for (const value of ['javascript:alert(1)','https://evil.com/test','https://tinyurl.com/a#beheer=secret',42]) {
+        await assertFails(updateDoc(doc(owner,'activities',id),change(value)));
+    }
+    await assertFails(updateDoc(doc(owner,'activities',id),{...change(''),ownerUid:'short-player'}));
+    await assertSucceeds(updateDoc(doc(manager,'activities',id),change('')));
+    await assertSucceeds(updateDoc(doc(owner,'activities',id),{status:'closed',updatedAt:serverTimestamp()}));
+    await assertFails(updateDoc(doc(manager,'activities',id),change('https://tinyurl.com/test-123')));
+});
 function newRound(uid, code, id = activityId) {
     return { activityId: id, code, masterUid: uid, phase: "waiting", activePosition: 0,
         questionOrder: [0,1,2,3,4], totalQuestions: 5, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
@@ -219,11 +240,13 @@ test("activiteit: vaste toegang, privébeheer, nieuwe ronde, definitief sluiten"
     await assertSucceeds(updateDoc(doc(replacement,"sessions",firstRound),{phase:"open",updatedAt:serverTimestamp()}));
     const answer = {participantUid:"activity-player",questionPosition:0,optionIndex:1,answeredAt:serverTimestamp()};
     await assertSucceeds(setDoc(doc(participant,"sessions",firstRound,"answers","activity-player_0"),answer));
+    await assertSucceeds(updateDoc(doc(master,"activities",activityId),{shortLink:'https://tinyurl.com/blijft-geldig',updatedAt:serverTimestamp()}));
     const restart = writeBatch(replacement);
     restart.set(doc(replacement,"sessions",secondRound),newRound("other-laptop",secondRound));
     restart.update(doc(replacement,"activities",activityId),{currentSession:secondRound,roundNumber:2,updatedAt:serverTimestamp()});
     await assertSucceeds(restart.commit());
     assert.equal((await getDoc(doc(participant,"activities",activityId))).data().currentSession,secondRound);
+    assert.equal((await getDoc(doc(replacement,"activities",activityId))).data().shortLink,'https://tinyurl.com/blijft-geldig');
     await assertFails(updateDoc(doc(master,"sessions",firstRound),{phase:"open",updatedAt:serverTimestamp()}));
     await assertFails(updateDoc(doc(master,"activities",activityId),{currentSession:firstRound,roundNumber:3,updatedAt:serverTimestamp()}));
     await assertSucceeds(updateDoc(doc(master,"sessions",secondRound),{phase:"open",updatedAt:serverTimestamp()}));

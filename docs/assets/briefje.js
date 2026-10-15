@@ -4,7 +4,8 @@ import {
     queryCode,
     renderQr,
 } from "./app.js?v=13";
-import { activityUrl, queryActivity, readActivity } from "./activity-service.js?v=15";
+import { activityUrl, queryActivity, readActivity, saveActivityShortLink } from "./activity-service.js?v=18";
+import { normalizeShortLink, handoutAddress } from "./short-link.js?v=18";
 const activityId = queryActivity();
 if (activityId) {
     document.querySelectorAll('a[href="quizmaster.html"]').forEach(link => {
@@ -22,10 +23,17 @@ const wifiPassword = document.querySelector("#wifiPassword");
 const printButton = document.querySelector("#printButton");
 const template = document.querySelector("#handoutTemplate");
 const targets = [...document.querySelectorAll(".participant-handout__content")];
+const shortInput = document.querySelector("#shortParticipantLink");
+const shortStatus = document.querySelector("#shortLinkStatus");
+const saveShortButton = document.querySelector("#saveShortLink");
+let savedShortLink = "";
+let saving = false;
+const shortLinkDirty = () => shortInput.value.trim() !== savedShortLink;
 
 function readableParticipantAddress() {
+    if (activityId) return handoutAddress(joinLink(), savedShortLink);
     const url = new URL(joinLink());
-    return `${url.host}${url.pathname}${activityId ? url.search : ""}`;
+    return `${url.host}${url.pathname}`;
 }
 
 function wifiText() {
@@ -89,6 +97,11 @@ if (activityId) {
     try {
         activity = await readActivity(activityId);
         if (activity.status !== "open") throw new Error("Deze activiteit is afgesloten. Maak voor een volgende gelegenheid een nieuwe activiteit en nieuwe briefjes.");
+        savedShortLink = normalizeShortLink(activity.shortLink || "");
+        shortInput.value = savedShortLink;
+        document.querySelector("#originalParticipantLink").value = joinLink();
+        document.querySelector("#shortLinkControls").classList.remove("hide");
+        shortStatus.textContent = savedShortLink ? "De bewaarde korte link staat op het afdrukvoorbeeld hieronder." : "Zonder korte link kunt u ook gewoon afdrukken.";
         ready = true; printButton.disabled = false; renderHandouts();
     } catch (error) { handoutError.textContent = error.message; handoutError.classList.remove("hide"); }
 } else if (code.length !== 3) {
@@ -103,4 +116,37 @@ if (activityId) {
 
 wifiName.addEventListener("input", renderHandouts);
 wifiPassword.addEventListener("input", renderHandouts);
-printButton.addEventListener("click", () => { if (ready) window.print(); });
+printButton.addEventListener("click", () => { if (ready && !saving && !shortLinkDirty()) window.print(); });
+shortInput.addEventListener("input", () => {
+    printButton.disabled = !ready || saving || shortLinkDirty();
+    shortStatus.textContent = shortLinkDirty() ? "Nog niet bewaard. Bewaar uw wijziging vóór het afdrukken." : "Het afdrukvoorbeeld gebruikt de bewaarde link.";
+});
+document.querySelector("#copyOriginalLink").addEventListener("click", async () => {
+    try {
+        await navigator.clipboard.writeText(joinLink());
+        shortStatus.textContent = "Deelnemerslink gekopieerd. Open nu TinyURL en plak de link daar.";
+    } catch {
+        const original = document.querySelector("#originalParticipantLink");
+        original.focus(); original.select();
+        shortStatus.textContent = "De link is geselecteerd. Druk op Ctrl+C om hem te kopiëren.";
+    }
+});
+saveShortButton.addEventListener("click", async () => {
+    if (!ready || saving || !activityId) return;
+    try {
+        const value = normalizeShortLink(shortInput.value);
+        saving = true; saveShortButton.disabled = true; shortInput.disabled = true; printButton.disabled = true;
+        shortStatus.textContent = "De link wordt bewaard…";
+        await saveActivityShortLink(activityId, value);
+        savedShortLink = value; shortInput.value = value;
+        renderHandouts();
+        shortStatus.textContent = value ? "Bewaard bij deze activiteit. De korte link staat nu op beide briefjes hieronder." : "Bewaard. De oorspronkelijke lange link staat nu weer op de briefjes.";
+    } catch (error) {
+        shortStatus.textContent = error.code === "permission-denied"
+            ? "Bewaren lukt niet. Open eerst uw bewaarde quizmasterlink en ga vandaar naar ‘Deelnemersbriefjes afdrukken’. Controleer ook of de activiteit nog open is."
+            : `Niet bewaard. ${error.message || "Controleer uw internet en probeer opnieuw."}`;
+    } finally {
+        saving = false; saveShortButton.disabled = false; shortInput.disabled = false;
+        printButton.disabled = !ready || shortLinkDirty();
+    }
+});

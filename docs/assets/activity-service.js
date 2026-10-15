@@ -1,4 +1,4 @@
-import { doc, getDoc, onSnapshot, runTransaction, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+import { doc, getDoc, onSnapshot, runTransaction, serverTimestamp, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 import { db, ensureAuth, watchQuiz } from "./firebase-service.js?v=13";
 import { QUESTIONS } from "./questions.js?v=8";
 
@@ -66,6 +66,10 @@ export async function readActivity(id) {
     const snapshot = await getDoc(doc(db, "activities", id));
     if (!snapshot.exists()) throw new Error("Deze activiteit bestaat niet.");
     return snapshot.data();
+}
+export async function saveActivityShortLink(id, shortLink) {
+    await ensureAuth();
+    await updateDoc(doc(db, "activities", id), { shortLink, updatedAt: serverTimestamp() });
 }
 export async function startRound(id, expectedSession, options) {
     const user = await ensureAuth();
