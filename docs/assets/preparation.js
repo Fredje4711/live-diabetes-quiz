@@ -15,3 +15,20 @@ export function preparationSummary(activity, prep = {}) {
             : 'Nog niet bevestigd als afgedrukt. Een bewaarde PDF is nog geen papieren briefje.',
     };
 }
+
+// Choose wording from actual preparation and quiz state, never from the URL alone.
+export function preparationMessage(activity, prep, {fresh = false, phase = 'waiting', error = ''} = {}) {
+    const title = activity.title || 'Live Diabetes Quiz';
+    if (activity.status === 'closed') return {heading:`Activiteit afgesloten: ${title}`, intro:'Deze activiteit is definitief afgesloten.', next:'Maak voor een andere gelegenheid een nieuwe activiteit met nieuwe briefjes.'};
+    if (phase === 'finished') return {heading:`Ronde afgelopen: ${title}`, intro:'Deze ronde is afgelopen. De activiteit is nog open.', next:'Bespreek de eindanalyse. Voor nog een ronde kiest u ‘Nog een quiz spelen’. Dezelfde deelnemersbriefjes blijven geldig.'};
+    if (['open','locked','revealed'].includes(phase)) return {heading:`Quiz bezig: ${title}`, intro:'De quiz is al gestart. U kunt verdergaan met de huidige vraag.', next:'Gebruik hieronder de quizbediening. U hoeft geen nieuwe activiteit te maken.'};
+    if (error || prep === null) return {heading:`Uw activiteit: ${title}`, intro:error ? 'De voorbereiding kon niet worden gecontroleerd.' : 'We halen uw voorbereiding op.', next:error ? 'Controleer uw internetverbinding en vernieuw deze pagina. Maak geen nieuwe activiteit.' : 'Even geduld voordat u de voorbereiding controleert.'};
+    const ready = prep.wifiConfigured && preparationSummary(activity, prep).printed;
+    if (ready) return {heading:`Voorbereiding klaar: ${title}`, intro:'Uw internetkeuze is bewaard en u hebt bevestigd dat de papieren briefjes klaar zijn.', next:'In de zaal: open uw bewaarde HTML-startbestand en het zaalscherm. Deel de briefjes uit en laat deelnemers verbinden. Klik op ‘Start quiz’ wanneer iedereen klaar is.'};
+    const next = !prep.wifiConfigured
+        ? 'Kies ‘Deelnemersbriefjes afdrukken’. Bewaar daar de internetkeuze en maak eventueel een korte link. Druk daarna de briefjes af.'
+        : 'Uw internetkeuze is bewaard. Ga naar ‘Deelnemersbriefjes afdrukken’ en bevestig daar pas dat de briefjes klaar zijn wanneer u ze werkelijk op papier hebt.';
+    return fresh
+        ? {heading:`Nieuwe activiteit aangemaakt: ${title}`, intro:'Bewaar eerst uw HTML-startbestand via ‘Quizmasterlink bewaren’. Daarna bereidt u de deelnemersbriefjes voor.', next}
+        : {heading:`Voorbereiding verder afwerken: ${title}`, intro:'U opent een bestaande activiteit. De voorbereiding is nog niet volledig bevestigd; hieronder ziet u wat al bewaard is. Maak geen nieuwe activiteit.', next};
+}
