@@ -26,6 +26,8 @@ before(async () => {
             rules: fs.readFileSync("firestore.rules", "utf8"),
         },
     });
+    // Only the local emulator's dedicated test project; repeatable test runs.
+    await environment.clearFirestore();
 });
 
 after(async () => {
