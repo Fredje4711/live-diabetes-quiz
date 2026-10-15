@@ -4,7 +4,9 @@ import {
     queryCode,
     renderQr,
 } from "./app.js?v=13";
-import { activityUrl, queryActivity, readActivity, saveActivityShortLink } from "./activity-service.js?v=18";
+import { activityUrl, queryActivity, readActivity, saveActivityShortLink } from "./activity-service.js?v=19";
+import { readPreparation, savePreparation } from './preparation-service.js?v=19';
+import { preparationSummary } from './preparation.js?v=19';
 import { normalizeShortLink, handoutAddress } from "./short-link.js?v=18";
 const activityId = queryActivity();
 if (activityId) {
@@ -28,6 +30,18 @@ const shortStatus = document.querySelector("#shortLinkStatus");
 const saveShortButton = document.querySelector("#saveShortLink");
 let savedShortLink = "";
 let saving = false;
+let prep = {};
+const prepStatus = document.querySelector('#preparationStatus');
+const printedBox = document.querySelector('#printedConfirmed');
+const saveWifi = document.querySelector('#saveWifi');
+const wifiDirty = () => activityId && (!prep.wifiConfigured || wifiName.value.trim() !== prep.wifiName || wifiPassword.value.trim() !== prep.wifiPassword);
+function updatePreparationControls() {
+    const dirty = shortLinkDirty() || wifiDirty();
+    printButton.disabled = !ready || saving || dirty;
+    printedBox.disabled = !ready || saving || dirty;
+    saveWifi.disabled = !ready || saving;
+    printedBox.checked = !dirty && preparationSummary({shortLink:savedShortLink}, prep).printed;
+}
 const shortLinkDirty = () => shortInput.value.trim() !== savedShortLink;
 
 function readableParticipantAddress() {
@@ -98,12 +112,20 @@ if (activityId) {
         activity = await readActivity(activityId);
         if (activity.status !== "open") throw new Error("Deze activiteit is afgesloten. Maak voor een volgende gelegenheid een nieuwe activiteit en nieuwe briefjes.");
         savedShortLink = normalizeShortLink(activity.shortLink || "");
+        prep = await readPreparation(activityId);
+        wifiName.value = prep.wifiName || ''; wifiPassword.value = prep.wifiPassword || '';
+        document.querySelector('#preparationControls').classList.remove('hide');
+        prepStatus.textContent = preparationSummary(activity, prep).paper;
         shortInput.value = savedShortLink;
         document.querySelector("#originalParticipantLink").value = joinLink();
         document.querySelector("#shortLinkControls").classList.remove("hide");
         shortStatus.textContent = savedShortLink ? "De bewaarde korte link staat op het afdrukvoorbeeld hieronder." : "Zonder korte link kunt u ook gewoon afdrukken.";
-        ready = true; printButton.disabled = false; renderHandouts();
-    } catch (error) { handoutError.textContent = error.message; handoutError.classList.remove("hide"); }
+        ready = true; updatePreparationControls(); renderHandouts();
+    } catch (error) {
+        handoutError.textContent = error.code === 'permission-denied'
+            ? 'Open eerst uw bewaarde HTML-startbestand of quizmasterlink. Kies daar ‘Deelnemersbriefjes afdrukken’ om uw voorbereiding te bekijken.' : error.message;
+        handoutError.classList.remove("hide");
+    }
 } else if (code.length !== 3) {
     handoutError.textContent =
         "Maak eerst in het quizmasterscherm een activiteit. Open daar ‘Deelnemersbriefjes afdrukken’.";
@@ -114,11 +136,13 @@ if (activityId) {
     renderHandouts();
 }
 
-wifiName.addEventListener("input", renderHandouts);
-wifiPassword.addEventListener("input", renderHandouts);
-printButton.addEventListener("click", () => { if (ready && !saving && !shortLinkDirty()) window.print(); });
+for (const input of [wifiName, wifiPassword]) input.addEventListener('input', () => {
+    renderHandouts(); updatePreparationControls();
+    prepStatus.textContent = 'Internetkeuze gewijzigd. Bewaar die eerst. Controleer daarna uw papieren briefjes opnieuw.';
+});
+printButton.addEventListener("click", () => { if (ready && !saving && !shortLinkDirty() && !wifiDirty()) window.print(); });
 shortInput.addEventListener("input", () => {
-    printButton.disabled = !ready || saving || shortLinkDirty();
+    updatePreparationControls();
     shortStatus.textContent = shortLinkDirty() ? "Nog niet bewaard. Bewaar uw wijziging vóór het afdrukken." : "Het afdrukvoorbeeld gebruikt de bewaarde link.";
 });
 document.querySelector("#copyOriginalLink").addEventListener("click", async () => {
@@ -136,10 +160,13 @@ saveShortButton.addEventListener("click", async () => {
     try {
         const value = normalizeShortLink(shortInput.value);
         saving = true; saveShortButton.disabled = true; shortInput.disabled = true; printButton.disabled = true;
+        wifiName.disabled = true; wifiPassword.disabled = true; updatePreparationControls();
         shortStatus.textContent = "De link wordt bewaard…";
         await saveActivityShortLink(activityId, value);
+        prep = await readPreparation(activityId);
         savedShortLink = value; shortInput.value = value;
         renderHandouts();
+        prepStatus.textContent = preparationSummary({shortLink:savedShortLink}, prep).paper;
         shortStatus.textContent = value ? "Bewaard bij deze activiteit. De korte link staat nu op beide briefjes hieronder." : "Bewaard. De oorspronkelijke lange link staat nu weer op de briefjes.";
     } catch (error) {
         shortStatus.textContent = error.code === "permission-denied"
@@ -147,6 +174,26 @@ saveShortButton.addEventListener("click", async () => {
             : `Niet bewaard. ${error.message || "Controleer uw internet en probeer opnieuw."}`;
     } finally {
         saving = false; saveShortButton.disabled = false; shortInput.disabled = false;
-        printButton.disabled = !ready || shortLinkDirty();
+        wifiName.disabled = false; wifiPassword.disabled = false;
+        updatePreparationControls();
     }
 });
+async function storePreparation(confirmed) {
+    if (!ready || saving || !activityId) return;
+    saving = true; updatePreparationControls(); saveShortButton.disabled = true;
+    wifiName.disabled = true; wifiPassword.disabled = true; shortInput.disabled = true;
+    try {
+        await savePreparation(activityId, {wifiName:wifiName.value, wifiPassword:wifiPassword.value, confirmed}, savedShortLink, prep.updatedAt?.toMillis() || null);
+        prep = await readPreparation(activityId);
+        prepStatus.textContent = confirmed ? preparationSummary({shortLink:savedShortLink}, prep).paper
+            : 'Internetkeuze bewaard. U kunt nu afdrukken of een PDF bewaren. Bevestig pas daarna wanneer uw papieren briefjes klaar zijn.';
+    } catch (error) {
+        prepStatus.textContent = `Niet bewaard. ${error.message || 'Controleer uw verbinding en probeer opnieuw.'}`;
+    } finally {
+        saving = false; saveShortButton.disabled = false;
+        wifiName.disabled = false; wifiPassword.disabled = false; shortInput.disabled = false;
+        updatePreparationControls();
+    }
+}
+saveWifi.addEventListener('click', () => storePreparation(false));
+printedBox.addEventListener('change', () => storePreparation(printedBox.checked));

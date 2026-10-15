@@ -81,8 +81,13 @@
                     <span id="phaseBadge" class="badge">Wachtkamer</span>
                 </div>
                 <div id="managementPanel" class="notice hide">
-                    <strong>Bewaar eerst uw quizmasterlink.</strong>
-                    <p>Bewaar deze link om de quiz later of op een andere computer te bedienen. Niet delen met deelnemers.</p>
+                    <h2 id="preparationHeading">Uw voorbereiding</h2>
+                    <p id="preparationIntro"></p>
+                    <p id="startFileDate"></p>
+                    <ul id="preparationChecklist"><li>Voorbereiding ophalen…</li></ul>
+                    <p id="preparationNext"></p>
+                    <strong>Uw HTML-startbestand voor later</strong>
+                    <p>Al bewaard? Gebruik hetzelfde bestand in de zaal, ook op een andere laptop. Nog niet bewaard? Klik hieronder. Niet delen met deelnemers.</p>
                     <div class="button-row">
                         <button id="saveManagementLink" type="button" class="button-primary">Quizmasterlink bewaren</button>
                         <button id="copyManagementLink" type="button" class="button-secondary">Quizmasterlink kopiëren</button>
@@ -191,6 +196,6 @@
     </main>
 
     <script src="assets/vendor/qrcode.min.js"></script>
-    <script type="module" src="assets/quizmaster.js?v=17"></script>
+    <script type="module" src="assets/quizmaster.js?v=19"></script>
 </body>
 </html>

@@ -23,5 +23,5 @@ test('briefje gebruikt korte link of volledige oorspronkelijke deelnemerslink', 
     const source = fs.readFileSync('docs/assets/briefje.js', 'utf8');
     assert.match(source, /renderQr\(target.querySelector\(".handout-quiz-qr"\), joinLink\(\), 145\)/);
     assert.match(source, /saveActivityShortLink\(activityId, value\)/);
-    assert.match(source, /printButton.disabled = !ready \|\| shortLinkDirty\(\)/);
+    assert.match(source, /printButton.disabled = !ready \|\| saving \|\| dirty/);
 });

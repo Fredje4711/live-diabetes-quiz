@@ -194,6 +194,29 @@ const activityId = "abcdef123456";
 const secret = "a".repeat(64);
 const firstRound = "b".repeat(32);
 const secondRound = "c".repeat(32);
+test('voorbereiding privé, gedeeld met quizmaster op andere laptop en datum alleen via server', async () => {
+    const id = '987654abcdef';
+    await environment.withSecurityRulesDisabled(async context => {
+        await setDoc(doc(context.firestore(),'activities',id),{ownerUid:'prep-owner',status:'open',shortLink:'https://tinyurl.com/test'});
+        await setDoc(doc(context.firestore(),'activities',id,'managers','prep-other'),{key:secret});
+    });
+    const owner = environment.authenticatedContext('prep-owner').firestore();
+    const other = environment.authenticatedContext('prep-other').firestore();
+    const player = environment.authenticatedContext('prep-player').firestore();
+    const ref = db => doc(db,'activities',id,'private','preparation');
+    const data = {wifiConfigured:true,wifiName:'Zaal',wifiPassword:'geheim',printedAt:null,printedShortLink:'https://tinyurl.com/test',updatedAt:serverTimestamp()};
+    await assertSucceeds(setDoc(ref(owner),data));
+    assert.equal((await assertSucceeds(getDoc(ref(other)))).data().wifiName,'Zaal');
+    await assertFails(getDoc(ref(player)));
+    await assertFails(setDoc(ref(player),data));
+    await assertSucceeds(updateDoc(ref(other),{printedAt:serverTimestamp(),updatedAt:serverTimestamp()}));
+    await assertFails(updateDoc(ref(owner),{printedAt:new Date(0),updatedAt:serverTimestamp()}));
+    await assertFails(setDoc(ref(owner),{...data,wifiName:'',wifiPassword:'secret'}));
+    await assertFails(setDoc(ref(owner),{...data,printedShortLink:'https://tinyurl.com/stale'}));
+    await assertSucceeds(setDoc(ref(owner),{...data,wifiName:'',wifiPassword:''}));
+    await assertSucceeds(updateDoc(doc(owner,'activities',id),{status:'closed',updatedAt:serverTimestamp()}));
+    await assertFails(setDoc(ref(other),data));
+});
 test("korte link: eigenaar en andere quizmaster mogen bewaren, deelnemers niet", async () => {
     const id = "123456abcdef";
     await environment.withSecurityRulesDisabled(async context => {

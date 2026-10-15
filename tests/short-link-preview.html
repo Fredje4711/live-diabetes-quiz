@@ -5,6 +5,7 @@
 const html = await (await fetch('../docs/briefje.html')).text();
 const source = await (await fetch('../docs/assets/briefje.js')).text();
 const helpers = await (await fetch('../docs/assets/short-link.js')).text();
+const prepHelpers = await (await fetch('../docs/assets/preparation.js')).text();
 const mocks = `
 const queryActivity = () => 'abcdef123456';
 const activityUrl = () => 'https://fredje4711.github.io/live-diabetes-quiz/deelnemer.html?a=abcdef123456';
@@ -12,9 +13,11 @@ const normalizeCode = () => '', queryCode = () => '', participantUrl = activityU
 const renderQr = (el, value, size) => { new QRCode(el, {text:value,width:size,height:size}); el.title=value; };
 const readActivity = async () => ({status:'open',title:'Voorbeeld ledenfeest',shortLink:sessionStorage.getItem('test-short-link') || ''});
 const saveActivityShortLink = async (id, value) => { sessionStorage.setItem('test-short-link',value); };
+const readPreparation = async () => JSON.parse(sessionStorage.getItem('test-preparation') || '{}');
+const savePreparation = async (id, value, short) => { sessionStorage.setItem('test-preparation', JSON.stringify({...value,wifiConfigured:true,printedAt:value.confirmed ? new Date().toISOString() : null,printedShortLink:short})); };
 `;
-const script = mocks + helpers.replaceAll('export ', '') + source.replace(/import\s+[\s\S]*?from\s+"[^"]+";/g, '');
+const script = mocks + helpers.replaceAll('export ', '') + prepHelpers.replaceAll('export ', '') + source.replace(/import\s+[\s\S]*?from\s+["'][^"']+["'];/g, '');
 const blob = URL.createObjectURL(new Blob([script],{type:'text/javascript'}));
 document.querySelector('iframe').srcdoc = html.replace('<head>','<head><base href="/docs/">')
-    .replace('assets/briefje.js?v=18',blob);
+    .replace('assets/briefje.js?v=19',blob);
 </script>

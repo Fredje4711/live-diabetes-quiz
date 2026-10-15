@@ -59,6 +59,22 @@ service cloud.firestore {
               && request.resource.data.shortLink is string
               && (request.resource.data.shortLink == ''
                 || request.resource.data.shortLink.matches('^https://tinyurl[.]com/[a-zA-Z0-9_-]{1,100}$'))));
+      // Wifi credentials and the organizer's checklist are not participant data.
+      match /private/{name} {
+        allow get: if name == 'preparation' && manages(id);
+        allow list, delete: if false;
+        allow create, update: if name == 'preparation' && manages(id)
+          && get(activityPath(id)).data.status == 'open'
+          && request.resource.data.keys().hasAll(['wifiConfigured','wifiName','wifiPassword','printedAt','printedShortLink','updatedAt'])
+          && request.resource.data.keys().hasOnly(['wifiConfigured','wifiName','wifiPassword','printedAt','printedShortLink','updatedAt'])
+          && request.resource.data.wifiConfigured == true
+          && request.resource.data.wifiName is string && request.resource.data.wifiName.size() <= 100
+          && request.resource.data.wifiPassword is string && request.resource.data.wifiPassword.size() <= 128
+          && (request.resource.data.wifiName != '' || request.resource.data.wifiPassword == '')
+          && request.resource.data.updatedAt == request.time
+          && (request.resource.data.printedAt == null || request.resource.data.printedAt == request.time)
+          && request.resource.data.printedShortLink == getAfter(activityPath(id)).data.get('shortLink', '');
+      }
       match /managers/{uid} {
         allow get: if signedIn() && uid == request.auth.uid;
         allow list, update, delete: if false;

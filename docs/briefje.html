@@ -50,12 +50,21 @@
             <div class="form-row" style="margin-top: 1.5rem">
                 <div class="field">
                     <label for="wifiName">Naam wifi van de zaal</label>
-                    <input id="wifiName" type="text" placeholder="Bijvoorbeeld: Zaal_Gasten">
+                    <input id="wifiName" type="text" maxlength="100" placeholder="Bijvoorbeeld: Zaal_Gasten">
                 </div>
                 <div class="field">
                     <label for="wifiPassword">Wachtwoord wifi</label>
-                    <input id="wifiPassword" type="text" placeholder="Laat leeg als dit niet nodig is">
+                    <input id="wifiPassword" type="text" maxlength="128" placeholder="Laat leeg als dit niet nodig is">
                 </div>
+            </div>
+            <div id="preparationControls" class="hide">
+                <p>Geen zaalwifi voor deelnemers? Laat beide wifi-vakken leeg en bewaar die keuze. Deze gegevens blijven bij uw activiteit bewaard, ook op een andere laptop.</p>
+                <button id="saveWifi" type="button">Internetkeuze bewaren</button>
+                <h2 style="margin-top:1.5rem">Zijn de papieren briefjes klaar?</h2>
+                <p>U kunt hieronder afdrukken of eerst een PDF bewaren. Vink dit pas aan wanneer de briefjes werkelijk op papier klaar zijn.</p>
+                <label class="check-field"><input id="printedConfirmed" type="checkbox">De deelnemersbriefjes zijn afgedrukt en klaar om mee te nemen.</label>
+                <p id="preparationStatus" role="status" aria-live="polite"></p>
+                <p>Na een wijziging aan wifi of korte link controleert u de papieren briefjes opnieuw en bevestigt u dit opnieuw.</p>
             </div>
             <div class="button-row">
                 <button id="printButton" class="button-primary" type="button">Nu afdrukken</button>
@@ -115,6 +124,6 @@
     </template>
 
     <script src="assets/vendor/qrcode.min.js"></script>
-    <script type="module" src="assets/briefje.js?v=18"></script>
+    <script type="module" src="assets/briefje.js?v=19"></script>
 </body>
 </html>

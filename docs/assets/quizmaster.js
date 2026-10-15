@@ -15,10 +15,31 @@ import {
     watchQuiz,
 } from "./firebase-service.js?v=13";
 import { activityUrl, managementUrl, queryActivity, validActivity, validKey,
-    createActivity, authorizeActivity, startRound, closeActivity, watchActivity } from "./activity-service.js?v=15";
+    createActivity, authorizeActivity, startRound, closeActivity, watchActivity } from "./activity-service.js?v=19";
+import { watchPreparation } from './preparation-service.js?v=19';
+import { preparationDate, preparationSummary } from './preparation.js?v=19';
 
 const identityKey = "dlq-activity-manager";
-import { makeQuizStartFile } from "./quiz-startbestand.js?v=17";
+import { makeQuizStartFile } from "./quiz-startbestand.js?v=19";
+let startFileStamp = new URLSearchParams(location.hash.slice(1)).get('startbestand');
+let preparation = null, preparationError = '', stopPreparation = null;
+function renderPreparation() {
+    if (!activityState) return;
+    document.querySelector('#preparationHeading').textContent = `Uw voorbereide activiteit: ${activityState.title}`;
+    document.querySelector('#preparationIntro').textContent = 'U hervat dezelfde activiteit. Maak niets opnieuw aan. Uw briefjes blijven geldig tot u de activiteit definitief afsluit.';
+    const stamp = preparationDate(startFileStamp);
+    document.querySelector('#startFileDate').textContent = stamp ? `Startbestand aangemaakt op ${stamp} (Belgische tijd). Niet de datum van uw bijeenkomst.` : 'Dit overzicht toont de laatste bewaarde voorbereiding.';
+    const list = document.querySelector('#preparationChecklist'); list.replaceChildren();
+    const summary = preparationSummary(activityState, preparation || {});
+    const lines = preparationError ? [preparationError] : preparation === null ? ['Voorbereiding ophalen…']
+        : [`Korte deelnemerslink: ${summary.short}`, `Internet voor deelnemers: ${summary.wifi}`, `Deelnemersbriefjes: ${summary.paper}`];
+    for (const text of lines) { const li = document.createElement('li'); li.textContent = text; list.append(li); }
+    const phase = latestState?.session?.phase;
+    document.querySelector('#preparationNext').textContent = phase === 'finished'
+        ? 'Deze ronde is afgelopen. U kunt de eindanalyse bespreken of nog een ronde spelen met dezelfde briefjes.'
+        : phase && phase !== 'waiting' ? 'De quiz is al gestart. Ga hieronder verder met de bediening.'
+        : 'Thuis: controleer uw briefjes via ‘Deelnemersbriefjes afdrukken’. In de zaal: open het zaalscherm, deel de briefjes uit en laat deelnemers verbinden. Klik daarna op ‘Start quiz’.';
+}
 let savedIdentity = {};
 try { savedIdentity = JSON.parse(localStorage.getItem(identityKey) || "{}"); } catch {}
 let activityId = queryActivity() || (validActivity(savedIdentity.id) ? savedIdentity.id : "");
@@ -41,7 +62,9 @@ function linkFor(page) {
 }
 function rememberActivity() {
     localStorage.setItem(identityKey, JSON.stringify({id: activityId, key: managementKey}));
-    history.replaceState(null, "", validKey(managementKey) ? managementUrl(activityId, managementKey) : activityUrl("quizmaster.html", activityId));
+    const url = new URL(validKey(managementKey) ? managementUrl(activityId, managementKey) : activityUrl("quizmaster.html", activityId));
+    if (preparationDate(startFileStamp)) { const hash = new URLSearchParams(url.hash.slice(1)); hash.set('startbestand', startFileStamp); url.hash = hash.toString(); }
+    history.replaceState(null, "", url);
 }
 function resetSetup() {
     preparingRound = false;
@@ -70,10 +93,15 @@ function activityUpdate(state) {
     }
     code = state.session.code;
     renderState(state);
+    renderPreparation();
     if (!preparingRound) { setupPanel.classList.add("hide"); controlPanel.classList.remove("hide"); }
 }
 async function beginActivity() {
     await authorizeActivity(activityId, managementKey);
+    stopPreparation?.(); preparation = null; preparationError = '';
+    stopPreparation = watchPreparation(activityId, data => { preparation = data; renderPreparation(); }, () => {
+        preparationError = 'Het voorbereidingsoverzicht kon niet worden opgehaald. Controleer uw verbinding en open opnieuw uw bewaarde quizmasterbestand.'; renderPreparation();
+    });
     rememberActivity();
     stopWatch?.();
     managementPanel.classList.remove("hide");
@@ -468,6 +496,7 @@ closeActivityButton.addEventListener("click", async () => {
     finally { closeActivityButton.disabled = false; }
 });
 document.querySelector("#newActivityButton").addEventListener("click", () => {
+    stopPreparation?.(); stopPreparation = null; preparation = null; startFileStamp = null;
     stopWatch?.(); stopWatch = null;
     activityId = ""; managementKey = ""; activityState = null; code = "";
     localStorage.removeItem(identityKey); localStorage.removeItem(storageCodeKey);

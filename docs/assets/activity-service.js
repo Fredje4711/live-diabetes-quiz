@@ -69,7 +69,17 @@ export async function readActivity(id) {
 }
 export async function saveActivityShortLink(id, shortLink) {
     await ensureAuth();
-    await updateDoc(doc(db, "activities", id), { shortLink, updatedAt: serverTimestamp() });
+    await runTransaction(db, async tx => {
+        const ref = doc(db, "activities", id);
+        const prepRef = doc(db, "activities", id, "private", "preparation");
+        const activity = (await tx.get(ref)).data();
+        const prep = await tx.get(prepRef);
+        if (activity?.status !== 'open') throw new Error('Deze activiteit is afgesloten.');
+        tx.update(ref, { shortLink, updatedAt: serverTimestamp() });
+        if (prep.exists() && (activity.shortLink || '') !== shortLink) {
+            tx.update(prepRef, {printedAt:null, printedShortLink:shortLink, updatedAt:serverTimestamp()});
+        }
+    });
 }
 export async function startRound(id, expectedSession, options) {
     const user = await ensureAuth();
@@ -101,7 +111,7 @@ export async function closeActivity(id, expectedSession) {
 export async function watchActivity(id, role, onState, onError) {
     await ensureAuth();
     let disposed = false, generation = 0, current = "", stopRound = null;
-    let activity = null;
+    let activity = null, lastState = null;
     const stopActivity = onSnapshot(doc(db, "activities", id), async snapshot => {
         if (disposed) return;
         if (!snapshot.exists()) { onError(new Error("Deze activiteit bestaat niet. Controleer de link op uw briefje.")); return; }
@@ -110,14 +120,18 @@ export async function watchActivity(id, role, onState, onError) {
             generation++; current = ""; stopRound?.(); stopRound = null;
             onState({ activity, closed: true }); return;
         }
-        if (current === activity.currentSession) return;
+        if (current === activity.currentSession) {
+            if (lastState) onState({ ...lastState, activity });
+            return;
+        }
+        lastState = null;
         current = activity.currentSession;
         const token = ++generation;
         stopRound?.(); stopRound = null;
         onState({ activity, loading: true });
         try {
             const stop = await watchQuiz(current, role, state => {
-                if (!disposed && token === generation) onState({ ...state, activity });
+                if (!disposed && token === generation) { lastState = state; onState({ ...state, activity }); }
             }, error => { if (!disposed && token === generation) onError(error); });
             if (disposed || token !== generation) stop(); else stopRound = stop;
         } catch (error) { if (!disposed && token === generation) onError(error); }
