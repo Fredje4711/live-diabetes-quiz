@@ -5,6 +5,18 @@ import vm from 'node:vm';
 import * as preparationHelpers from '../docs/assets/preparation.js';
 
 const read = file => fs.readFileSync(new URL('../docs/' + file, import.meta.url), 'utf8');
+test('zaalscherm is de eerste actie; deelnemerslink heeft afzonderlijke optionele uitleg', () => {
+    const master = read('quizmaster.html');
+    assert.ok(master.indexOf('id="openProjectorLink"') < master.indexOf('id="copyParticipantLink"'));
+    assert.match(master, /aria-describedby="projectorLinkHelp"/);
+    assert.match(master, /aria-describedby="participantLinkHelp"/);
+    assert.match(master, /De bediening voor de quizmaster blijft op uw laptop/);
+    assert.match(master, /Extra mogelijkheid, geen verplichte stap/);
+    assert.match(master, /niet de link van het zaalscherm/);
+    const source = read('assets/quizmaster.js');
+    assert.match(source, /openProjectorLink.href = linkFor\("projectie.html"\)/);
+    assert.match(source, /copyText\(linkFor\("deelnemer.html"\), copyParticipantLink\)/);
+});
 test('instructies herhalen de dynamische voorbereidingstekst niet', () => {
     const master = read('quizmaster.html');
     assert.doesNotMatch(master, /Kies hoe deelnemers internet gebruiken/);

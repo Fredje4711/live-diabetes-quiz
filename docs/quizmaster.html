@@ -99,12 +99,16 @@
                 </div>
 
                 <h3>Later in de zaal: zaalscherm openen en deelnemers verbinden</h3>
-                <p>Open het zaalscherm op de tv of projector. Deel de briefjes uit en help deelnemers verbinding maken.</p>
-                <div class="button-row">
-                    <button id="copyParticipantLink" class="button-secondary" type="button">Deelnemerslink kopiëren</button>
-                    <a id="openProjectorLink" class="button-link" href="projectie.html" target="_blank" rel="noopener">
+                <div>
+                    <a id="openProjectorLink" class="button-link" href="projectie.html" target="_blank" rel="noopener" aria-describedby="projectorLinkHelp">
                         Zaalscherm openen
                     </a>
+                    <p id="projectorLinkHelp">Opent het scherm voor het publiek: eerst de wachtkamer, daarna de vragen en antwoorden. Zet dit in een apart browservenster op de aangesloten tv of projector. De bediening voor de quizmaster blijft op uw laptop.</p>
+                </div>
+                <p>Deel de briefjes uit en help deelnemers verbinding maken met hun gsm.</p>
+                <div>
+                    <button id="copyParticipantLink" class="button-secondary" type="button" aria-describedby="participantLinkHelp">Deelnemerslink kopiëren</button>
+                    <p id="participantLinkHelp"><strong>Extra mogelijkheid, geen verplichte stap.</strong> Kopieert de link om op de gsm mee te spelen, niet de link van het zaalscherm. Plak deze bijvoorbeeld in een e-mail aan online deelnemers. Wie het deelnemersbriefje gebruikt, heeft deze knop niet nodig.</p>
                 </div>
                 <div class="qr-card">
                     <div id="participantQr" class="qr-output" aria-label="Voorbeeld van de QR-code op het deelnemersbriefje"></div>
