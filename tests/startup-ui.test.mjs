@@ -11,7 +11,10 @@ test('zaalscherm is de eerste actie; deelnemerslink heeft afzonderlijke optionel
     assert.match(master, /aria-describedby="projectorLinkHelp"/);
     assert.match(master, /aria-describedby="participantLinkHelp"/);
     assert.match(master, /De bediening voor de quizmaster blijft op uw laptop/);
-    assert.match(master, /Extra mogelijkheid, geen verplichte stap/);
+    assert.match(master, /plak de link in een e-mail en verstuur die naar hen/);
+    assert.match(master, /Zij openen de link op hun gsm en doen mee aan dezelfde quiz/);
+    assert.match(master, /Het zaalscherm toont u apart via uw online bijeenkomst/);
+    assert.match(master, /Dan hoeft u deze knop niet te gebruiken/);
     assert.match(master, /niet de link van het zaalscherm/);
     const source = read('assets/quizmaster.js');
     assert.match(source, /openProjectorLink.href = linkFor\("projectie.html"\)/);
