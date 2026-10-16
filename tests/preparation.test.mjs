@@ -1,6 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {preparationSummary, preparationDate, preparationMessage, showPreparationOverview} from '../docs/assets/preparation.js';
+import {preparationSummary, preparationDate, preparationMessage, showPreparationOverview, preparationSteps} from '../docs/assets/preparation.js';
+
+test('afgewerkte briefjes worden een controlelink; startbestand wordt de volgende stap', () => {
+    const activity = {title:'Test',status:'open'};
+    const prep = {wifiConfigured:true,printedAt:'2026-10-16T07:00:00Z',printedShortLink:''};
+    const steps = preparationSteps(activity,prep);
+    assert.equal(steps.ready,true);
+    assert.equal(steps.handoutsHeading,'✓ Deelnemersbriefjes klaar');
+    assert.equal(steps.handoutsLink,'Bekijken of wijzigen');
+    assert.match(steps.fileHeading,/^Volgende stap:/);
+    assert.equal(preparationMessage(activity,prep).next,'');
+    for (const incomplete of [null, {}, {...prep,wifiConfigured:false}, {...prep,printedAt:null}]) {
+        assert.equal(preparationSteps(activity,incomplete).ready,false);
+    }
+    assert.equal(preparationSteps({...activity,shortLink:'https://tinyurl.com/nieuw'},prep).ready,false);
+    assert.equal(preparationSteps(activity,prep,{error:'offline'}).ready,false);
+    assert.doesNotMatch(preparationSteps(activity,prep,{phase:'open'}).fileHeading,/Volgende stap/);
+});
 
 test('nieuwe lege activiteit verbergt overzicht; hervatten, bewaarde gegevens en fouten blijven zichtbaar', () => {
     const a = {title:'Test',status:'open'};

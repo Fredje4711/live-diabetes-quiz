@@ -2,13 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import * as preparationHelpers from '../docs/assets/preparation.js';
 
 const read = file => fs.readFileSync(new URL('../docs/' + file, import.meta.url), 'utf8');
 test('instructies herhalen de dynamische voorbereidingstekst niet', () => {
     const master = read('quizmaster.html');
     assert.doesNotMatch(master, /Kies hoe deelnemers internet gebruiken/);
     assert.equal((master.match(/id="preparationNext"/g) || []).length, 1);
-    assert.ok(master.indexOf('id="preparationNext"') < master.indexOf('<h3>1.'));
+    assert.ok(master.indexOf('id="preparationNext"') < master.indexOf('id="handoutsStepHeading"'));
     assert.match(master, /Voor uw oefening kunt u deze QR-code scannen/);
     assert.doesNotMatch(read('index.html'), /Kies het aantal vragen en bewaar uw quizmasterlink/);
     assert.doesNotMatch(read('deelnemer.html'), /Open uw deelnemersbriefje/);
@@ -36,6 +37,30 @@ const element = () => {
         contains: name => classes.has(name),
     }};
 };
+test('quizmasterscherm schakelt van voorbereiden naar klaar en terug na wijziging', () => {
+    const source = read('assets/quizmaster.js');
+    const fn = source.slice(source.indexOf('function renderPreparation()'), source.indexOf('let savedIdentity'));
+    const elements = new Map();
+    const get = selector => {
+        if (!elements.has(selector)) elements.set(selector, {...element(), replaceChildren() {}, append() {}});
+        return elements.get(selector);
+    };
+    const context = {...preparationHelpers, activityState:{title:'Test',roundNumber:1},
+        preparation:{wifiConfigured:true,printedAt:'2026-10-16T07:00:00Z',printedShortLink:''},
+        preparationError:'', activityCreatedHere:false, latestState:{session:{phase:'waiting'}}, startFileStamp:null,
+        document:{querySelector:get,createElement:element}};
+    vm.runInNewContext(fn + '\nrenderPreparation();',context);
+    assert.equal(get('#printHandoutsLink').textContent,'Bekijken of wijzigen');
+    assert.equal(get('#printHandoutsLink').classList.contains('button-link'),false);
+    assert.match(get('#startFileStepHeading').textContent,/^Volgende stap:/);
+    assert.match(get('#startFileInstruction').textContent,/Hebt u het al bewaard/);
+    assert.equal(get('#preparationNext').classList.contains('hide'),true);
+    context.preparation.printedAt = null;
+    vm.runInNewContext('renderPreparation();',context);
+    assert.equal(get('#printHandoutsLink').textContent,'Deelnemersbriefjes voorbereiden');
+    assert.equal(get('#printHandoutsLink').classList.contains('button-link'),true);
+    assert.equal(get('#preparationNext').classList.contains('hide'),false);
+});
 for (const [page, joinId, errorId] of [['deelnemer','joinPanel','joinError'], ['projectie','projectorJoin','projectorError']]) {
     test(`${page}: alleen laadmelding zichtbaar vóór JavaScript start`, () => {
         const html = read(page + '.html');

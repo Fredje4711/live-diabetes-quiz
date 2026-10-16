@@ -17,7 +17,7 @@ import {
 import { activityUrl, managementUrl, queryActivity, validActivity, validKey,
     createActivity, authorizeActivity, startRound, closeActivity, watchActivity } from "./activity-service.js?v=19";
 import { watchPreparation } from './preparation-service.js?v=19';
-import { preparationDate, preparationSummary, preparationMessage, showPreparationOverview } from './preparation.js?v=23';
+import { preparationDate, preparationSummary, preparationMessage, showPreparationOverview, preparationSteps } from './preparation.js?v=24';
 
 const identityKey = "dlq-activity-manager";
 import { makeQuizStartFile } from "./quiz-startbestand.js?v=19";
@@ -41,7 +41,17 @@ function renderPreparation() {
         : [`Korte deelnemerslink: ${summary.short}`, `Internet voor deelnemers: ${summary.wifi}`, `Deelnemersbriefjes: ${summary.paper}`];
     for (const text of lines) { const li = document.createElement('li'); li.textContent = text; list.append(li); }
     document.querySelector('#preparationNext').textContent = message.next;
-    document.querySelector('#startFileInstruction').textContent = activityCreatedHere
+    document.querySelector('#preparationNext').classList.toggle('hide', !message.next);
+    const steps = preparationSteps(activityState, preparation, context);
+    document.querySelector('#handoutsStepHeading').textContent = steps.handoutsHeading;
+    document.querySelector('#startFileStepHeading').textContent = steps.fileHeading;
+    const handoutsLink = document.querySelector('#printHandoutsLink');
+    handoutsLink.textContent = steps.handoutsLink;
+    handoutsLink.classList.toggle('button-link', !steps.ready);
+    handoutsLink.classList.toggle('button-link--print', !steps.ready);
+    document.querySelector('#startFileInstruction').textContent = steps.ready
+        ? 'Bewaar het startbestand op uw laptop om deze activiteit later in de zaal te openen. Hebt u het al bewaard? Dan hoeft dat niet opnieuw en bent u klaar voor de zaal.'
+        : activityCreatedHere
         ? 'Briefjes voorbereid? Bewaar dit bestand op uw bureaublad. Open het later in de zaal, ook op een andere laptop met internet. U mag het ook tussentijds bewaren om later verder te werken.'
         : 'Uw startbestand blijft geldig. Bewaar hieronder een exemplaar als u het nog niet hebt.';
 }
