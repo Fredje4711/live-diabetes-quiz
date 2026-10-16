@@ -11,6 +11,8 @@ test('instructies herhalen de dynamische voorbereidingstekst niet', () => {
     assert.equal((master.match(/id="preparationNext"/g) || []).length, 1);
     assert.ok(master.indexOf('id="preparationNext"') < master.indexOf('id="handoutsStepHeading"'));
     assert.match(master, /Voor uw oefening kunt u deze QR-code scannen/);
+    assert.match(master, /Zet het bestand over via e-mail of USB-stick/);
+    assert.match(master, /Dubbelklik erop om de quiz te bedienen; internet is nodig/);
     assert.doesNotMatch(read('index.html'), /Kies het aantal vragen en bewaar uw quizmasterlink/);
     assert.doesNotMatch(read('deelnemer.html'), /Open uw deelnemersbriefje/);
     assert.match(read('briefje.html'), /Klik ook op ‘Internetkeuze bewaren’/);
