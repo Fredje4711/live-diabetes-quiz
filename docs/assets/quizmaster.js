@@ -43,6 +43,7 @@ function renderPreparation() {
     document.querySelector('#preparationNext').textContent = message.next;
     document.querySelector('#preparationNext').classList.toggle('hide', !message.next);
     const steps = preparationSteps(activityState, preparation, context);
+    document.querySelector('#preparationPause').classList.toggle('hide', !steps.ready || (context.phase && context.phase !== 'waiting'));
     document.querySelector('#handoutsStepHeading').textContent = steps.handoutsHeading;
     document.querySelector('#startFileStepHeading').textContent = stamp ? 'Uw bewaarde startbestand' : steps.fileHeading;
     const handoutsLink = document.querySelector('#printHandoutsLink');
@@ -507,7 +508,7 @@ document.querySelector("#saveManagementLink").addEventListener("click", () => {
     const url = URL.createObjectURL(new Blob([file.html], {type:"text/html;charset=utf-8"}));
     const a = document.createElement("a"); a.href = url; a.download = file.filename; a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
-    document.querySelector("#saveLinkHelp").textContent = "Het startbestand is gedownload (meestal in Downloads). Zet het op uw bureaublad. Dubbelklik er later op om deze quiz te openen. Gebruik een andere computer? Neem dit bestand dan mee, bijvoorbeeld op een USB-stick. Bewaar het privé.";
+    document.querySelector("#saveLinkHelp").textContent = "De download is gestart. Controleer of het bestand ‘" + file.filename + "’ in Downloads staat en zet het op uw bureaublad.";
 });
 closeActivityButton.addEventListener("click", async () => {
     if (!activityState || !await confirmAction("Activiteit DEFINITIEF afsluiten? Alle uitgedeelde briefjes stoppen met werken. Dit kan niet ongedaan worden gemaakt. Kies Annuleren als u nog een ronde wilt spelen.", "Ja, definitief afsluiten")) return;

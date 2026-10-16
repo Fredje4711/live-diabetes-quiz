@@ -76,11 +76,13 @@ test('quizmasterscherm schakelt van voorbereiden naar klaar en terug na wijzigin
     assert.match(get('#startFileInstruction').textContent,/^Bewaar nu het startbestand/);
     assert.doesNotMatch(get('#startFileInstruction').textContent,/al bewaard|blijft geldig/);
     assert.equal(get('#preparationNext').classList.contains('hide'),true);
+    assert.equal(get('#preparationPause').classList.contains('hide'),false);
     context.preparation.printedAt = null;
     vm.runInNewContext('renderPreparation();',context);
     assert.equal(get('#printHandoutsLink').textContent,'Deelnemersbriefjes voorbereiden');
     assert.equal(get('#printHandoutsLink').classList.contains('button-link'),true);
     assert.equal(get('#preparationNext').classList.contains('hide'),false);
+    assert.equal(get('#preparationPause').classList.contains('hide'),true);
     assert.match(get('#startFileInstruction').textContent,/^Bereid eerst/);
     context.startFileStamp = '2026-10-16T07:30:00Z';
     vm.runInNewContext('renderPreparation();',context);
@@ -92,6 +94,21 @@ test('quizmasterscherm schakelt van voorbereiden naar klaar en terug na wijzigin
     vm.runInNewContext('renderPreparation();',context);
     assert.match(get('#startFileInstruction').textContent,/^Bewaar nu/);
     assert.equal(get('#saveManagementLink').textContent,'Startbestand voor de quizmaster bewaren');
+    context.latestState.session.phase = 'open';
+    vm.runInNewContext('renderPreparation();',context);
+    assert.equal(get('#preparationPause').classList.contains('hide'),true);
+});
+test('thuis stoppen en later dezelfde activiteit openen zijn expliciete afzonderlijke momenten', () => {
+    const master = read('quizmaster.html');
+    assert.match(master, /Klaar voor vandaag\? U mag hier stoppen/);
+    assert.match(master, /Zijn de papieren briefjes klaar en staat het startbestand op uw laptop/);
+    assert.match(master, /Kies niet ‘Activiteit definitief afsluiten’/);
+    assert.match(master, /u komt terug op dit quizmasterscherm, bij dezelfde activiteit/);
+    assert.match(master, /U hoeft dit venster daarvoor niet eerst te sluiten/);
+    for (const file of ['handleiding.html','uitleg/organiseren.html']) {
+        assert.match(read(file), /Voorbereiding afgerond\? U mag stoppen/);
+        assert.match(read(file), /niet ‘Activiteit definitief afsluiten’/);
+    }
 });
 for (const [page, joinId, errorId] of [['deelnemer','joinPanel','joinError'], ['projectie','projectorJoin','projectorError']]) {
     test(`${page}: alleen laadmelding zichtbaar vóór JavaScript start`, () => {
