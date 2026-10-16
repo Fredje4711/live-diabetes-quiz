@@ -28,7 +28,7 @@ export function preparationMessage(activity, prep, {fresh = false, phase = 'wait
     if (['open','locked','revealed'].includes(phase)) return {heading:`Quiz bezig: ${title}`, intro:'De quiz is al gestart. U kunt verdergaan met de huidige vraag.', next:'Gebruik hieronder de quizbediening. U hoeft geen nieuwe activiteit te maken.'};
     if (error || prep === null) return {heading:`Uw activiteit: ${title}`, intro:error ? 'De voorbereiding kon niet worden gecontroleerd.' : 'We halen uw voorbereiding op.', next:error ? 'Controleer uw internetverbinding en vernieuw deze pagina. Maak geen nieuwe activiteit.' : 'Even geduld voordat u de voorbereiding controleert.'};
     const ready = prep.wifiConfigured && preparationSummary(activity, prep).printed;
-    if (ready) return {heading:`Voorbereiding klaar: ${title}`, intro:'Uw internetkeuze is bewaard en u hebt bevestigd dat de papieren briefjes klaar zijn.', next:'In de zaal: open uw bewaarde HTML-startbestand en het zaalscherm. Deel de briefjes uit en laat deelnemers verbinden. Klik op ‘Start quiz’ wanneer iedereen klaar is.'};
+    if (ready) return {heading:`Voorbereiding klaar: ${title}`, intro:'Uw internetkeuze is bewaard en u hebt bevestigd dat de papieren briefjes klaar zijn.', next:'Hebt u uw startbestand al? Ga dan verder bij stap 3: in de zaal.'};
     const next = !prep.wifiConfigured
         ? 'Kies ‘Deelnemersbriefjes voorbereiden’. Bewaar daar de internetkeuze en maak eventueel een korte link. Druk daarna de briefjes af.'
         : 'Uw internetkeuze is bewaard. Ga naar ‘Deelnemersbriefjes voorbereiden’ en bevestig daar pas dat de briefjes klaar zijn wanneer u ze werkelijk op papier hebt.';

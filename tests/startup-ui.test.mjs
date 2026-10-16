@@ -4,6 +4,16 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 
 const read = file => fs.readFileSync(new URL('../docs/' + file, import.meta.url), 'utf8');
+test('instructies herhalen de dynamische voorbereidingstekst niet', () => {
+    const master = read('quizmaster.html');
+    assert.doesNotMatch(master, /Kies hoe deelnemers internet gebruiken/);
+    assert.equal((master.match(/id="preparationNext"/g) || []).length, 1);
+    assert.ok(master.indexOf('id="preparationNext"') < master.indexOf('<h3>1.'));
+    assert.match(master, /Voor uw oefening kunt u deze QR-code scannen/);
+    assert.doesNotMatch(read('index.html'), /Kies het aantal vragen en bewaar uw quizmasterlink/);
+    assert.doesNotMatch(read('deelnemer.html'), /Open uw deelnemersbriefje/);
+    assert.match(read('briefje.html'), /Klik ook op ‘Internetkeuze bewaren’/);
+});
 test('voorbereiding staat vóór startbestand en zaal; printen staat vóór papieren bevestiging', () => {
     const master = read('quizmaster.html');
     assert.ok(master.indexOf('id="printHandoutsLink"') < master.indexOf('id="saveManagementLink"'));

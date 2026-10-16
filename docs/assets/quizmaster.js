@@ -17,7 +17,7 @@ import {
 import { activityUrl, managementUrl, queryActivity, validActivity, validKey,
     createActivity, authorizeActivity, startRound, closeActivity, watchActivity } from "./activity-service.js?v=19";
 import { watchPreparation } from './preparation-service.js?v=19';
-import { preparationDate, preparationSummary, preparationMessage, showPreparationOverview } from './preparation.js?v=22';
+import { preparationDate, preparationSummary, preparationMessage, showPreparationOverview } from './preparation.js?v=23';
 
 const identityKey = "dlq-activity-manager";
 import { makeQuizStartFile } from "./quiz-startbestand.js?v=19";
@@ -42,8 +42,8 @@ function renderPreparation() {
     for (const text of lines) { const li = document.createElement('li'); li.textContent = text; list.append(li); }
     document.querySelector('#preparationNext').textContent = message.next;
     document.querySelector('#startFileInstruction').textContent = activityCreatedHere
-        ? 'Briefjes voorbereid? Bewaar daarna dit HTML-startbestand op uw bureaublad. Hiermee opent u in de zaal dezelfde activiteit, ook op een andere laptop. Wilt u tussendoor stoppen? Dan kunt u het bestand ook nu al bewaren om later verder te werken.'
-        : 'Gebruik uw bewaarde HTML-startbestand om deze activiteit later te openen. Hebt u het bestand nog niet? Bewaar het hieronder. Niet delen met deelnemers.';
+        ? 'Briefjes voorbereid? Bewaar dit bestand op uw bureaublad. Open het later in de zaal, ook op een andere laptop met internet. U mag het ook tussentijds bewaren om later verder te werken.'
+        : 'Uw startbestand blijft geldig. Bewaar hieronder een exemplaar als u het nog niet hebt.';
 }
 let savedIdentity = {};
 try { savedIdentity = JSON.parse(localStorage.getItem(identityKey) || "{}"); } catch {}

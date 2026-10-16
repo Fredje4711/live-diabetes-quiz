@@ -85,9 +85,8 @@
                     <p id="preparationIntro"></p>
                     <p id="startFileDate"></p>
                     <ul id="preparationChecklist"><li>Voorbereiding ophalen…</li></ul>
-                    <h3>1. Deelnemersbriefjes voorbereiden</h3>
-                    <p>Kies hoe deelnemers internet gebruiken, vul eventueel de zaalwifi en een korte deelnemerslink in. Daarna kunt u de briefjes afdrukken of als PDF bewaren.</p>
                     <p id="preparationNext"></p>
+                    <h3>1. Deelnemersbriefjes voorbereiden</h3>
                     <a id="printHandoutsLink" class="button-link button-link--print" href="briefje.html" target="_blank" rel="noopener">Deelnemersbriefjes voorbereiden</a>
                     <h3 style="margin-top:1.5rem">2. Startbestand voor de quizmaster bewaren</h3>
                     <p id="startFileInstruction">Bewaar het startbestand om deze activiteit later te openen. Niet delen met deelnemers.</p>
@@ -95,11 +94,11 @@
                         <button id="saveManagementLink" type="button" class="button-primary">Startbestand voor de quizmaster bewaren</button>
                         <button id="copyManagementLink" type="button" class="button-secondary">Quizmasterlink kopiëren</button>
                     </div>
-                    <p id="saveLinkHelp" role="status">Dit HTML-bestand opent uw activiteit op internet en haalt de laatst bewaarde gegevens op. Het is geen kopie van uw voorbereiding. Na latere wijzigingen hoeft u het niet opnieuw te bewaren. Deel het alleen met medeorganisatoren.</p>
+                    <p id="saveLinkHelp" role="status">Het bestand haalt steeds de laatst bewaarde gegevens op. Na wijzigingen hoeft u het niet opnieuw te bewaren. Deel het alleen met medeorganisatoren.</p>
                 </div>
 
                 <h3>3. In de zaal: zaalscherm openen en deelnemers verbinden</h3>
-                <p>Open in de zaal uw bewaarde startbestand, ook op een andere laptop met internet. Open daarna het zaalscherm, deel de briefjes uit en help de deelnemers verbinden. Start de quiz hieronder wanneer iedereen klaar is.</p>
+                <p>Open het zaalscherm op de tv of projector. Deel de briefjes uit en help deelnemers verbinding maken.</p>
                 <div class="button-row">
                     <button id="copyParticipantLink" class="button-secondary" type="button">Deelnemerslink kopiëren</button>
                     <a id="openProjectorLink" class="button-link" href="projectie.html" target="_blank" rel="noopener">
@@ -109,8 +108,7 @@
                 <div class="qr-card">
                     <div id="participantQr" class="qr-output" aria-label="Voorbeeld van de QR-code op het deelnemersbriefje"></div>
                     <p>
-                        Dit is een controlevoorbeeld. Deelnemers scannen deze QR-code
-                        <strong>niet van dit scherm</strong>, maar van hun vooraf afgedrukte briefje.
+                        Voor uw oefening kunt u deze QR-code scannen. In de zaal gebruiken deelnemers hun uitgedeelde briefje.
                     </p>
                 </div>
             </div>
@@ -120,7 +118,7 @@
                     <section class="panel">
                         <div id="waitingMaster">
                             <h2>Wachtkamer is geopend</h2>
-                            <p>Laat deelnemers de QR-code op hun briefje scannen of de volledige link openen. Geen cijfercode nodig. Start wanneer iedereen klaar is.</p>
+                            <p>Controleer de teller ‘nu verbonden’. Klik op ‘Start quiz’ wanneer alle meespelende deelnemers ‘U bent verbonden’ op hun gsm zien.</p>
                         </div>
 
                         <div id="questionMaster" class="hide">
@@ -198,6 +196,6 @@
     </main>
 
     <script src="assets/vendor/qrcode.min.js"></script>
-    <script type="module" src="assets/quizmaster.js?v=22"></script>
+    <script type="module" src="assets/quizmaster.js?v=23"></script>
 </body>
 </html>
