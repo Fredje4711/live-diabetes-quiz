@@ -55,13 +55,25 @@ test('quizmasterscherm schakelt van voorbereiden naar klaar en terug na wijzigin
     assert.equal(get('#printHandoutsLink').textContent,'Bekijken of wijzigen');
     assert.equal(get('#printHandoutsLink').classList.contains('button-link'),false);
     assert.match(get('#startFileStepHeading').textContent,/^Volgende stap:/);
-    assert.match(get('#startFileInstruction').textContent,/Hebt u het al bewaard/);
+    assert.match(get('#startFileInstruction').textContent,/^Bewaar nu het startbestand/);
+    assert.doesNotMatch(get('#startFileInstruction').textContent,/al bewaard|blijft geldig/);
     assert.equal(get('#preparationNext').classList.contains('hide'),true);
     context.preparation.printedAt = null;
     vm.runInNewContext('renderPreparation();',context);
     assert.equal(get('#printHandoutsLink').textContent,'Deelnemersbriefjes voorbereiden');
     assert.equal(get('#printHandoutsLink').classList.contains('button-link'),true);
     assert.equal(get('#preparationNext').classList.contains('hide'),false);
+    assert.match(get('#startFileInstruction').textContent,/^Bereid eerst/);
+    context.startFileStamp = '2026-10-16T07:30:00Z';
+    vm.runInNewContext('renderPreparation();',context);
+    assert.equal(get('#startFileStepHeading').textContent,'Uw bewaarde startbestand');
+    assert.match(get('#startFileInstruction').textContent,/via uw bewaarde startbestand geopend/);
+    assert.match(get('#saveManagementLink').textContent,/^Extra exemplaar/);
+    context.startFileStamp = 'ongeldig';
+    context.preparation.printedAt = '2026-10-16T07:00:00Z';
+    vm.runInNewContext('renderPreparation();',context);
+    assert.match(get('#startFileInstruction').textContent,/^Bewaar nu/);
+    assert.equal(get('#saveManagementLink').textContent,'Startbestand voor de quizmaster bewaren');
 });
 for (const [page, joinId, errorId] of [['deelnemer','joinPanel','joinError'], ['projectie','projectorJoin','projectorError']]) {
     test(`${page}: alleen laadmelding zichtbaar vóór JavaScript start`, () => {

@@ -44,16 +44,19 @@ function renderPreparation() {
     document.querySelector('#preparationNext').classList.toggle('hide', !message.next);
     const steps = preparationSteps(activityState, preparation, context);
     document.querySelector('#handoutsStepHeading').textContent = steps.handoutsHeading;
-    document.querySelector('#startFileStepHeading').textContent = steps.fileHeading;
+    document.querySelector('#startFileStepHeading').textContent = stamp ? 'Uw bewaarde startbestand' : steps.fileHeading;
     const handoutsLink = document.querySelector('#printHandoutsLink');
     handoutsLink.textContent = steps.handoutsLink;
     handoutsLink.classList.toggle('button-link', !steps.ready);
     handoutsLink.classList.toggle('button-link--print', !steps.ready);
-    document.querySelector('#startFileInstruction').textContent = steps.ready
-        ? 'Bewaar het startbestand op uw laptop om deze activiteit later in de zaal te openen. Hebt u het al bewaard? Dan hoeft dat niet opnieuw en bent u klaar voor de zaal.'
-        : activityCreatedHere
-        ? 'Briefjes voorbereid? Bewaar dit bestand op uw bureaublad. Open het later in de zaal, ook op een andere laptop met internet. U mag het ook tussentijds bewaren om later verder te werken.'
-        : 'Uw startbestand blijft geldig. Bewaar hieronder een exemplaar als u het nog niet hebt.';
+    document.querySelector('#startFileInstruction').textContent = stamp
+        ? 'U hebt deze activiteit via uw bewaarde startbestand geopend. Dat bestand blijft geldig; opnieuw bewaren is niet nodig.'
+        : steps.ready
+        ? 'Bewaar nu het startbestand voor de quizmaster. Daarmee opent u later in de zaal dezelfde activiteit, op deze laptop of op een andere laptop.'
+        : 'Bereid eerst de deelnemersbriefjes voor. Bewaar daarna hier het startbestand voor de quizmaster. Wilt u de voorbereiding onderbreken? U kunt het bestand ook tussentijds bewaren om later verder te werken.';
+    document.querySelector('#saveManagementLink').textContent = stamp
+        ? 'Extra exemplaar van het startbestand bewaren'
+        : 'Startbestand voor de quizmaster bewaren';
 }
 let savedIdentity = {};
 try { savedIdentity = JSON.parse(localStorage.getItem(identityKey) || "{}"); } catch {}
