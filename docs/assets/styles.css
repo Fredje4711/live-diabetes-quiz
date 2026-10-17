@@ -812,24 +812,26 @@ h3 {
     font-weight: 800;
 }
 
-.farewell-art, .farewell-footer { display: none; }
+.farewell-art { display: none; }
 #activityNotice.is-farewell {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: clamp(10px, 2vh, 24px);
+    gap: clamp(18px, 4vh, 44px);
     min-height: min(78vh, 880px);
     padding: clamp(18px, 3vh, 40px);
     text-align: center;
-    background: radial-gradient(ellipse at top left, #d3f1f5, transparent 55%), radial-gradient(ellipse at bottom right, #fff0cb, transparent 55%), #fff;
-    border: 2px solid #8fcbd4;
+    background: radial-gradient(ellipse at top left, #138d9c, transparent 55%), radial-gradient(ellipse at bottom right, #135a8b, transparent 60%), #073449;
+    border: 2px solid #218fa6;
+    border-bottom: 8px solid #e9b94f;
 }
 #activityNotice.is-farewell.hide { display: none; }
-#activityNotice.is-farewell .farewell-art { display: block; width: min(50vw, 650px); height: clamp(90px, 23vh, 250px); flex-shrink: 0; }
-#activityNotice.is-farewell h1 { color: #075574; font-size: clamp(30px, min(4.7vw, 7vh), 82px); line-height: 1.12; max-width: 23ch; margin: 0; text-wrap: balance; }
-#activityNotice.is-farewell > p { color: #075574; font-size: clamp(25px, min(3.2vw, 5vh), 56px); line-height: 1.2; font-weight: 750; margin: 0; }
-#activityNotice.is-farewell .farewell-footer { display: block; color: #435b64; font-size: clamp(17px, 2.5vh, 30px); line-height: 1.25; padding-top: .3em; }
+#activityNotice.is-farewell .farewell-art { display: flex; gap: clamp(10px, 1.5vw, 28px); margin-bottom: 1vh; }
+#activityNotice.is-farewell .farewell-art span { display: grid; place-items: center; width: clamp(45px, 7vw, 110px); aspect-ratio: 1; border: 2px solid #80d9e3; border-radius: 18%; background: #0a526b; color: #fff; font-size: clamp(26px, 4vw, 62px); font-weight: 850; box-shadow: 0 8px 20px #001d3033; }
+#activityNotice.is-farewell .farewell-art span:nth-child(even) { background: #e9b94f; border-color: #ffe1a0; color: #073449; }
+#activityNotice.is-farewell h1 { color: #fff; font-size: clamp(30px, min(4.7vw, 7vh), 82px); line-height: 1.12; max-width: 23ch; margin: 0; text-wrap: balance; }
+#activityNotice.is-farewell > p { color: #ffe1a0; font-size: clamp(25px, min(3.2vw, 5vh), 56px); line-height: 1.2; font-weight: 750; margin: 0; }
 
 .projector-message {
     display: grid;

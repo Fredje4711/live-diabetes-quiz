@@ -10,6 +10,8 @@ test('feestelijk bedankscherm is uitsluitend voor afgesloten activiteiten', () =
     const source = read('assets/projectie.js');
     const css = read('assets/styles.css');
     assert.match(html, /class="farewell-art"/);
+    assert.doesNotMatch(html, /Samen meedoen|Samen bijleren|<svg class="farewell-art"/);
+    assert.match(html, /<span>A<\/span><span>B<\/span><span>C<\/span><span>D<\/span>/);
     assert.doesNotMatch(html.match(/<section id="activityNotice"[^>]*>/)[0], /is-farewell/);
     assert.ok(source.includes("notice.classList.toggle('is-farewell', Boolean(state.closed))"));
     assert.ok(source.includes("notice.classList.remove('is-farewell')"));
