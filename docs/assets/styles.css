@@ -827,9 +827,7 @@ h3 {
     border-bottom: 8px solid #e9b94f;
 }
 #activityNotice.is-farewell.hide { display: none; }
-#activityNotice.is-farewell .farewell-art { display: flex; gap: clamp(10px, 1.5vw, 28px); margin-bottom: 1vh; }
-#activityNotice.is-farewell .farewell-art span { display: grid; place-items: center; width: clamp(45px, 7vw, 110px); aspect-ratio: 1; border: 2px solid #80d9e3; border-radius: 18%; background: #0a526b; color: #fff; font-size: clamp(26px, 4vw, 62px); font-weight: 850; box-shadow: 0 8px 20px #001d3033; }
-#activityNotice.is-farewell .farewell-art span:nth-child(even) { background: #e9b94f; border-color: #ffe1a0; color: #073449; }
+#activityNotice.is-farewell .farewell-art { display: block; width: min(44vw, 560px); height: clamp(100px, 21vh, 230px); flex-shrink: 0; margin-bottom: 1vh; }
 #activityNotice.is-farewell h1 { color: #fff; font-size: clamp(30px, min(4.7vw, 7vh), 82px); line-height: 1.12; max-width: 23ch; margin: 0; text-wrap: balance; }
 #activityNotice.is-farewell > p { color: #ffe1a0; font-size: clamp(25px, min(3.2vw, 5vh), 56px); line-height: 1.2; font-weight: 750; margin: 0; }
 
