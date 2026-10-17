@@ -11,7 +11,8 @@ test('feestelijk bedankscherm is uitsluitend voor afgesloten activiteiten', () =
     const css = read('assets/styles.css');
     assert.match(html, /class="farewell-art"/);
     assert.doesNotMatch(html, /Samen meedoen|Samen bijleren|<span>A<\/span><span>B<\/span>/);
-    assert.match(html, /src="assets\/bedankt-samen.png"/);
+    assert.match(html, /src="assets\/bedankt-verbonden-linten.png"/);
+    assert.doesNotMatch(html, /bedankt-samen.png/);
     assert.doesNotMatch(html, /diabetesRing|<svg class="farewell-art"/);
     assert.doesNotMatch(html.match(/<section id="activityNotice"[^>]*>/)[0], /is-farewell/);
     assert.ok(source.includes("notice.classList.toggle('is-farewell', Boolean(state.closed))"));
