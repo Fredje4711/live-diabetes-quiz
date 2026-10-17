@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Projectiescherm van de Live Diabetes Quiz.">
     <title>Zaalscherm — voor het publiek | Live Diabetes Quiz</title>
-    <link rel="stylesheet" href="assets/styles.css?v=27">
+    <link rel="stylesheet" href="assets/styles.css?v=28">
 </head>
 <body class="projector">
     <header class="site-header">
@@ -24,7 +24,26 @@
     </header>
 
     <main class="projector-shell">
-        <section id="activityNotice" class="panel projector-message" role="status"><h1>Even geduld…</h1><p>We openen uw activiteit.</p></section>
+        <section id="activityNotice" class="panel projector-message" role="status">
+            <svg class="farewell-art" viewBox="0 0 600 200" aria-hidden="true" focusable="false">
+                <circle cx="300" cy="100" r="92" fill="#d7f3f5"/>
+                <circle cx="165" cy="107" r="26" fill="#f4c79d"/>
+                <path d="M113 185v-19a52 52 0 0 1 104 0v19" fill="#27a9ba"/>
+                <path d="M139 103q-1-38 30-33 29 3 23 34-18-9-27-22-6 15-26 21" fill="#52666d"/>
+                <circle cx="435" cy="107" r="26" fill="#bd825d"/>
+                <path d="M383 185v-19a52 52 0 0 1 104 0v19" fill="#e6a83d"/>
+                <path d="M409 99q0-36 27-34 31 1 26 38l-13-14-40 10" fill="#39464d"/>
+                <circle cx="300" cy="78" r="31" fill="#e5b18b"/>
+                <path d="M239 185v-26a61 61 0 0 1 122 0v26" fill="#075574"/>
+                <path d="M270 74q-3-40 32-37 32 2 29 40-24-7-36-20-7 12-25 17" fill="#e7e9ec"/>
+                <path d="M300 160c-45-26-20-53 0-31 20-22 45 5 0 31" fill="#fff"/>
+                <g fill="#27a9ba"><circle cx="76" cy="89" r="7"/><circle cx="524" cy="147" r="6"/><path d="m218 30 5-14 5 14 14 5-14 5-5 14-5-14-14-5z"/></g>
+                <g fill="#e6a83d"><path d="m493 49 6-17 6 17 17 6-17 6-6 17-6-17-17-6z"/><circle cx="105" cy="39" r="6"/><circle cx="375" cy="25" r="5"/></g>
+                <path d="m61 147 14 8m461-66 15-8" stroke="#e6a83d" stroke-width="7" stroke-linecap="round"/>
+            </svg>
+            <h1>Even geduld…</h1><p>We openen uw activiteit.</p>
+            <div class="farewell-footer" aria-hidden="true">Samen meedoen. Samen bijleren.</div>
+        </section>
         <section id="projectorJoin" class="panel projector-message hide">
             <div>
                 <p class="eyebrow">Groot zaalscherm</p>
@@ -93,6 +112,6 @@
         </section>
     </main>
 
-    <script type="module" src="assets/projectie.js?v=27"></script>
+    <script type="module" src="assets/projectie.js?v=28"></script>
 </body>
 </html>

@@ -5,6 +5,17 @@ import vm from 'node:vm';
 import * as preparationHelpers from '../docs/assets/preparation.js';
 
 const read = file => fs.readFileSync(new URL('../docs/' + file, import.meta.url), 'utf8');
+test('feestelijk bedankscherm is uitsluitend voor afgesloten activiteiten', () => {
+    const html = read('projectie.html');
+    const source = read('assets/projectie.js');
+    const css = read('assets/styles.css');
+    assert.match(html, /class="farewell-art"/);
+    assert.doesNotMatch(html.match(/<section id="activityNotice"[^>]*>/)[0], /is-farewell/);
+    assert.ok(source.includes("notice.classList.toggle('is-farewell', Boolean(state.closed))"));
+    assert.ok(source.includes("notice.classList.remove('is-farewell')"));
+    assert.match(css, /#activityNotice\.is-farewell\.hide \{ display: none/);
+    assert.match(css, /#activityNotice\.is-farewell > p/);
+});
 test('vensters vermelden hun rol in tabtitel en zichtbare kop; beginnersteksten zijn concreet', () => {
     for (const [file, role] of [['quizmaster.html','Quizmastervenster'],['briefje.html','Quizmastervenster'],['deelnemer.html','Deelnemerscherm'],['projectie.html','Zaalscherm']]) {
         const html = read(file);
@@ -131,7 +142,7 @@ for (const [page, joinId, errorId] of [['deelnemer','joinPanel','joinError'], ['
         const notice = html.match(/<section id="activityNotice"[^>]*>/)[0];
         assert.doesNotMatch(notice, /\bhide\b/);
         assert.match(html, /Even geduld…/);
-        assert.match(html, new RegExp(`${page}\\.js\\?v=${page === 'projectie' ? 27 : 15}`));
+        assert.match(html, new RegExp(`${page}\\.js\\?v=${page === 'projectie' ? 28 : 15}`));
     });
     test(`${page}: fout toont melding, geen oud formulier bij vaste activiteit`, () => {
         const source = read('assets/' + page + '.js');

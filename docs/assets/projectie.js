@@ -43,6 +43,7 @@ function showError(message = "") {
     projectorError.classList.toggle("hide", !message);
     if (message) {
         const notice = document.querySelector("#activityNotice");
+        notice.classList.remove('is-farewell');
         projectorJoin.classList.toggle("hide", Boolean(activityId));
         notice.classList.toggle("hide", !activityId);
         if (activityId) {
@@ -213,6 +214,7 @@ try {
                 latestState = null;
                 [projectorWaiting,projectorQuestion,projectorFinished].forEach(el => el.classList.add("hide"));
                 const notice = document.querySelector("#activityNotice");
+                notice.classList.toggle('is-farewell', Boolean(state.closed));
                 notice.classList.remove("hide");
                 notice.querySelector("h1").textContent = state.closed ? "Bedankt voor uw deelname aan de quiz!" : "Een nieuwe ronde komt eraan";
                 notice.querySelector("p").textContent = state.closed ? "Fijn dat u erbij was." : "Blijf verbonden op uw gsm. Dezelfde briefjes blijven geldig.";
