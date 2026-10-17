@@ -812,24 +812,51 @@ h3 {
     font-weight: 800;
 }
 
-.farewell-art { display: none; }
 #activityNotice.is-farewell {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: clamp(18px, 4vh, 44px);
+    gap: clamp(28px, 7vh, 80px);
     min-height: min(78vh, 880px);
-    padding: clamp(18px, 3vh, 40px);
+    padding: clamp(28px, 5vw, 90px);
     text-align: center;
     background: radial-gradient(ellipse at top left, #138d9c, transparent 55%), radial-gradient(ellipse at bottom right, #135a8b, transparent 60%), #073449;
     border: 2px solid #218fa6;
     border-bottom: 8px solid #e9b94f;
 }
 #activityNotice.is-farewell.hide { display: none; }
-#activityNotice.is-farewell .farewell-art { display: block; width: min(72vw, 1080px); height: clamp(100px, 24vh, 280px); object-fit: contain; flex-shrink: 0; margin: 0; mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent); }
-#activityNotice.is-farewell h1 { color: #fff; font-size: clamp(30px, min(4.7vw, 7vh), 82px); line-height: 1.12; max-width: 23ch; margin: 0; text-wrap: balance; }
-#activityNotice.is-farewell > p { color: #ffe1a0; font-size: clamp(25px, min(3.2vw, 5vh), 56px); line-height: 1.2; font-weight: 750; margin: 0; }
+#activityNotice.is-farewell::before,
+#activityNotice.is-farewell::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 50%;
+}
+/* Quiet blue circle and cropped corner accent, never covering the lettering. */
+#activityNotice.is-farewell::before {
+    width: clamp(220px, 42vw, 700px);
+    aspect-ratio: 1;
+    border: clamp(18px, 3vw, 48px) solid rgb(71 182 235 / 17%);
+    top: -30%;
+    right: -12%;
+}
+#activityNotice.is-farewell::after {
+    width: clamp(160px, 24vw, 420px);
+    aspect-ratio: 1;
+    background: rgb(41 190 193 / 12%);
+    border: 2px solid rgb(255 225 160 / 28%);
+    bottom: -28%;
+    left: -8%;
+}
+#activityNotice.is-farewell h1 { color: #fff; line-height: 1.15; max-width: 100%; margin: 0; text-wrap: balance; }
+#activityNotice.is-farewell .farewell-thanks { display: block; color: #ffe1a0; font-size: clamp(54px, min(10vw, 17vh), 180px); font-weight: 850; letter-spacing: .025em; text-transform: uppercase; line-height: 1.05; }
+#activityNotice.is-farewell .farewell-subtitle { display: block; font-size: clamp(26px, min(4vw, 6vh), 70px); font-weight: 650; margin-top: clamp(14px, 3vh, 32px); }
+#activityNotice.is-farewell > p { color: #fff; font-size: clamp(25px, min(3.2vw, 5vh), 56px); line-height: 1.2; font-weight: 650; margin: 0; }
 
 .projector-message {
     display: grid;

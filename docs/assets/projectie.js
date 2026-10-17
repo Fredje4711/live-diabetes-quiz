@@ -216,7 +216,11 @@ try {
                 const notice = document.querySelector("#activityNotice");
                 notice.classList.toggle('is-farewell', Boolean(state.closed));
                 notice.classList.remove("hide");
-                notice.querySelector("h1").textContent = state.closed ? "Bedankt voor uw deelname aan de quiz!" : "Een nieuwe ronde komt eraan";
+                const heading = notice.querySelector("h1");
+                heading.textContent = "Een nieuwe ronde komt eraan";
+                if (state.closed) {
+                    heading.innerHTML = '<span class="farewell-thanks">Bedankt</span> <span class="farewell-subtitle">voor uw deelname aan de quiz!</span>';
+                }
                 notice.querySelector("p").textContent = state.closed ? "Fijn dat u erbij was." : "Blijf verbonden op uw gsm. Dezelfde briefjes blijven geldig.";
                 projectorPhase.textContent = state.closed ? "Afgesloten" : "Even geduld";
                 return;

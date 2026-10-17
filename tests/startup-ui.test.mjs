@@ -9,9 +9,9 @@ test('feestelijk bedankscherm is uitsluitend voor afgesloten activiteiten', () =
     const html = read('projectie.html');
     const source = read('assets/projectie.js');
     const css = read('assets/styles.css');
-    assert.match(html, /class="farewell-art"/);
+    assert.match(source, /class="farewell-thanks"/);
     assert.doesNotMatch(html, /Samen meedoen|Samen bijleren|<span>A<\/span><span>B<\/span>/);
-    assert.match(html, /src="assets\/bedankt-verbonden-linten.png"/);
+    assert.doesNotMatch(html, /bedankt-verbonden-linten.png/);
     assert.doesNotMatch(html, /bedankt-samen.png/);
     assert.doesNotMatch(html, /diabetesRing|<svg class="farewell-art"/);
     assert.doesNotMatch(html.match(/<section id="activityNotice"[^>]*>/)[0], /is-farewell/);
@@ -146,7 +146,7 @@ for (const [page, joinId, errorId] of [['deelnemer','joinPanel','joinError'], ['
         const notice = html.match(/<section id="activityNotice"[^>]*>/)[0];
         assert.doesNotMatch(notice, /\bhide\b/);
         assert.match(html, /Even geduld…/);
-        assert.match(html, new RegExp(`${page}\\.js\\?v=${page === 'projectie' ? 28 : 15}`));
+        assert.match(html, new RegExp(`${page}\\.js\\?v=${page === 'projectie' ? 29 : 15}`));
     });
     test(`${page}: fout toont melding, geen oud formulier bij vaste activiteit`, () => {
         const source = read('assets/' + page + '.js');
@@ -209,5 +209,5 @@ test('eindanalyse toont aantallen vóór het afzonderlijke percentage', () => {
     assert.equal(content[0].textContent, 'Vraag 4 · 30 van de 50 deelnemers hadden deze vraag fout.');
     assert.equal(content[1].textContent, 'Dat is 60%.');
     assert.equal(content[1].className, 'projector-analysis__percentage');
-    assert.ok(source.includes('Bedankt voor uw deelname aan de quiz!'));
+    assert.ok(source.includes('voor uw deelname aan de quiz!'));
 });
