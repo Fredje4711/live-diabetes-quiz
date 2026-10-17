@@ -5,6 +5,20 @@ import vm from 'node:vm';
 import * as preparationHelpers from '../docs/assets/preparation.js';
 
 const read = file => fs.readFileSync(new URL('../docs/' + file, import.meta.url), 'utf8');
+test('vensters vermelden hun rol in tabtitel en zichtbare kop; beginnersteksten zijn concreet', () => {
+    for (const [file, role] of [['quizmaster.html','Quizmastervenster'],['briefje.html','Quizmastervenster'],['deelnemer.html','Deelnemerscherm'],['projectie.html','Zaalscherm']]) {
+        const html = read(file);
+        assert.match(html.match(/<title>(.*?)<\/title>/)[1],new RegExp(role));
+        assert.match(html.match(/<header[\s\S]*?<\/header>/)[0],new RegExp(role));
+    }
+    const handout = read('briefje.html');
+    assert.doesNotMatch(handout,/Eén keer per nieuwe activiteit|Wilt u die weer gebruiken|Gegevens voorbereid|Hebt u dat al/);
+    assert.match(handout,/Kies in het quizmastervenster <strong>Quiz opnieuw beginnen/);
+    assert.match(handout,/niet ‘Activiteit definitief afsluiten’/);
+    assert.match(handout,/Verwijder de korte link uit het invulvak/);
+    assert.match(read('quizmaster.html'), /Hoe zet ik het zaalscherm op de tv of projector/);
+    assert.match(read('handleiding.html'), /gsm, tablet of computer/);
+});
 test('zaalscherm is de eerste actie; deelnemerslink heeft afzonderlijke optionele uitleg', () => {
     const master = read('quizmaster.html');
     assert.ok(master.indexOf('id="openProjectorLink"') < master.indexOf('id="copyParticipantLink"'));
@@ -12,7 +26,7 @@ test('zaalscherm is de eerste actie; deelnemerslink heeft afzonderlijke optionel
     assert.match(master, /aria-describedby="participantLinkHelp"/);
     assert.match(master, /De bediening voor de quizmaster blijft op uw laptop/);
     assert.match(master, /plak de link in een e-mail en verstuur die naar hen/);
-    assert.match(master, /Zij openen de link op hun gsm en doen mee aan dezelfde quiz/);
+    assert.match(master, /Zij openen de link op hun gsm, tablet of computer en doen mee aan dezelfde quiz/);
     assert.match(master, /Voor deelnemers op afstand/);
     assert.match(master, /Deel het zaalscherm en de stem van de quizmaster via uw online bijeenkomst/);
     assert.doesNotMatch(master, /online deelnemers/i);

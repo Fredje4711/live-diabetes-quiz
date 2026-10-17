@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Afdrukbare deelnemersbriefjes voor de Live Diabetes Quiz.">
-    <title>Deelnemersbriefjes – Live Diabetes Quiz</title>
+    <title>Quizmastervenster — deelnemersbriefjes voorbereiden | Live Diabetes Quiz</title>
     <link rel="stylesheet" href="assets/styles.css?v=13">
 </head>
 <body class="handout-page">
@@ -12,7 +12,7 @@
         <div class="site-header__inner">
             <a class="brand" href="quizmaster.html">
                 <img class="brand__logo" src="assets/logo-diabetes-liga-midden-limburg.png" alt="">
-                <span>Deelnemersbriefjes</span>
+                <span>Quizmastervenster<small style="display:block;font-size:.7em">Deelnemersbriefjes voorbereiden</small></span>
             </a>
             <span class="badge">Twee briefjes per A4</span>
         </div>
@@ -27,7 +27,7 @@
             </p>
             <section id="shortLinkControls" class="hide" aria-labelledby="shortLinkHeading" style="margin-top:1.5rem">
                 <h2 id="shortLinkHeading">1. Deelnemerslink — eventueel verkorten</h2>
-                <p>De QR-code werkt rechtstreeks. Een korte link maakt het overtypen gemakkelijker voor wie niet kan scannen.</p>
+                <p>De QR-code op het briefje opent rechtstreeks de quiz. Een korte link maakt het overtypen gemakkelijker voor wie niet kan scannen.</p>
                 <div class="field">
                     <label for="originalParticipantLink">Oorspronkelijke deelnemerslink — blijft altijd beschikbaar</label>
                     <input id="originalParticipantLink" type="url" readonly>
@@ -43,8 +43,11 @@
                 </div>
                 <div class="button-row"><button id="saveShortLink" type="button">Korte link bewaren</button></div>
                 <p id="shortLinkStatus" role="status" aria-live="polite"></p>
-                <p id="shortLinkHelp">Eén keer per nieuwe activiteit. Bij opnieuw spelen binnen dezelfde activiteit blijft deze link bewaard, ook op een andere laptop. Zonder korte link drukken we de oorspronkelijke link af. Wilt u die weer gebruiken? Maak het vak leeg en klik op ‘Korte link bewaren’.</p>
-                <p>De QR-code werkt zonder TinyURL, ook als die dienst niet beschikbaar is.</p>
+                <p id="shortLinkHelp">Wilt u een korte link gebruiken? Maak voor elke nieuwe quizactiviteit een eigen korte deelnemerslink. Wilt u binnen dezelfde activiteit opnieuw beginnen? Kies in het quizmastervenster <strong>Quiz opnieuw beginnen</strong>: dezelfde link en briefjes blijven geldig. Kies dan <strong>niet ‘Activiteit definitief afsluiten’</strong>, want die knop maakt de briefjes ongeldig.</p>
+                <details><summary>De lange link gebruiken of hulp bij TinyURL</summary>
+                    <p>Zonder korte link verschijnt de lange deelnemerslink op de briefjes. Wilt u daarnaar terug? Verwijder de korte link uit het invulvak en klik op <strong>Korte link bewaren</strong>. Controleer daarna het afdrukvoorbeeld.</p>
+                    <p>De QR-code op het briefje gebruikt de oorspronkelijke deelnemerslink, niet TinyURL. Als TinyURL niet bereikbaar is, kunnen deelnemers nog steeds die QR-code scannen.</p>
+                </details>
             </section>
             <h2 style="margin-top:1.5rem">2. Internet voor de deelnemers instellen</h2>
             <p>Eigen mobiele data is meestal het gemakkelijkst. Wilt u ook zaalwifi aanbieden? Vul de geteste wifi-naam en het wachtwoord in. Zonder zaalwifi laat u beide vakken leeg.</p>
@@ -72,9 +75,9 @@
                 <p id="preparationStatus" role="status" aria-live="polite"></p>
                 <p>Na een wijziging aan wifi of korte link controleert u de papieren briefjes opnieuw en bevestigt u dit opnieuw.</p>
             </div>
-            <p><strong>Gegevens voorbereid?</strong> Ga terug naar de quizmaster en bewaar daar uw startbestand voor later. Hebt u dat al? Dan blijft hetzelfde bestand bruikbaar.</p>
+            <p><strong>Zijn de briefjes klaar?</strong> Klik op ‘Terug naar quizmaster’. Bewaar daar het startbestand waarmee u later in de zaal deze quizactiviteit opent.</p>
             <div class="button-row">
-                <a class="button-link" href="quizmaster.html">Terug naar quizmaster — startbestand bewaren</a>
+                <a class="button-link" href="quizmaster.html">Terug naar quizmaster</a>
             </div>
             <p id="handoutError" class="notice notice--error hide" role="alert"></p>
         </section>
