@@ -696,6 +696,15 @@ h3 {
     line-height: 1.1;
 }
 
+.analysis-summary { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; flex-wrap: wrap; }
+.analysis-summary .projector-analysis__percentage, .analysis-summary .analysis-percentage { white-space: nowrap; }
+.analysis-wrong { margin-top: .35rem; font-size: clamp(13px, min(1.4vw, 2vh), 22px); line-height: 1.25; }
+.analysis-wrong p { margin: 0; }
+.analysis-wrong__options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .3rem .8rem; margin-top: .2rem; }
+.analysis-wrong__options p { overflow-wrap: anywhere; }
+.analysis-wrong__most { font-weight: 850; color: #8c3514; }
+@media (max-width: 700px) { .analysis-wrong__options { grid-template-columns: 1fr; } }
+
 .projector-analysis__answer {
     margin: 0.3rem 0 0;
     color: #0c4e28;

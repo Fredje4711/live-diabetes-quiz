@@ -9,7 +9,7 @@ import {
     ensureAuth,
     resolveLatestSessionCode,
     watchQuiz,
-} from "./firebase-service.js?v=13";
+} from "./firebase-service.js?v=27";
 import { queryActivity, watchActivity } from "./activity-service.js?v=15";
 const activityId = queryActivity();
 
@@ -72,6 +72,7 @@ function renderOptions(state) {
     });
 }
 
+import { renderWrongAnswers } from './analysis-options.js';
 function renderFinalAnalysis(analysis) {
     projectorAnalysisList.replaceChildren();
     const topThree = analysis?.difficultQuestions?.slice(0, 3) || [];
@@ -99,7 +100,10 @@ function renderFinalAnalysis(analysis) {
         answer.className = "projector-analysis__answer";
         answer.textContent = `Juiste antwoord: ${entry.correctAnswer}`;
 
-        content.append(meta, percentage, question, answer);
+        const summary = document.createElement('div');
+        summary.className = 'analysis-summary';
+        summary.append(meta, percentage);
+        content.append(summary, question, answer, renderWrongAnswers(entry));
         item.append(rank, content);
         projectorAnalysisList.append(item);
     });

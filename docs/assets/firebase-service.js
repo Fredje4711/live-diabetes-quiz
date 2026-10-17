@@ -385,8 +385,9 @@ function analysisFor(session, answers) {
         if (!question) return;
         const isCorrect = answer.optionIndex === question.correctOption;
         if (isCorrect) correct += 1;
-        const item = byPosition.get(answer.questionPosition) || { total: 0, incorrect: 0 };
+        const item = byPosition.get(answer.questionPosition) || { total: 0, incorrect: 0, counts: question.options.map(() => 0) };
         item.total += 1;
+        if (Number.isInteger(answer.optionIndex) && answer.optionIndex >= 0 && answer.optionIndex < item.counts.length) item.counts[answer.optionIndex] += 1;
         if (!isCorrect) item.incorrect += 1;
         byPosition.set(answer.questionPosition, item);
     });
@@ -401,6 +402,10 @@ function analysisFor(session, answers) {
                     QUESTIONS[session.questionOrder[position]]?.correctOption
                 ] || "",
             incorrect: item.incorrect,
+            wrongAnswers: QUESTIONS[session.questionOrder[position]].options
+                .map((text, optionIndex) => ({text, letter: String.fromCharCode(65 + optionIndex), count: item.counts[optionIndex], optionIndex}))
+                .filter(option => option.optionIndex !== QUESTIONS[session.questionOrder[position]].correctOption)
+                .sort((a, b) => b.count - a.count || a.optionIndex - b.optionIndex),
             total: item.total,
             percentage: Math.round((item.incorrect / item.total) * 100),
         }))

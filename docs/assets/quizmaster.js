@@ -13,7 +13,7 @@ import {
     controlSession,
     ensureAuth,
     watchQuiz,
-} from "./firebase-service.js?v=13";
+} from "./firebase-service.js?v=27";
 import { activityUrl, managementUrl, queryActivity, validActivity, validKey,
     createActivity, authorizeActivity, startRound, closeActivity, watchActivity } from "./activity-service.js?v=19";
 import { watchPreparation } from './preparation-service.js?v=19';
@@ -255,6 +255,7 @@ function renderBars(container, question, statistics, phase) {
     });
 }
 
+import { renderWrongAnswers } from './analysis-options.js';
 function renderAnalysis(analysis) {
     analysisPanel.classList.remove("hide");
     analysisMetrics.replaceChildren();
@@ -293,7 +294,13 @@ function renderAnalysis(analysis) {
         percentage.textContent = `Dat is ${entry.percentage}%.`;
         const text = document.createElement("p");
         text.textContent = entry.question;
-        item.append(title, percentage, text);
+        const summary = document.createElement('div');
+        summary.className = 'analysis-summary';
+        summary.append(title, percentage);
+        const answer = document.createElement('p');
+        answer.className = 'projector-analysis__answer';
+        answer.textContent = `Juiste antwoord: ${entry.correctAnswer}`;
+        item.append(summary, text, answer, renderWrongAnswers(entry));
         analysisList.append(item);
     });
 }

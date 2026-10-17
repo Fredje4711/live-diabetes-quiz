@@ -131,7 +131,7 @@ for (const [page, joinId, errorId] of [['deelnemer','joinPanel','joinError'], ['
         const notice = html.match(/<section id="activityNotice"[^>]*>/)[0];
         assert.doesNotMatch(notice, /\bhide\b/);
         assert.match(html, /Even geduld…/);
-        assert.match(html, new RegExp(`${page}\\.js\\?v=${page === 'projectie' ? 16 : 15}`));
+        assert.match(html, new RegExp(`${page}\\.js\\?v=${page === 'projectie' ? 27 : 15}`));
     });
     test(`${page}: fout toont melding, geen oud formulier bij vaste activiteit`, () => {
         const source = read('assets/' + page + '.js');
@@ -187,9 +187,10 @@ test('eindanalyse toont aantallen vóór het afzonderlijke percentage', () => {
     vm.runInNewContext(fn + '\nrenderFinalAnalysis(analysis);', {
         document: {createElement: makeNode}, projectorAnalysisList: list,
         projectorAnalysisEmpty: makeNode(),
+        renderWrongAnswers: makeNode,
         analysis: {difficultQuestions: [{number: 4, total: 50, incorrect: 30, percentage: 60, question: 'Voorbeeldvraag', correctAnswer: 'Voorbeeldantwoord'}]},
     });
-    const content = list.children[0].children[1].children;
+    const content = list.children[0].children[1].children[0].children;
     assert.equal(content[0].textContent, 'Vraag 4 · 30 van de 50 deelnemers hadden deze vraag fout.');
     assert.equal(content[1].textContent, 'Dat is 60%.');
     assert.equal(content[1].className, 'projector-analysis__percentage');
