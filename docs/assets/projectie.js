@@ -9,7 +9,7 @@ import {
     ensureAuth,
     resolveLatestSessionCode,
     watchQuiz,
-} from "./firebase-service.js?v=27";
+} from "./firebase-service.js?v=28";
 import { queryActivity, watchActivity } from "./activity-service.js?v=15";
 const activityId = queryActivity();
 
@@ -99,7 +99,7 @@ function renderFinalAnalysis(analysis) {
 
         const answer = document.createElement("p");
         answer.className = "projector-analysis__answer";
-        answer.textContent = `Juiste antwoord: ${entry.correctAnswer}`;
+        answer.textContent = `Juiste antwoord: ${entry.correctLetter}. ${entry.correctAnswer}`;
 
         const summary = document.createElement('div');
         summary.className = 'analysis-summary';

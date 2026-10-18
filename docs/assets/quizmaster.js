@@ -13,7 +13,7 @@ import {
     controlSession,
     ensureAuth,
     watchQuiz,
-} from "./firebase-service.js?v=27";
+} from "./firebase-service.js?v=28";
 import { activityUrl, managementUrl, queryActivity, validActivity, validKey,
     createActivity, authorizeActivity, startRound, closeActivity, watchActivity } from "./activity-service.js?v=19";
 import { watchPreparation } from './preparation-service.js?v=19';
@@ -299,7 +299,7 @@ function renderAnalysis(analysis) {
         summary.append(title, percentage);
         const answer = document.createElement('p');
         answer.className = 'projector-analysis__answer';
-        answer.textContent = `Juiste antwoord: ${entry.correctAnswer}`;
+        answer.textContent = `Juiste antwoord: ${entry.correctLetter}. ${entry.correctAnswer}`;
         item.append(summary, text, answer, renderWrongAnswers(entry));
         analysisList.append(item);
     });

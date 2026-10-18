@@ -397,6 +397,7 @@ function analysisFor(session, answers) {
         .map(([position, item]) => ({
             number: position + 1,
             question: QUESTIONS[session.questionOrder[position]]?.question || "",
+            correctLetter: String.fromCharCode(65 + QUESTIONS[session.questionOrder[position]].correctOption),
             correctAnswer:
                 QUESTIONS[session.questionOrder[position]]?.options?.[
                     QUESTIONS[session.questionOrder[position]]?.correctOption

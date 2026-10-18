@@ -154,7 +154,7 @@ for (const [page, joinId, errorId] of [['deelnemer','joinPanel','joinError'], ['
         const notice = html.match(/<section id="activityNotice"[^>]*>/)[0];
         assert.doesNotMatch(notice, /\bhide\b/);
         assert.match(html, /Even geduld…/);
-        assert.match(html, new RegExp(`${page}\\.js\\?v=${page === 'projectie' ? 29 : 15}`));
+        assert.match(html, new RegExp(`${page}\\.js\\?v=${page === 'projectie' ? 30 : 15}`));
     });
     test(`${page}: fout toont melding, geen oud formulier bij vaste activiteit`, () => {
         const source = read('assets/' + page + '.js');
