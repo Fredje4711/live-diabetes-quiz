@@ -5,6 +5,14 @@ import vm from 'node:vm';
 import * as preparationHelpers from '../docs/assets/preparation.js';
 
 const read = file => fs.readFileSync(new URL('../docs/' + file, import.meta.url), 'utf8');
+test('verdergaan in de zaal heeft een eigen opvallend blok na de voorbereiding', () => {
+    const html = read('quizmaster.html');
+    assert.match(html, /<section class="venue-next" aria-labelledby="venueNextHeading">/);
+    assert.match(html, /<h2 id="venueNextHeading">In de zaal: ga hier verder<\/h2>/);
+    assert.ok(html.indexOf('id="preparationPause"') < html.indexOf('class="venue-next"'));
+    assert.match(html, /U hoeft de voorbereiding hierboven niet opnieuw te doen/);
+    assert.match(read('assets/styles.css'), /\.venue-next \{\s*margin-top: 2\.5rem/);
+});
 test('feestelijk bedankscherm is uitsluitend voor afgesloten activiteiten', () => {
     const html = read('projectie.html');
     const source = read('assets/projectie.js');

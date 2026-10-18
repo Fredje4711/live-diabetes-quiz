@@ -812,6 +812,22 @@ h3 {
     font-weight: 800;
 }
 
+.venue-next {
+    margin-top: 2.5rem;
+    padding: clamp(18px, 3vw, 32px);
+    border: 2px solid #15859b;
+    border-top: 7px solid #15859b;
+    border-radius: 14px;
+    background: #f5fcfc;
+}
+.venue-next__heading h2 {
+    margin: 0 0 1rem;
+    color: #074d69;
+    font-size: clamp(1.65rem, 3vw, 2.3rem);
+    line-height: 1.2;
+}
+.venue-next__heading .eyebrow { color: #126679; }
+.venue-next__arrival { margin: 1rem 0; }
 #activityNotice.is-farewell {
     position: relative;
     isolation: isolate;

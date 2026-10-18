@@ -6,7 +6,7 @@
     <meta name="description" content="Bediening van de Live Diabetes Quiz.">
     <meta name="referrer" content="no-referrer">
     <title>Quizmastervenster — bediening | Live Diabetes Quiz</title>
-    <link rel="stylesheet" href="assets/styles.css?v=27">
+    <link rel="stylesheet" href="assets/styles.css?v=34">
 </head>
 <body>
     <header class="site-header">
@@ -103,8 +103,15 @@
                     </section>
                 </div>
 
-                <h3>In de zaal: verdergaan met uw bewaarde startbestand</h3>
+                <section class="venue-next" aria-labelledby="venueNextHeading">
+                <header class="venue-next__heading">
+                    <p class="eyebrow">Verder met uw voorbereide quiz</p>
+                    <h2 id="venueNextHeading">In de zaal: ga hier verder</h2>
+                    <p>Hebt u uw bewaarde startbestand geopend en bent u klaar om te beginnen? Ga hieronder verder met <strong>Zaalscherm openen</strong>. U hoeft de voorbereiding hierboven niet opnieuw te doen.</p>
+                </header>
+                <details class="venue-next__arrival"><summary>Nog thuis? Zo gaat u later in de zaal verder</summary>
                 <p>Neem de papieren briefjes en het startbestand mee. Sluit de laptop aan op de tv of projector en zorg voor internet. Dubbelklik op het bewaarde bestand ‘Quiz … openen.html’: u komt terug op dit quizmasterscherm, bij dezelfde activiteit. U hoeft niets opnieuw aan te maken.</p>
+                </details>
                 <p><strong>Bent u in de zaal, of wilt u nu oefenen?</strong> Ga hieronder verder. U hoeft dit venster daarvoor niet eerst te sluiten.</p>
                 <div>
                     <a id="openProjectorLink" class="button-link" href="projectie.html" target="_blank" rel="noopener" aria-describedby="projectorLinkHelp">
@@ -133,6 +140,7 @@
                         Voor uw oefening kunt u deze QR-code scannen. In de zaal gebruiken deelnemers hun uitgedeelde briefje.
                     </p>
                 </div>
+                </section>
             </div>
 
             <div class="dashboard-grid" style="margin-top: 1rem">
