@@ -5,9 +5,9 @@ Anonieme live quiz voor Diabetes Liga Midden-Limburg.
 ## Onderdelen
 
 - **Quizmaster:** maakt een activiteit en bedient de vragen via een quizmasterlink, ook op een andere computer.
-- **Deelnemer:** opent de vaste QR-code of volledige link op het vooraf afgedrukte briefje; geen cijfercode nodig.
+- **Deelnemer:** opent de vaste QR-code of het webadres op het vooraf afgedrukte briefje; geen cijfercode nodig. Deelnemers op afstand ontvangen de deelnemerslink via e-mail.
 - **Groot zaalscherm:** toont dezelfde vraag en antwoorden als de gsm, plus de live aantallen.
-- **Deelnemersbriefje:** twee briefjes per A4 met vaste QR-code, volledige deelnemerslink en optionele zaalwifi.
+- **Deelnemersbriefje:** twee briefjes per A4 met vaste QR-code, optionele TinyURL-link (anders de oorspronkelijke link) en optionele zaalwifi.
 - **GitHub Pages:** publiceert de statische website uit de map `docs`.
 - **Firebase:** verzorgt anonieme toegang en realtime synchronisatie.
 
@@ -23,12 +23,24 @@ Na publicatie:
 - Deelnemer: `https://fredje4711.github.io/live-diabetes-quiz/deelnemer.html`
 - Groot zaalscherm: `https://fredje4711.github.io/live-diabetes-quiz/projectie.html`
 
-Maak eerst een activiteit en bewaar de quizmasterlink. Gebruik daarna in het quizmasterscherm de knop
-**Deelnemersbriefjes afdrukken**. De unieke QR-code op het briefje opent
+Maak eerst een activiteit en kies **Deelnemersbriefjes voorbereiden**.
+Bewaar eventueel een geteste TinyURL-link en de internetkeuze. Druk de briefjes af
+of bewaar eerst een PDF; bevestig pas na het werkelijk afdrukken dat de papieren briefjes klaar zijn.
+Ga terug en kies **Startbestand voor de quizmaster bewaren**.
+Neem het HTML-bestand mee naar de zaal, eventueel via e-mail of USB-stick naar een andere laptop met internet.
+Open het bestand en ga naar **In de zaal: ga hier verder**. De voorbereiding hoeft niet opnieuw.
+Het bestand haalt de laatste bewaarde gegevens op en hoeft na wijzigingen niet opnieuw gedownload te worden.
+De unieke QR-code op het briefje opent
 rechtstreeks het deelnemerscherm van die activiteit. Bij een nieuwe ronde blijven
 de briefjes geldig en gaan verbonden deelnemers automatisch mee. Alleen
 **Activiteit definitief afsluiten** maakt de link onbruikbaar voor verdere deelname.
 Voor een andere gelegenheid maakt u een nieuwe activiteit en nieuwe briefjes.
+Een korte link mag met of zonder `https://` worden ingevoerd. Op het briefje staat het adres
+zonder `https://` of `www.`. Deelnemers typen het in de adresbalk van hun browser, niet in het
+zoekvak op de Google-pagina. De QR-code blijft rechtstreeks de oorspronkelijke link gebruiken.
+De top 3 op het zaalscherm toont per vraag aantallen en percentage, het juiste antwoord met de
+letter en alle drie foute opties met hun letters en aantallen. De berekening gebruikt de ontvangen
+antwoorden voor die vraag. Definitief afsluiten toont het bedankscherm; nog een ronde starten niet.
 Oude driecijferige sessies blijven ondersteund; hun briefjes worden niet omgezet.
 
 De actuele uitleg staat in `docs/handleiding.html`, met apart `docs/uitleg/oefenen.html`
