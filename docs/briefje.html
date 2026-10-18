@@ -39,7 +39,8 @@
                 </ol>
                 <div class="field">
                     <label for="shortParticipantLink">Korte deelnemerslink van TinyURL</label>
-                    <input id="shortParticipantLink" type="text" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://tinyurl.com/…" aria-describedby="shortLinkHelp">
+                    <input id="shortParticipantLink" type="text" inputmode="url" autocomplete="off" spellcheck="false" placeholder="tinyurl.com/…" aria-describedby="shortLinkInputHelp shortLinkHelp">
+                    <p id="shortLinkInputHelp">Plak hier uw gekopieerde TinyURL-link. Met of zonder <strong>https://</strong> is allebei goed. Op het briefje tonen we het adres zonder <strong>https://</strong> en zonder <strong>www.</strong>, zodat deelnemers minder hoeven te typen.</p>
                 </div>
                 <div class="button-row"><button id="saveShortLink" type="button">Korte link bewaren</button></div>
                 <p id="shortLinkStatus" role="status" aria-live="polite"></p>
@@ -119,8 +120,9 @@
                 <div>
                     <h3>Open de quiz</h3>
                     <p>Scan deze QR-code met uw camera-app of QR-app en tik op de link.</p>
-                    <p>Lukt scannen niet? Typ in de adresbalk van Google, Chrome of Safari:</p>
+                    <p>Lukt het scannen niet? Typ dit adres in de adresbalk van uw browser:</p>
                     <strong class="handout-address"></strong>
+                    <p class="handout-address-help">Typ het precies zoals hierboven. U hoeft er geen <strong>www.</strong> of <strong>https://</strong> vóór te zetten.</p>
                     <p class="handout-code-instruction">Vul indien gevraagd quizcode <strong class="handout-code"></strong> in.</p>
                 </div>
                 <div class="handout-quiz-qr qr-output" aria-label="QR-code naar het deelnemerscherm"></div>
