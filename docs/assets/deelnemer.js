@@ -17,8 +17,6 @@ const activityId = queryActivity();
 const storageCodeKey = "dlq-participant-code";
 const connectionStatus = document.querySelector("#connectionStatus");
 const joinPanel = document.querySelector("#joinPanel");
-const joinForm = document.querySelector("#joinForm");
-const quizCodeInput = document.querySelector("#quizCode");
 const joinError = document.querySelector("#joinError");
 const quizPanel = document.querySelector("#quizPanel");
 const participantCode = document.querySelector("#participantCode");
@@ -193,7 +191,7 @@ async function switchToSession(nextCode) {
 async function joinQuiz(nextCode) {
     const requestedCode = normalizeCode(nextCode);
     if (requestedCode.length !== 3) {
-        showError("Voer de drie cijfers van uw quizbriefje in.");
+        showError("Open de deelnemerslink op uw briefje of in de e-mail van de organisator.");
         return;
     }
 
@@ -256,14 +254,6 @@ async function submitAnswer(optionIndex) {
     }
 }
 
-joinForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    joinQuiz(quizCodeInput.value);
-});
-
-quizCodeInput.addEventListener("input", () => {
-    quizCodeInput.value = normalizeCode(quizCodeInput.value);
-});
 
 try {
     await ensureAuth();
@@ -290,13 +280,11 @@ try {
             setConnection(connectionStatus, "error", "Verbinding controleren");
         });
     } else if (code.length === 3) {
-        quizCodeInput.value = code;
         await joinQuiz(code);
     } else {
         setConnection(connectionStatus, "online", "Klaar om te verbinden");
         document.querySelector("#activityNotice").classList.add("hide");
         joinPanel.classList.remove("hide");
-        quizCodeInput.focus();
     }
 } catch (error) {
     setConnection(connectionStatus, "error", "Firebase niet beschikbaar");

@@ -17,8 +17,6 @@ const storageCodeKey = "dlq-projector-code";
 const connectionStatus = document.querySelector("#connectionStatus");
 const projectorPhase = document.querySelector("#projectorPhase");
 const projectorJoin = document.querySelector("#projectorJoin");
-const projectorJoinForm = document.querySelector("#projectorJoinForm");
-const projectorCodeInput = document.querySelector("#projectorCode");
 const projectorError = document.querySelector("#projectorError");
 const projectorWaiting = document.querySelector("#projectorWaiting");
 const projectorQuestion = document.querySelector("#projectorQuestion");
@@ -160,7 +158,7 @@ async function switchProjection(nextCode) {
 async function openProjection(nextCode, exactSession = false) {
     const requestedCode = normalizeCode(nextCode);
     if (requestedCode.length !== 3) {
-        showError("Voer de drie cijfers van de quizcode in.");
+        showError("Open dit scherm via ‘Zaalscherm openen’ in het quizmastervenster.");
         return;
     }
 
@@ -196,14 +194,6 @@ async function openProjection(nextCode, exactSession = false) {
     }
 }
 
-projectorJoinForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    openProjection(projectorCodeInput.value);
-});
-
-projectorCodeInput.addEventListener("input", () => {
-    projectorCodeInput.value = normalizeCode(projectorCodeInput.value);
-});
 
 try {
     await ensureAuth();
@@ -232,13 +222,11 @@ try {
             projectorJoin.classList.remove("hide"); showError(error.message);
         });
     } else if (code.length === 3) {
-        projectorCodeInput.value = code;
         await openProjection(code, openExactSession);
     } else {
-        setConnection(connectionStatus, "online", "Klaar voor quizcode");
+        setConnection(connectionStatus, "online", "Openen via quizmaster");
         document.querySelector("#activityNotice").classList.add("hide");
         projectorJoin.classList.remove("hide");
-        projectorCodeInput.focus();
     }
 } catch (error) {
     setConnection(connectionStatus, "error", "Firebase niet beschikbaar");

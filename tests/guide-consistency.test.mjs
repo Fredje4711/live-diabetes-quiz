@@ -8,6 +8,17 @@ const root = fileURLToPath(new URL('../docs/', import.meta.url));
 const pages = ['index.html', 'kennismaken.html', 'handleiding.html', 'uitleg/oefenen.html', 'uitleg/organiseren.html', 'briefje.html', 'deelnemer.html', 'quizmaster.html'];
 const read = name => fs.readFileSync(path.join(root, name), 'utf8');
 
+test('publieke uitleg bevat geen verwijzingen naar de vervallen cijfercode', () => {
+    for (const file of [...pages, 'projectie.html']) {
+        assert.doesNotMatch(read(file), /cijfercode|drie cijfers|driecijfer|oude sessie|oude quiz|quizcode/i, file);
+    }
+    for (const file of ['assets/deelnemer.js','assets/projectie.js']) {
+        assert.doesNotMatch(read(file), /(?:quizCodeInput|projectorCodeInput|joinForm|projectorJoinForm)/, file);
+    }
+    assert.doesNotMatch(read('assets/briefje.js'), /querySelector\("\.handout-code/);
+    assert.match(read('projectie.html'), /Open het zaalscherm via de quizmaster/);
+});
+
 test('geschreven uitleg gebruikt actuele knoppen en verwijst naar het zaalblok', () => {
     for (const file of pages) {
         assert.doesNotMatch(read(file), /Deelnemersbriefjes afdrukken|Quizmasterlink bewaren|Sluit antwoorden|online deelnemers/i, file);

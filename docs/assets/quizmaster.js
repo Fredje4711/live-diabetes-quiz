@@ -344,7 +344,7 @@ function renderState(state) {
     }
 
     latestState = state;
-    sessionCode.textContent = activityState?.title || `Oude sessie ${state.session.code}`;
+    sessionCode.textContent = activityState?.title || 'Live Diabetes Quiz';
     phaseBadge.textContent = formatPhase(state.session.phase);
     questionPhase.textContent = formatPhase(state.session.phase);
     activeParticipants.textContent = state.participants.active;
@@ -486,7 +486,7 @@ copyParticipantLink.addEventListener("click", () =>
 newSessionButton.addEventListener("click", async () => {
     if (
         !await confirmAction(
-            activityId ? "Een nieuwe ronde voorbereiden? Na het bevestigen begint iedereen met een lege score. Dezelfde briefjes blijven geldig." : "Dit is een oude sessie met cijfercode. Maak een nieuwe activiteit en druk daarvoor nieuwe briefjes af. Doorgaan?",
+            activityId ? "Een nieuwe ronde voorbereiden? Na het bevestigen begint iedereen met een lege score. Dezelfde briefjes blijven geldig." : "Maak een nieuwe activiteit en bereid de deelnemersbriefjes voor. Doorgaan?",
         )
     ) {
         return;

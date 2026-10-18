@@ -5,7 +5,7 @@ Anonieme live quiz voor Diabetes Liga Midden-Limburg.
 ## Onderdelen
 
 - **Quizmaster:** maakt een activiteit en bedient de vragen via een quizmasterlink, ook op een andere computer.
-- **Deelnemer:** opent de vaste QR-code of het webadres op het vooraf afgedrukte briefje; geen cijfercode nodig. Deelnemers op afstand ontvangen de deelnemerslink via e-mail.
+- **Deelnemer:** opent de vaste QR-code of het webadres op het vooraf afgedrukte briefje. Deelnemers op afstand ontvangen de deelnemerslink via e-mail.
 - **Groot zaalscherm:** toont dezelfde vraag en antwoorden als de gsm, plus de live aantallen.
 - **Deelnemersbriefje:** twee briefjes per A4 met vaste QR-code, optionele TinyURL-link (anders de oorspronkelijke link) en optionele zaalwifi.
 - **GitHub Pages:** publiceert de statische website uit de map `docs`.
@@ -41,7 +41,6 @@ zoekvak op de Google-pagina. De QR-code blijft rechtstreeks de oorspronkelijke l
 De top 3 op het zaalscherm toont per vraag aantallen en percentage, het juiste antwoord met de
 letter en alle drie foute opties met hun letters en aantallen. De berekening gebruikt de ontvangen
 antwoorden voor die vraag. Definitief afsluiten toont het bedankscherm; nog een ronde starten niet.
-Oude driecijferige sessies blijven ondersteund; hun briefjes worden niet omgezet.
 
 De actuele uitleg staat in `docs/handleiding.html`, met apart `docs/uitleg/oefenen.html`
 en `docs/uitleg/organiseren.html`. De behouden video's tonen de oude werkwijze;

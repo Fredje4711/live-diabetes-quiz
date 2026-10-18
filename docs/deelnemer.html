@@ -26,27 +26,6 @@
             <h1>Neem uw deelnemersbriefje</h1>
             <p class="lead">Scan de quiz-QR-code met uw camera en tik op de link. Lukt scannen niet? Typ het webadres op uw briefje in de adresbalk van uw browser, niet in het zoekvak op de Google-pagina. Voeg geen www. of https:// toe. Tik daarna op ‘Ga’ of het pijltje op uw toetsenbord.</p>
             <p>Speelt u op afstand mee? Open de deelnemerslink uit de e-mail van de organisator.</p>
-            <details><summary>Ik heb nog een oud briefje met drie cijfers</summary>
-            <form id="joinForm" style="margin-top: 1.5rem">
-                <div class="field">
-                    <label for="quizCode">Quizcode</label>
-                    <input
-                        id="quizCode"
-                        class="code-input"
-                        type="text"
-                        inputmode="numeric"
-                        autocomplete="one-time-code"
-                        maxlength="3"
-                        pattern="[0-9]{3}"
-                        placeholder="000"
-                        required
-                    >
-                </div>
-                <div class="button-row">
-                    <button class="button-primary" type="submit">Deelnemen</button>
-                </div>
-            </form>
-            </details>
             <p class="notice">Uw naam of e-mailadres wordt niet gevraagd.</p>
             <p id="joinError" class="notice notice--error hide" role="alert"></p>
         </section>
@@ -94,6 +73,6 @@
         </section>
     </main>
 
-    <script type="module" src="assets/deelnemer.js?v=15"></script>
+    <script type="module" src="assets/deelnemer.js?v=16"></script>
 </body>
 </html>

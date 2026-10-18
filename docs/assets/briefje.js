@@ -75,8 +75,6 @@ function renderHandouts() {
     if (!ready) return;
     targets.forEach((target) => {
         target.replaceChildren(template.content.cloneNode(true));
-        target.querySelector(".handout-code").textContent = code;
-        target.querySelector(".handout-code-instruction").classList.toggle("hide", Boolean(activityId));
         target.querySelector(".handout-activity").textContent = activity?.title || "Live Diabetes Quiz";
         target.querySelector(".handout-address").textContent = readableParticipantAddress();
         target.querySelector(".wifi-details").textContent = wifiText();
