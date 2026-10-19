@@ -43,8 +43,9 @@ letter en alle drie foute opties met hun letters en aantallen. De berekening geb
 antwoorden voor die vraag. Definitief afsluiten toont het bedankscherm; nog een ronde starten niet.
 
 De actuele uitleg staat in `docs/handleiding.html`, met apart `docs/uitleg/oefenen.html`
-en `docs/uitleg/organiseren.html`. De behouden video's tonen de oude werkwijze;
-op de handleiding staat daarom een waarschuwing bij deze video's.
+en `docs/uitleg/organiseren.html`. De korte uitlegvideo (4 minuten en 2 seconden)
+toont de huidige quiz en staat op `docs/assets/video/live-diabetes-quiz-uitleg.mp4`.
+Dit is de enige aangeboden video; latere wijzigingen worden in deze korte versie verwerkt.
 
 ### Techniek en controle
 

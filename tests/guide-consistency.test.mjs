@@ -8,6 +8,15 @@ const root = fileURLToPath(new URL('../docs/', import.meta.url));
 const pages = ['index.html', 'kennismaken.html', 'handleiding.html', 'uitleg/oefenen.html', 'uitleg/organiseren.html', 'briefje.html', 'deelnemer.html', 'quizmaster.html'];
 const read = name => fs.readFileSync(path.join(root, name), 'utf8');
 
+test('de handleiding biedt uitsluitend de actuele korte video aan', () => {
+    const html = read('handleiding.html');
+    assert.equal((html.match(/<video\b/g) || []).length, 1);
+    assert.match(html, /4 minuten en 2 seconden/);
+    assert.match(html, /live-diabetes-quiz-uitleg\.mp4\?v=20261019/);
+    assert.doesNotMatch(html, /videohandleiding-organisatoren|nog niet bijgewerkt|Uitgebreide eerdere/);
+    assert.equal(fs.existsSync(path.join(root, 'assets/video/videohandleiding-organisatoren.mp4')), false);
+});
+
 test('vraagvoorbeeld staat afzonderlijk vóór het uitklapbare top-3-kader', () => {
     const html = read('handleiding.html');
     const figure = html.match(/<figure class="question-example"[\s\S]*?<\/figure>/)?.[0];
