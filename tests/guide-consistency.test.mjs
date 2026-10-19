@@ -8,6 +8,20 @@ const root = fileURLToPath(new URL('../docs/', import.meta.url));
 const pages = ['index.html', 'kennismaken.html', 'handleiding.html', 'uitleg/oefenen.html', 'uitleg/organiseren.html', 'briefje.html', 'deelnemer.html', 'quizmaster.html'];
 const read = name => fs.readFileSync(path.join(root, name), 'utf8');
 
+test('vraagvoorbeeld staat afzonderlijk vóór het uitklapbare top-3-kader', () => {
+    const html = read('handleiding.html');
+    const figure = html.match(/<figure class="question-example"[\s\S]*?<\/figure>/)?.[0];
+    assert.ok(figure);
+    assert.match(figure, /Zo ziet een vraag eruit op het zaalscherm/);
+    assert.match(figure, /zaalscherm-vraag\.jpg/);
+    const details = html.match(/<details class="analysis-help">[\s\S]*?<\/details>/)?.[0];
+    assert.ok(details);
+    assert.match(details, /Wat ziet u in de top 3\?/);
+    assert.doesNotMatch(details, /<img|<figure/);
+    assert.ok(html.indexOf(figure) < html.indexOf(details));
+    assert.match(html, /\.analysis-help\{[^}]*background:#edf8fc/);
+});
+
 test('publieke uitleg bevat geen verwijzingen naar de vervallen cijfercode', () => {
     for (const file of [...pages, 'projectie.html']) {
         assert.doesNotMatch(read(file), /cijfercode|drie cijfers|driecijfer|oude sessie|oude quiz|quizcode/i, file);

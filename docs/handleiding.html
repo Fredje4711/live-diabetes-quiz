@@ -10,6 +10,11 @@
 .guide img,.guide video{width:100%;height:auto;border-radius:12px}.guide figure{margin:1rem 0}
 .guide figcaption,.guide small{color:var(--muted)}.guide nav{display:flex;gap:1rem;flex-wrap:wrap}
 .guide summary{cursor:pointer;font-weight:800;padding:.8rem 0}.guide section{scroll-margin-top:1rem}
+.guide .question-example{margin:2rem 0;padding-top:1rem;border-top:1px solid #c4d8e1}
+.guide .question-example h3{margin:0 0 1rem}
+.guide .analysis-help{margin:2rem 0 1.5rem;padding:.25rem 1.1rem;border:1px solid #a9cedc;border-left:5px solid #087995;border-radius:10px;background:#edf8fc}
+.guide .analysis-help summary{color:#074d69}
+.guide .analysis-help p:last-child{margin-bottom:1rem}
 </style>
 </head>
 <body>
@@ -79,8 +84,12 @@
 <li>Bespreek de oplossing en klik op <strong>Volgende vraag</strong>. Deelnemers hoeven niets anders te doen; de volgende vraag verschijnt vanzelf.</li>
 <li>Na de laatste oplossing klikt u op <strong>Eindanalyse</strong>. De tv toont maximaal drie meest fout beantwoorde vragen. Iedere deelnemer ziet zijn eigen score.</li>
 </ol>
-<details><summary>Wat ziet u in de top 3?</summary><p>Bij elke vraag staan het aantal foute antwoorden en het percentage naast elkaar. Daaronder ziet u het juiste antwoord <strong>met de letter</strong>, bijvoorbeeld ‘Juiste antwoord: B. Diabetes Type 2’. Ook de drie foute antwoordmogelijkheden staan erbij, elk met hun letter en het aantal keer dat ze gekozen zijn. <strong>Meest gekozen</strong> geeft aan welk fout antwoord het vaakst gekozen werd; bij een gelijk aantal kunnen dat meerdere antwoorden zijn.</p><p>De aantallen en percentages zijn berekend op de ontvangen antwoorden voor die vraag. Iemand die die vraag niet beantwoordde, telt daarin niet mee. Gebruik het overzicht om samen de vergissingen te bespreken. Zijn minder dan drie vragen fout beantwoord, dan zijn er minder items; zonder fouten verschijnt een melding.</p></details>
-<figure><img src="assets/handleiding/zaalscherm-vraag.jpg" alt="Voorbeeld: een vraag en vier mogelijke antwoorden op het grote scherm" loading="lazy"><figcaption>Het publiek volgt op het grote scherm; antwoorden gebeurt alleen op de gsm.</figcaption></figure>
+<figure class="question-example" aria-labelledby="questionExampleTitle">
+<h3 id="questionExampleTitle">Zo ziet een vraag eruit op het zaalscherm</h3>
+<img src="assets/handleiding/zaalscherm-vraag.jpg" alt="Voorbeeld: een vraag en vier mogelijke antwoorden op het grote scherm" loading="lazy">
+<figcaption>Het publiek volgt op het grote scherm; antwoorden gebeurt alleen op de gsm.</figcaption>
+</figure>
+<details class="analysis-help"><summary>Wat ziet u in de top 3?</summary><p>Bij elke vraag staan het aantal foute antwoorden en het percentage naast elkaar. Daaronder ziet u het juiste antwoord <strong>met de letter</strong>, bijvoorbeeld ‘Juiste antwoord: B. Diabetes Type 2’. Ook de drie foute antwoordmogelijkheden staan erbij, elk met hun letter en het aantal keer dat ze gekozen zijn. <strong>Meest gekozen</strong> geeft aan welk fout antwoord het vaakst gekozen werd; bij een gelijk aantal kunnen dat meerdere antwoorden zijn.</p><p>De aantallen en percentages zijn berekend op de ontvangen antwoorden voor die vraag. Iemand die die vraag niet beantwoordde, telt daarin niet mee. Gebruik het overzicht om samen de vergissingen te bespreken. Zijn minder dan drie vragen fout beantwoord, dan zijn er minder items; zonder fouten verschijnt een melding.</p></details>
 <details><summary>Wat doen de andere knoppen?</summary><p><strong>Vorige vraag</strong> toont een eerdere vraag opnieuw; reeds gegeven antwoorden blijven bewaard. <strong>Ronde stoppen en eindanalyse tonen</strong> stopt tussentijds alleen de ronde, niet de activiteit. De resultaten betreffen de ontvangen antwoorden.</p></details>
 </section>
 <section id="opnieuw" class="panel">
