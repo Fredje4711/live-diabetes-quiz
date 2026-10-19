@@ -17,13 +17,14 @@ import {
 import { activityUrl, managementUrl, queryActivity, validActivity, validKey,
     createActivity, authorizeActivity, startRound, closeActivity, watchActivity } from "./activity-service.js?v=19";
 import { watchPreparation } from './preparation-service.js?v=19';
-import { preparationDate, preparationSummary, preparationMessage, showPreparationOverview, preparationSteps } from './preparation.js?v=24';
+import { preparationDate, preparationSummary, preparationMessage, showPreparationOverview, preparationSteps, preparationLayout } from './preparation.js?v=25';
 
 const identityKey = "dlq-activity-manager";
 import { makeQuizStartFile } from "./quiz-startbestand.js?v=19";
 let startFileStamp = new URLSearchParams(location.hash.slice(1)).get('startbestand');
 let preparation = null, preparationError = '', stopPreparation = null;
 let activityCreatedHere = false;
+let preparationLayoutKey = '';
 function renderPreparation() {
     if (!activityState) return;
     const context = {fresh:activityCreatedHere && activityState.roundNumber === 1, phase:latestState?.session?.phase, error:preparationError};
@@ -34,7 +35,7 @@ function renderPreparation() {
     document.querySelector('#preparationHeading').textContent = message.heading;
     document.querySelector('#preparationIntro').textContent = message.intro;
     const stamp = preparationDate(startFileStamp);
-    document.querySelector('#startFileDate').textContent = stamp ? `Startbestand aangemaakt op ${stamp} (Belgische tijd). Niet de datum van uw bijeenkomst.` : 'Dit overzicht toont de laatste bewaarde voorbereiding.';
+    document.querySelector('#startFileDate').textContent = stamp ? `Startbestand bewaard op ${stamp}.` : '';
     const list = document.querySelector('#preparationChecklist'); list.replaceChildren();
     const summary = preparationSummary(activityState, preparation || {});
     const lines = preparationError ? [preparationError] : preparation === null ? ['Voorbereiding ophalen…']
@@ -43,7 +44,16 @@ function renderPreparation() {
     document.querySelector('#preparationNext').textContent = message.next;
     document.querySelector('#preparationNext').classList.toggle('hide', !message.next);
     const steps = preparationSteps(activityState, preparation, context);
-    document.querySelector('#preparationPause').classList.toggle('hide', !steps.ready || (context.phase && context.phase !== 'waiting'));
+    const layout = preparationLayout({ready:steps.ready, resumed:Boolean(stamp), phase:context.phase, error:preparationError});
+    const layoutKey = `${activityId}:${layout.preparationOpen}:${layout.venueOpen}`;
+    if (layoutKey !== preparationLayoutKey) {
+        managementPanel.open = layout.preparationOpen;
+        document.querySelector('#venuePanel').open = layout.venueOpen;
+        preparationLayoutKey = layoutKey;
+    }
+    document.querySelector('#preparationToggle').textContent = layout.preparationOpen ? 'Voorbereiding' : 'Voorbereiding bekijken of wijzigen';
+    document.querySelector('#venueNextHeading').textContent = layout.venueOpen ? 'In de zaal: ga hier verder' : 'Zaalscherm en deelnemerslinks';
+    document.querySelector('#preparationPause').classList.toggle('hide', !steps.ready || Boolean(stamp) || (context.phase && context.phase !== 'waiting'));
     document.querySelector('#handoutsStepHeading').textContent = steps.handoutsHeading;
     document.querySelector('#startFileStepHeading').textContent = stamp ? 'Uw bewaarde startbestand' : steps.fileHeading;
     const handoutsLink = document.querySelector('#printHandoutsLink');
@@ -51,10 +61,10 @@ function renderPreparation() {
     handoutsLink.classList.toggle('button-link', !steps.ready);
     handoutsLink.classList.toggle('button-link--print', !steps.ready);
     document.querySelector('#startFileInstruction').textContent = stamp
-        ? 'U hebt deze activiteit via uw bewaarde startbestand geopend. Dat bestand blijft geldig; opnieuw bewaren is niet nodig.'
+        ? 'Uw startbestand werkt. Opnieuw bewaren is niet nodig.'
         : steps.ready
-        ? 'Bewaar nu het startbestand voor de quizmaster. Daarmee opent u later in de zaal dezelfde activiteit, op deze laptop of op een andere laptop.'
-        : 'Bereid eerst de deelnemersbriefjes voor. Bewaar daarna hier het startbestand voor de quizmaster. Wilt u de voorbereiding onderbreken? U kunt het bestand ook tussentijds bewaren om later verder te werken.';
+        ? 'Bewaar nu het startbestand. Daarmee opent u deze quiz later in de zaal, ook op een andere laptop.'
+        : 'Maak eerst de deelnemersbriefjes klaar. Bewaar daarna hier uw startbestand.';
     document.querySelector('#saveManagementLink').textContent = stamp
         ? 'Extra exemplaar van het startbestand bewaren'
         : 'Startbestand voor de quizmaster bewaren';

@@ -40,11 +40,11 @@
                 <div class="field">
                     <label for="shortParticipantLink">Korte deelnemerslink van TinyURL</label>
                     <input id="shortParticipantLink" type="text" inputmode="url" autocomplete="off" spellcheck="false" placeholder="tinyurl.com/…" aria-describedby="shortLinkInputHelp shortLinkHelp">
-                    <p id="shortLinkInputHelp">Plak hier uw gekopieerde TinyURL-link. Met of zonder <strong>https://</strong> is allebei goed. Op het briefje tonen we het adres zonder <strong>https://</strong> en zonder <strong>www.</strong>, zodat deelnemers minder hoeven te typen.</p>
+                    <p id="shortLinkInputHelp">Met of zonder <strong>https://</strong> is allebei goed. Op het briefje vervallen <strong>https://</strong> en <strong>www.</strong> om het typen makkelijker te maken.</p>
                 </div>
                 <div class="button-row"><button id="saveShortLink" type="button">Korte link bewaren</button></div>
                 <p id="shortLinkStatus" role="status" aria-live="polite"></p>
-                <p id="shortLinkHelp">Wilt u een korte link gebruiken? Maak voor elke nieuwe quizactiviteit een eigen korte deelnemerslink. Wilt u binnen dezelfde activiteit opnieuw beginnen? Kies in het quizmastervenster <strong>Quiz opnieuw beginnen</strong>: dezelfde link en briefjes blijven geldig. Kies dan <strong>niet ‘Activiteit definitief afsluiten’</strong>, want die knop maakt de briefjes ongeldig.</p>
+                <p id="shortLinkHelp">Gebruik per activiteit een eigen korte link. Bij <strong>Quiz opnieuw beginnen</strong> blijft die geldig; bij <strong>Activiteit definitief afsluiten</strong> worden de briefjes ongeldig.</p>
                 <details><summary>De lange link gebruiken of hulp bij TinyURL</summary>
                     <p>Zonder korte link verschijnt de lange deelnemerslink op de briefjes. Wilt u daarnaar terug? Verwijder de korte link uit het invulvak en klik op <strong>Korte link bewaren</strong>. Controleer daarna het afdrukvoorbeeld.</p>
                     <p>De QR-code op het briefje gebruikt de oorspronkelijke deelnemerslink, niet TinyURL. Als TinyURL niet bereikbaar is, kunnen deelnemers nog steeds die QR-code scannen.</p>
@@ -67,16 +67,16 @@
                 <button id="saveWifi" type="button">Internetkeuze bewaren</button>
             </div>
             <h2 style="margin-top:1.5rem">3. Voorbeeld controleren en afdrukken</h2>
-            <p>Controleer het voorbeeld onderaan: activiteitnaam, link en internetinstructies. De knop hieronder opent het afdrukvenster. Kies uw printer of ‘Opslaan als PDF’ om later af te drukken.</p>
+            <p>Controleer onderaan de naam, link en internetgegevens. Druk de briefjes af of bewaar een PDF om later af te drukken.</p>
             <div class="button-row"><button id="printButton" class="button-primary" type="button">Briefjes afdrukken of PDF bewaren</button></div>
             <div id="paperConfirmationControls" class="hide">
                 <h2 style="margin-top:1.5rem">4. Papieren briefjes bevestigen</h2>
-                <p>Vink dit pas aan wanneer de briefjes werkelijk op papier klaar zijn. Alleen een PDF bewaard? Laat dit nog uitgevinkt.</p>
+                <p>Vink dit pas aan als de briefjes op papier klaar zijn, niet bij alleen een PDF.</p>
                 <label class="check-field"><input id="printedConfirmed" type="checkbox">De deelnemersbriefjes zijn afgedrukt en klaar om mee te nemen.</label>
                 <p id="preparationStatus" role="status" aria-live="polite"></p>
                 <p>Na een wijziging aan wifi of korte link controleert u de papieren briefjes opnieuw en bevestigt u dit opnieuw.</p>
             </div>
-            <p><strong>Zijn de briefjes klaar?</strong> Klik op ‘Terug naar quizmaster’. Bewaar daar het startbestand waarmee u later in de zaal deze quizactiviteit opent.</p>
+            <p><strong>Briefjes klaar?</strong> Ga terug en bewaar uw startbestand voor de zaal.</p>
             <div class="button-row">
                 <a class="button-link" href="quizmaster.html">Terug naar quizmaster</a>
             </div>

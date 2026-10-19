@@ -7,10 +7,10 @@ import * as preparationHelpers from '../docs/assets/preparation.js';
 const read = file => fs.readFileSync(new URL('../docs/' + file, import.meta.url), 'utf8');
 test('verdergaan in de zaal heeft een eigen opvallend blok na de voorbereiding', () => {
     const html = read('quizmaster.html');
-    assert.match(html, /<section class="venue-next" aria-labelledby="venueNextHeading">/);
+    assert.match(html, /<details id="venuePanel" class="venue-next" open>/);
     assert.match(html, /<h2 id="venueNextHeading">In de zaal: ga hier verder<\/h2>/);
     assert.ok(html.indexOf('id="preparationPause"') < html.indexOf('class="venue-next"'));
-    assert.match(html, /U hoeft de voorbereiding hierboven niet opnieuw te doen/);
+    assert.match(html, /Voorbereiding bekijken of wijzigen|id="preparationToggle"/);
     assert.match(read('assets/styles.css'), /\.venue-next \{\s*margin-top: 2\.5rem/);
 });
 test('feestelijk bedankscherm is uitsluitend voor afgesloten activiteiten', () => {
@@ -36,10 +36,10 @@ test('vensters vermelden hun rol in tabtitel en zichtbare kop; beginnersteksten 
     }
     const handout = read('briefje.html');
     assert.doesNotMatch(handout,/Eén keer per nieuwe activiteit|Wilt u die weer gebruiken|Gegevens voorbereid|Hebt u dat al/);
-    assert.match(handout,/Kies in het quizmastervenster <strong>Quiz opnieuw beginnen/);
-    assert.match(handout,/niet ‘Activiteit definitief afsluiten’/);
+    assert.match(handout,/Bij <strong>Quiz opnieuw beginnen/);
+    assert.match(handout,/Activiteit definitief afsluiten<\/strong> worden de briefjes ongeldig/);
     assert.match(handout,/Verwijder de korte link uit het invulvak/);
-    assert.match(read('quizmaster.html'), /Hoe zet ik het zaalscherm op de tv of projector/);
+    assert.match(read('quizmaster.html'), /Toon dit venster op de tv of projector/);
     assert.match(read('handleiding.html'), /gsm, tablet of computer/);
 });
 test('zaalscherm is de eerste actie; deelnemerslink heeft afzonderlijke optionele uitleg', () => {
@@ -47,15 +47,14 @@ test('zaalscherm is de eerste actie; deelnemerslink heeft afzonderlijke optionel
     assert.ok(master.indexOf('id="openProjectorLink"') < master.indexOf('id="copyParticipantLink"'));
     assert.match(master, /aria-describedby="projectorLinkHelp"/);
     assert.match(master, /aria-describedby="participantLinkHelp"/);
-    assert.match(master, /De bediening voor de quizmaster blijft op uw laptop/);
-    assert.match(master, /plak de link in een e-mail en verstuur die naar hen/);
-    assert.match(master, /Zij openen de link op hun gsm, tablet of computer en doen mee aan dezelfde quiz/);
-    assert.match(master, /Voor deelnemers op afstand/);
-    assert.match(master, /Deel het zaalscherm en de stem van de quizmaster via uw online bijeenkomst/);
+    assert.match(master, /U bedient de quiz vanaf uw laptop/);
+    assert.match(master, /Mail deze link naar deelnemers op afstand/);
+    assert.match(master, /Ze antwoorden via hun gsm, tablet of computer/);
+    assert.match(master, /<details><summary>Doen er ook mensen van thuis mee\?/);
+    assert.match(master, /Deel daarnaast het zaalscherm en uw stem via de online bijeenkomst/);
     assert.doesNotMatch(master, /online deelnemers/i);
     assert.doesNotMatch(read('handleiding.html'), /online deelnemers/i);
-    assert.match(master, /Dan hoeft u deze knop niet te gebruiken/);
-    assert.match(master, /niet de link van het zaalscherm/);
+    assert.match(master, /Deelnemers scannen de QR-code of typen het webadres/);
     const source = read('assets/quizmaster.js');
     assert.match(source, /openProjectorLink.href = linkFor\("projectie.html"\)/);
     assert.match(source, /copyText\(linkFor\("deelnemer.html"\), copyParticipantLink\)/);
@@ -66,8 +65,8 @@ test('instructies herhalen de dynamische voorbereidingstekst niet', () => {
     assert.equal((master.match(/id="preparationNext"/g) || []).length, 1);
     assert.ok(master.indexOf('id="preparationNext"') < master.indexOf('id="handoutsStepHeading"'));
     assert.match(master, /Voor uw oefening kunt u deze QR-code scannen/);
-    assert.match(master, /Zet het bestand over via e-mail of USB-stick/);
-    assert.match(master, /Dubbelklik erop om de quiz te bedienen; internet is nodig/);
+    assert.match(master, /via e-mail of USB-stick naar een andere laptop overzetten/);
+    assert.match(master, /Internet is nodig\. Deel het niet met deelnemers/);
     assert.doesNotMatch(read('index.html'), /Kies het aantal vragen en bewaar uw quizmasterlink/);
     assert.doesNotMatch(read('deelnemer.html'), /Open uw deelnemersbriefje/);
     assert.match(read('briefje.html'), /Klik ook op ‘Internetkeuze bewaren’/);
@@ -105,6 +104,7 @@ test('quizmasterscherm schakelt van voorbereiden naar klaar en terug na wijzigin
     const context = {...preparationHelpers, activityState:{title:'Test',roundNumber:1},
         preparation:{wifiConfigured:true,printedAt:'2026-10-16T07:00:00Z',printedShortLink:''},
         preparationError:'', activityCreatedHere:false, latestState:{session:{phase:'waiting'}}, startFileStamp:null,
+        activityId:'test', preparationLayoutKey:'', managementPanel:get('#managementPanel'),
         document:{querySelector:get,createElement:element}};
     vm.runInNewContext(fn + '\nrenderPreparation();',context);
     assert.equal(get('#printHandoutsLink').textContent,'Bekijken of wijzigen');
@@ -120,11 +120,11 @@ test('quizmasterscherm schakelt van voorbereiden naar klaar en terug na wijzigin
     assert.equal(get('#printHandoutsLink').classList.contains('button-link'),true);
     assert.equal(get('#preparationNext').classList.contains('hide'),false);
     assert.equal(get('#preparationPause').classList.contains('hide'),true);
-    assert.match(get('#startFileInstruction').textContent,/^Bereid eerst/);
+    assert.match(get('#startFileInstruction').textContent,/^Maak eerst/);
     context.startFileStamp = '2026-10-16T07:30:00Z';
     vm.runInNewContext('renderPreparation();',context);
     assert.equal(get('#startFileStepHeading').textContent,'Uw bewaarde startbestand');
-    assert.match(get('#startFileInstruction').textContent,/via uw bewaarde startbestand geopend/);
+    assert.match(get('#startFileInstruction').textContent,/Uw startbestand werkt/);
     assert.match(get('#saveManagementLink').textContent,/^Extra exemplaar/);
     context.startFileStamp = 'ongeldig';
     context.preparation.printedAt = '2026-10-16T07:00:00Z';
@@ -137,11 +137,12 @@ test('quizmasterscherm schakelt van voorbereiden naar klaar en terug na wijzigin
 });
 test('thuis stoppen en later dezelfde activiteit openen zijn expliciete afzonderlijke momenten', () => {
     const master = read('quizmaster.html');
-    assert.match(master, /Klaar voor vandaag\? U mag hier stoppen/);
-    assert.match(master, /Zijn de papieren briefjes klaar en staat het startbestand op uw laptop/);
+    assert.match(master, /Startbestand bewaard\? Dan bent u klaar voor de zaal/);
+    assert.match(master, /U mag dit venster sluiten/);
     assert.match(master, /Kies niet ‘Activiteit definitief afsluiten’/);
-    assert.match(master, /u komt terug op dit quizmasterscherm, bij dezelfde activiteit/);
-    assert.match(master, /U hoeft dit venster daarvoor niet eerst te sluiten/);
+    assert.match(master, /Open in de zaal uw bewaarde startbestand/);
+    assert.match(master, /U kunt deze stappen ook thuis oefenen/);
+    assert.doesNotMatch(master, /Windows-toets|HDMI|Hoe zet ik het zaalscherm/);
     for (const file of ['handleiding.html','uitleg/organiseren.html']) {
         assert.match(read(file), /Voorbereiding afgerond\? U mag stoppen/);
         assert.match(read(file), /niet ‘Activiteit definitief afsluiten’/);

@@ -1,6 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {preparationSummary, preparationDate, preparationMessage, showPreparationOverview, preparationSteps} from '../docs/assets/preparation.js';
+import {preparationSummary, preparationDate, preparationMessage, showPreparationOverview, preparationSteps, preparationLayout} from '../docs/assets/preparation.js';
+
+test('voorbereiding blijft open tot klaar; hervatten en spelen tonen minder uitleg', () => {
+    assert.deepEqual(preparationLayout(), {preparationOpen:true,venueOpen:true});
+    assert.equal(preparationLayout({ready:true}).preparationOpen,true);
+    assert.equal(preparationLayout({ready:true,resumed:true}).preparationOpen,false);
+    assert.equal(preparationLayout({ready:false,resumed:true}).preparationOpen,true);
+    for (const phase of ['open','locked','revealed','finished']) {
+        assert.deepEqual(preparationLayout({phase}), {preparationOpen:false,venueOpen:false});
+    }
+    assert.equal(preparationLayout({phase:'open',error:'offline'}).preparationOpen,true);
+});
 
 test('afgewerkte briefjes worden een controlelink; startbestand wordt de volgende stap', () => {
     const activity = {title:'Test',status:'open'};
@@ -38,7 +49,7 @@ test('onderscheid tussen ontbrekende keuze, mobiele data en wifi', () => {
 test('nieuwe activiteit zegt niet hervatten of voorbereiding klaar', () => {
     const message = preparationMessage({title:'Test',status:'open'}, {}, {fresh:true});
     assert.match(message.heading, /Nieuwe activiteit aangemaakt/);
-    assert.match(message.intro, /Nu bereiden we de deelnemersbriefjes voor/);
+    assert.match(message.intro, /Maak de deelnemersbriefjes klaar/);
     assert.doesNotMatch(JSON.stringify(message), /hervat|briefjes blijven|Voorbereiding klaar/);
     assert.match(message.next, /internetgegevens/);
 });

@@ -828,6 +828,15 @@ h3 {
 }
 .venue-next__heading .eyebrow { color: #126679; }
 .venue-next__arrival { margin: 1rem 0; }
+#managementPanel > summary { cursor: pointer; font-weight: 700; }
+#managementPanel[open] > summary { margin-bottom: 1rem; }
+.venue-next > summary { cursor: pointer; }
+.venue-next > summary h2 { display: inline; }
+.venue-next[open] > summary { margin-bottom: 1rem; }
+.venue-next:not([open]) { margin-top: 1rem; padding: 1rem; border-top-width: 2px; }
+.venue-next:not([open]) > summary h2 { font-size: 1.15rem; }
+.venue-next details { margin: 1rem 0; }
+.venue-next details > summary { cursor: pointer; font-weight: 600; }
 #activityNotice.is-farewell {
     position: relative;
     isolation: isolate;

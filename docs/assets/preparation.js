@@ -7,13 +7,19 @@ export function preparationDate(value) {
 export function preparationSummary(activity, prep = {}) {
     const printed = Boolean(prep.printedAt) && prep.printedShortLink === (activity.shortLink || '');
     return {
-        short: activity.shortLink ? `Ingevuld: ${activity.shortLink}` : 'Niet ingevuld — de lange link blijft bruikbaar.',
-        wifi: !prep.wifiConfigured ? 'Nog niet bewaard. Kies zaalwifi of mobiele data bij de briefjes.'
+        short: activity.shortLink || 'Niet ingesteld (optioneel).',
+        wifi: !prep.wifiConfigured ? 'Nog niet bewaard.'
             : prep.wifiName ? `Bewaard: ${prep.wifiName}` : 'Zonder zaalwifi — deelnemers gebruiken mobiele data.',
         printed,
-        paper: printed ? `Klaar om mee te nemen — door u bevestigd op ${preparationDate(prep.printedAt)}.`
-            : 'Nog niet bevestigd als afgedrukt. Een bewaarde PDF is nog geen papieren briefje.',
+        paper: printed ? `Klaar — bevestigd op ${preparationDate(prep.printedAt)}.`
+            : 'Nog niet bevestigd als afgedrukt.',
     };
+}
+
+// Only change disclosure defaults when the workflow changes, not on every live update.
+export function preparationLayout({ready = false, resumed = false, phase = 'waiting', error = ''} = {}) {
+    const playing = ['open', 'locked', 'revealed', 'finished'].includes(phase);
+    return {preparationOpen: Boolean(error) || (!playing && !(ready && resumed)), venueOpen: !playing};
 }
 
 export function showPreparationOverview(activity, prep, {fresh = false, phase = 'waiting', error = ''} = {}) {
@@ -40,11 +46,11 @@ export function preparationMessage(activity, prep, {fresh = false, phase = 'wait
     if (['open','locked','revealed'].includes(phase)) return {heading:`Quiz bezig: ${title}`, intro:'De quiz is al gestart. U kunt verdergaan met de huidige vraag.', next:'Gebruik hieronder de quizbediening. U hoeft geen nieuwe activiteit te maken.'};
     if (error || prep === null) return {heading:`Uw activiteit: ${title}`, intro:error ? 'De voorbereiding kon niet worden gecontroleerd.' : 'We halen uw voorbereiding op.', next:error ? 'Controleer uw internetverbinding en vernieuw deze pagina. Maak geen nieuwe activiteit.' : 'Even geduld voordat u de voorbereiding controleert.'};
     const ready = prep.wifiConfigured && preparationSummary(activity, prep).printed;
-    if (ready) return {heading:`Voorbereiding klaar: ${title}`, intro:'Uw internetkeuze is bewaard en u hebt bevestigd dat de papieren briefjes klaar zijn.', next:''};
+    if (ready) return {heading:`Voorbereiding klaar: ${title}`, intro:'De deelnemersbriefjes zijn klaar.', next:''};
     const next = !prep.wifiConfigured
-        ? 'Kies ‘Deelnemersbriefjes voorbereiden’. Bewaar daar de internetkeuze en maak eventueel een korte link. Druk daarna de briefjes af.'
-        : 'Uw internetkeuze is bewaard. Ga naar ‘Deelnemersbriefjes voorbereiden’ en bevestig daar pas dat de briefjes klaar zijn wanneer u ze werkelijk op papier hebt.';
+        ? 'Stel bij ‘Deelnemersbriefjes voorbereiden’ de internetgegevens en eventueel een korte link in.'
+        : 'Bevestig bij ‘Deelnemersbriefjes voorbereiden’ dat de briefjes werkelijk op papier klaar zijn.';
     return fresh
-        ? {heading:`Nieuwe activiteit aangemaakt: ${title}`, intro:'Uw activiteit is aangemaakt. Nu bereiden we de deelnemersbriefjes voor.', next:'Klik op ‘Deelnemersbriefjes voorbereiden’. Daar stelt u de internetgegevens en eventueel een korte link in. Daarna kunt u de briefjes afdrukken of als PDF bewaren.'}
-        : {heading:`Voorbereiding verder afwerken: ${title}`, intro:'U opent een bestaande activiteit. De voorbereiding is nog niet volledig bevestigd; hieronder ziet u wat al bewaard is. Maak geen nieuwe activiteit.', next};
+        ? {heading:`Nieuwe activiteit aangemaakt: ${title}`, intro:'Maak de deelnemersbriefjes klaar. Bewaar daarna uw startbestand.', next:'Bij ‘Deelnemersbriefjes voorbereiden’ stelt u de internetgegevens en eventueel een korte link in.'}
+        : {heading:`Voorbereiding verder afwerken: ${title}`, intro:'Werk de voorbereiding hieronder af. U hoeft geen nieuwe activiteit te maken.', next};
 }
