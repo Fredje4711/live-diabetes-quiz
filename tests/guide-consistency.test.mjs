@@ -47,7 +47,7 @@ test('geschreven uitleg gebruikt actuele knoppen en verwijst naar het zaalblok',
         assert.doesNotMatch(read(file), /Deelnemersbriefjes afdrukken|Quizmasterlink bewaren|Sluit antwoorden|online deelnemers/i, file);
     }
     for (const file of ['index.html','handleiding.html','uitleg/oefenen.html','uitleg/organiseren.html']) {
-        assert.ok(read(file).includes('In de zaal: ga hier verder'), file);
+        assert.ok(read(file).includes('In de zaal: start hier uw voorbereide quiz'), file);
         assert.ok(read(file).includes('startbestand'), file);
     }
 });

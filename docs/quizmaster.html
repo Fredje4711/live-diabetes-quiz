@@ -6,7 +6,7 @@
     <meta name="description" content="Bediening van de Live Diabetes Quiz.">
     <meta name="referrer" content="no-referrer">
     <title>Quizmastervenster — bediening | Live Diabetes Quiz</title>
-    <link rel="stylesheet" href="assets/styles.css?v=35">
+    <link rel="stylesheet" href="assets/styles.css?v=36">
 </head>
 <body>
     <header class="site-header">
@@ -104,11 +104,14 @@
                     </section>
                 </details>
 
-                <details id="venuePanel" class="venue-next" open>
-                <summary class="venue-next__heading">
-                    <h2 id="venueNextHeading">In de zaal: ga hier verder</h2>
-                </summary>
-                <p>Open het zaalscherm, laat deelnemers verbinden en start de quiz. U kunt deze stappen ook thuis oefenen.</p>
+                <section id="venuePanel" class="venue-next" aria-labelledby="venueNextHeading">
+                <header class="venue-next__heading">
+                    <h2 id="venueNextHeading">In de zaal: start hier uw voorbereide quiz</h2>
+                </header>
+                <button id="toggleVenue" class="button-secondary hide" type="button" aria-controls="venueContent" aria-expanded="false">Zaalstappen tonen</button>
+                <div id="venueContent">
+                <p id="venueIntro">Open uw bewaarde startbestand op de laptop waarmee u de quiz leidt. Uw activiteit en deelnemersbriefjes zijn al voorbereid; u hoeft niets opnieuw aan te maken. Staat dit scherm al open? Ga dan hieronder verder.</p>
+                <p>U kunt deze stappen ook thuis oefenen.</p>
                 <h3>1. Open het zaalscherm</h3>
                 <div>
                     <a id="openProjectorLink" class="button-link" href="projectie.html" target="_blank" rel="noopener" aria-describedby="projectorLinkHelp">
@@ -117,10 +120,10 @@
                     <p id="projectorLinkHelp">Toon dit venster op de tv of projector. U bedient de quiz vanaf uw laptop.</p>
                 </div>
                 <h3>2. Laat deelnemers verbinden</h3>
-                <p>Deel de briefjes uit. Deelnemers scannen de QR-code of typen het webadres in hun browser.</p>
-                <details><summary>Doen er ook mensen van thuis mee?</summary>
+                <p>Deel de briefjes uit. Deelnemers scannen de QR-code of typen het webadres in hun browser. Help wie niet verbonden raakt.</p>
+                <details><summary>Deelnemers op afstand laten meespelen</summary>
                     <button id="copyParticipantLink" class="button-secondary" type="button" aria-describedby="participantLinkHelp">Deelnemerslink kopiëren</button>
-                    <p id="participantLinkHelp">Mail deze link naar deelnemers op afstand. Ze antwoorden via hun gsm, tablet of computer. Deel daarnaast het zaalscherm en uw stem via de online bijeenkomst.</p>
+                    <p id="participantLinkHelp">Voor deelnemers die niet in de zaal zijn: mail hun deze deelnemerslink. Ze antwoorden via hun gsm, tablet of computer. Deel daarnaast het zaalscherm en uw gesproken uitleg via uw online bijeenkomst.</p>
                 </details>
                 <details><summary>Thuis oefenen: QR-code tonen</summary>
                 <div class="qr-card">
@@ -130,7 +133,8 @@
                     </p>
                 </div>
                 </details>
-                </details>
+                </div>
+                </section>
             </div>
 
             <div class="dashboard-grid" style="margin-top: 1rem">
@@ -215,6 +219,6 @@
     </main>
 
     <script src="assets/vendor/qrcode.min.js"></script>
-    <script type="module" src="assets/quizmaster.js?v=30"></script>
+    <script type="module" src="assets/quizmaster.js?v=31"></script>
 </body>
 </html>

@@ -44,15 +44,19 @@ function renderPreparation() {
     document.querySelector('#preparationNext').textContent = message.next;
     document.querySelector('#preparationNext').classList.toggle('hide', !message.next);
     const steps = preparationSteps(activityState, preparation, context);
+    document.querySelector('#venueIntro').textContent = steps.ready
+        ? 'Open uw bewaarde startbestand op de laptop waarmee u de quiz leidt. Uw activiteit en deelnemersbriefjes zijn al voorbereid; u hoeft niets opnieuw aan te maken. Staat dit scherm al open? Ga dan hieronder verder.'
+        : 'Maak voor de bijeenkomst eerst de voorbereiding hierboven af en bewaar uw startbestand. Open dat bestand later in de zaal en volg de stappen hieronder. Wilt u nu al oefenen? Dat kan ook.';
     const layout = preparationLayout({ready:steps.ready, resumed:Boolean(stamp), phase:context.phase, error:preparationError});
     const layoutKey = `${activityId}:${layout.preparationOpen}:${layout.venueOpen}`;
     if (layoutKey !== preparationLayoutKey) {
         managementPanel.open = layout.preparationOpen;
-        document.querySelector('#venuePanel').open = layout.venueOpen;
+        setVenueExpanded(layout.venueOpen);
         preparationLayoutKey = layoutKey;
     }
     document.querySelector('#preparationToggle').textContent = layout.preparationOpen ? 'Voorbereiding' : 'Voorbereiding bekijken of wijzigen';
-    document.querySelector('#venueNextHeading').textContent = layout.venueOpen ? 'In de zaal: ga hier verder' : 'Zaalscherm en deelnemerslinks';
+    document.querySelector('#toggleVenue').classList.toggle('hide', layout.venueOpen);
+    document.querySelector('#venueNextHeading').textContent = layout.venueOpen ? 'In de zaal: start hier uw voorbereide quiz' : 'Zaalscherm en deelnemerslinks';
     document.querySelector('#preparationPause').classList.toggle('hide', !steps.ready || Boolean(stamp) || (context.phase && context.phase !== 'waiting'));
     document.querySelector('#handoutsStepHeading').textContent = steps.handoutsHeading;
     document.querySelector('#startFileStepHeading').textContent = stamp ? 'Uw bewaarde startbestand' : steps.fileHeading;
@@ -69,6 +73,13 @@ function renderPreparation() {
         ? 'Extra exemplaar van het startbestand bewaren'
         : 'Startbestand voor de quizmaster bewaren';
 }
+function setVenueExpanded(expanded) {
+    document.querySelector('#venueContent').classList.toggle('hide', !expanded);
+    document.querySelector('#venuePanel').classList.toggle('venue-next--compact', !expanded);
+    const toggle = document.querySelector('#toggleVenue');
+    toggle.ariaExpanded = String(expanded);
+    toggle.textContent = expanded ? 'Zaalstappen verbergen' : 'Zaalstappen tonen';
+}
 let savedIdentity = {};
 try { savedIdentity = JSON.parse(localStorage.getItem(identityKey) || "{}"); } catch {}
 let activityId = queryActivity() || (validActivity(savedIdentity.id) ? savedIdentity.id : "");
@@ -82,6 +93,9 @@ const setupTitle = document.querySelector("#setupTitle");
 const setupLead = document.querySelector("#setupLead");
 const closeActivityButton = document.querySelector("#closeActivityButton");
 const managementPanel = document.querySelector("#managementPanel");
+document.querySelector('#toggleVenue').addEventListener('click', () => {
+    setVenueExpanded(document.querySelector('#venueContent').classList.contains('hide'));
+});
 const closedPanel = document.querySelector("#closedPanel");
 const cancelRound = document.querySelector("#cancelRound");
 

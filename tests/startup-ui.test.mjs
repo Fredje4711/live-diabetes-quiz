@@ -7,8 +7,9 @@ import * as preparationHelpers from '../docs/assets/preparation.js';
 const read = file => fs.readFileSync(new URL('../docs/' + file, import.meta.url), 'utf8');
 test('verdergaan in de zaal heeft een eigen opvallend blok na de voorbereiding', () => {
     const html = read('quizmaster.html');
-    assert.match(html, /<details id="venuePanel" class="venue-next" open>/);
-    assert.match(html, /<h2 id="venueNextHeading">In de zaal: ga hier verder<\/h2>/);
+    assert.match(html, /<section id="venuePanel" class="venue-next" aria-labelledby="venueNextHeading">/);
+    assert.match(html, /<h2 id="venueNextHeading">In de zaal: start hier uw voorbereide quiz<\/h2>/);
+    assert.doesNotMatch(html, /<details id="venuePanel"/);
     assert.ok(html.indexOf('id="preparationPause"') < html.indexOf('class="venue-next"'));
     assert.match(html, /Voorbereiding bekijken of wijzigen|id="preparationToggle"/);
     assert.match(read('assets/styles.css'), /\.venue-next \{\s*margin-top: 2\.5rem/);
@@ -48,10 +49,10 @@ test('zaalscherm is de eerste actie; deelnemerslink heeft afzonderlijke optionel
     assert.match(master, /aria-describedby="projectorLinkHelp"/);
     assert.match(master, /aria-describedby="participantLinkHelp"/);
     assert.match(master, /U bedient de quiz vanaf uw laptop/);
-    assert.match(master, /Mail deze link naar deelnemers op afstand/);
+    assert.match(master, /Voor deelnemers die niet in de zaal zijn: mail hun deze deelnemerslink/);
     assert.match(master, /Ze antwoorden via hun gsm, tablet of computer/);
-    assert.match(master, /<details><summary>Doen er ook mensen van thuis mee\?/);
-    assert.match(master, /Deel daarnaast het zaalscherm en uw stem via de online bijeenkomst/);
+    assert.match(master, /<details><summary>Deelnemers op afstand laten meespelen/);
+    assert.match(master, /Deel daarnaast het zaalscherm en uw gesproken uitleg via uw online bijeenkomst/);
     assert.doesNotMatch(master, /online deelnemers/i);
     assert.doesNotMatch(read('handleiding.html'), /online deelnemers/i);
     assert.match(master, /Deelnemers scannen de QR-code of typen het webadres/);
