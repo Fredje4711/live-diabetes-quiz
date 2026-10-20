@@ -8,6 +8,15 @@ const root = fileURLToPath(new URL('../docs/', import.meta.url));
 const pages = ['index.html', 'kennismaken.html', 'handleiding.html', 'uitleg/oefenen.html', 'uitleg/organiseren.html', 'briefje.html', 'deelnemer.html', 'quizmaster.html'];
 const read = name => fs.readFileSync(path.join(root, name), 'utf8');
 
+test('nog een ronde krijgt overal dezelfde korte tip voor afwisseling', () => {
+    for (const file of ['quizmaster.html','handleiding.html','uitleg/oefenen.html','uitleg/organiseren.html']) {
+        const text = read(file).replace(/<[^>]+>/g, '');
+        assert.ok(text.includes('Nog een ronde? Vink ‘Vragen in willekeurige volgorde’ aan voor afwisseling.'));
+        assert.doesNotMatch(text, /[Ee]erder gespeelde vragen kunnen terugkomen|Zonder vinkje begint u opnieuw/);
+    }
+    assert.match(read('quizmaster.html'), /aria-describedby="shuffleHelp"/);
+});
+
 test('de handleiding biedt uitsluitend de actuele korte video aan', () => {
     const html = read('handleiding.html');
     assert.equal((html.match(/<video\b/g) || []).length, 1);
