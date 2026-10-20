@@ -38,9 +38,11 @@ test('landing has real new activity link, author, disclaimer and downloadable ge
     assert.match(html,/aria-describedby="newActivityReminder"/);
     assert.match(html,/Al briefjes voorbereid\?/);
     assert.match(html,/Maak alleen een nieuwe activiteit voor een nieuwe bijeenkomst/);
-    assert.match(html,/Freddy Sleeuwaert/);
-    assert.match(html,/mailto:fredje4711@gmail\.com/);
-    assert.match(html,/vervangt geen persoonlijk medisch advies/);
+    assert.match(html,/assets\/author-footer\.js/);
+    const footer=read('assets/author-footer.js');
+    assert.match(footer,/Freddy Sleeuwaert/);
+    assert.match(footer,/mailto:fredje4711@gmail\.com/);
+    assert.match(footer,/vervangt geen persoonlijk medisch advies/);
     assert.match(html,/download="Live Diabetes Quiz - Start hier.html"/);
     assert.doesNotMatch(html,/<dialog|ontwerpvoorstel|Twee bestanden, elk hun doel|newPreview|>Voorstel</);
     assert.match(read('Live Diabetes Quiz - Start hier.html'),/url=https:\/\/fredje4711\.github\.io\/live-diabetes-quiz\/start\.html/);

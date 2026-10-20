@@ -264,6 +264,7 @@ try {
                 latestState = null; renderedQuestionKey = "";
                 quizPanel.classList.add("hide");
                 const notice = document.querySelector("#activityNotice");
+                notice.classList.toggle('is-closed', Boolean(state.closed));
                 notice.classList.remove("hide");
                 notice.querySelector("h1").textContent = state.closed ? "Deze activiteit is afgelopen" : "Even geduld…";
                 notice.querySelector("p").textContent = state.closed ? "Bedankt voor uw deelname. U kunt dit scherm sluiten." : "De quizmaster zet een nieuwe ronde klaar. U hoeft niets te doen.";
