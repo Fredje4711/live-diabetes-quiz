@@ -35,6 +35,9 @@ test('normal opening still resumes saved activity; explicit activity takes prior
 test('landing has real new activity link, author, disclaimer and downloadable generic start file',()=>{
     const html=read('start.html');
     assert.match(html,/quizmaster\.html\?nieuw=1/);
+    assert.match(html,/aria-describedby="newActivityReminder"/);
+    assert.match(html,/Al briefjes voorbereid\?/);
+    assert.match(html,/Maak alleen een nieuwe activiteit voor een nieuwe bijeenkomst/);
     assert.match(html,/Freddy Sleeuwaert/);
     assert.match(html,/mailto:fredje4711@gmail\.com/);
     assert.match(html,/vervangt geen persoonlijk medisch advies/);
