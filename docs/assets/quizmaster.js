@@ -21,7 +21,8 @@ import { preparationDate, preparationSummary, preparationMessage, showPreparatio
 
 const identityKey = "dlq-activity-manager";
 import { makeQuizStartFile } from "./quiz-startbestand.js?v=19";
-let startFileStamp = new URLSearchParams(location.hash.slice(1)).get('startbestand');
+const startNewActivity = new URLSearchParams(location.search).get('nieuw') === '1' && !queryActivity();
+let startFileStamp = startNewActivity ? null : new URLSearchParams(location.hash.slice(1)).get('startbestand');
 let preparation = null, preparationError = '', stopPreparation = null;
 let activityCreatedHere = false;
 let preparationLayoutKey = '';
@@ -82,8 +83,8 @@ function setVenueExpanded(expanded) {
 }
 let savedIdentity = {};
 try { savedIdentity = JSON.parse(localStorage.getItem(identityKey) || "{}"); } catch {}
-let activityId = queryActivity() || (validActivity(savedIdentity.id) ? savedIdentity.id : "");
-let managementKey = new URLSearchParams(location.hash.slice(1)).get("beheer") ||
+let activityId = startNewActivity ? "" : queryActivity() || (validActivity(savedIdentity.id) ? savedIdentity.id : "");
+let managementKey = startNewActivity ? "" : new URLSearchParams(location.hash.slice(1)).get("beheer") ||
     (savedIdentity.id === activityId ? savedIdentity.key || "" : "");
 let activityState = null;
 let preparingRound = false;
@@ -202,7 +203,7 @@ const buttons = {
     finish: document.querySelector("#finishButton"),
 };
 
-const storedCode = localStorage.getItem(storageCodeKey) || "";
+const storedCode = startNewActivity ? "" : localStorage.getItem(storageCodeKey) || "";
 let code = /^\d{3}$/.test(storedCode) ? storedCode : "";
 if (storedCode && !code) localStorage.removeItem(storageCodeKey);
 const storedPreviousCode = localStorage.getItem(previousStorageCodeKey) || "";
