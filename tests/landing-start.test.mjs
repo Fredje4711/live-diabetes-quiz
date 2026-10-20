@@ -37,7 +37,10 @@ test('landing has real new activity link, author, disclaimer and downloadable ge
     assert.match(html,/quizmaster\.html\?nieuw=1/);
     assert.match(html,/aria-describedby="newActivityReminder"/);
     assert.match(html,/Al briefjes voorbereid\?/);
-    assert.match(html,/Maak alleen een nieuwe activiteit voor een nieuwe bijeenkomst/);
+    assert.match(html,/Maak alleen een nieuwe quiz voor een nieuwe bijeenkomst/);
+    assert.match(html,/Wilt u een nieuwe quiz voorbereiden of een eerder voorbereide quiz openen\?/);
+    assert.match(html,/Een voorbereide quiz<br>openen/);
+    assert.doesNotMatch(html,/activiteit/i);
     assert.match(html,/assets\/author-footer\.js/);
     const footer=read('assets/author-footer.js');
     assert.match(footer,/Freddy Sleeuwaert/);
